@@ -1,0 +1,32 @@
+{
+  "name": "@trustid/portalapi-sdk",
+  "version": "0.1.0",
+  "description": "SDK for TrustID PortalAPI - Authentication and OTP methods",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "trustid",
+    "sdk",
+    "authentication",
+    "otp"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "typescript": "^5.8.3"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
+
