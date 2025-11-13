@@ -14,6 +14,7 @@ export function createHttpClient(
     timeout,
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       ...defaultHeaders,
     },
   });
@@ -36,10 +37,20 @@ export function createHttpClient(
         );
       } else if (error.request) {
         // Request was made but no response received
+        // This can happen due to network issues, SSL problems, or timeouts
+        const errorMessage = error.code === 'ECONNREFUSED' 
+          ? 'Connection refused - server may be down or unreachable'
+          : error.code === 'ETIMEDOUT'
+          ? 'Request timeout - server took too long to respond'
+          : error.code === 'ENOTFOUND'
+          ? 'DNS lookup failed - hostname not found'
+          : error.code === 'CERT_HAS_EXPIRED' || error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE'
+          ? `SSL certificate error: ${error.message}`
+          : `No response received from server: ${error.message || error.code || 'Unknown error'}`;
         throw new TrustIdSDKError(
-          'No response received from server',
+          errorMessage,
           0,
-          error.request
+          { originalError: error.message, code: error.code, request: error.request }
         );
       } else {
         // Error setting up the request
