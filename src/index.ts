@@ -9,4 +9,5 @@
 export { TrustIdSDK } from './client';
 export * from './types';
 export { AuthOTP } from './auth';
+export { KeyManager } from './modules/encryption';
 

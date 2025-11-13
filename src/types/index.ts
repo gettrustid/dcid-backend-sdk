@@ -67,6 +67,50 @@ export interface RefreshTokenOptions {
 }
 
 /**
+ * Options for generating encryption key
+ */
+export interface GenerateEncryptionKeyOptions {
+  /** The DID for which to generate the encryption key */
+  did: string;
+  /** The email address of the DID owner */
+  ownerEmail: string;
+}
+
+/**
+ * Response from generating encryption key
+ */
+export interface GenerateEncryptionKeyResponse {
+  /** The generated encryption key (MetaKeep encrypted - client decrypts with SDK) */
+  encryptedKey: string;
+  /** The DID for which the key was generated */
+  did: string;
+  /** The email address of the DID owner */
+  ownerEmail: string;
+  /** Informational message */
+  message: string;
+}
+
+/**
+ * Options for getting encrypted key
+ */
+export interface GetEncryptedKeyOptions {
+  /** The DID for which to retrieve the encrypted key */
+  did: string;
+}
+
+/**
+ * Response from getting encrypted key
+ */
+export interface GetEncryptedKeyResponse {
+  /** The encrypted key (MetaKeep encrypted - client decrypts with SDK) */
+  encryptedKey: string;
+  /** The DID for which the key was retrieved */
+  did: string;
+  /** Informational message */
+  message: string;
+}
+
+/**
  * Custom error class for SDK errors
  */
 export class TrustIdSDKError extends Error {
