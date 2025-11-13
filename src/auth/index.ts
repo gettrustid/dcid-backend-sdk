@@ -1,2 +1,1 @@
-export { AuthOTP } from './otp';
-
+export { AuthOTP } from "./otp";

@@ -1,33 +1,33 @@
-import { createHttpClient } from './utils/http';
-import { AuthOTP } from './auth/otp';
-import { KeyManager } from './modules/encryption';
-import { TrustIdSDKConfig, TokenResponse } from './types';
+import { createHttpClient } from "./utils/http";
+import { AuthOTP } from "./auth/otp";
+import { KeyManager } from "./modules/encryption";
+import { TrustIdSDKConfig, TokenResponse } from "./types";
 
 /**
  * Main TrustID PortalAPI SDK Client
- * 
+ *
  * This is the main entry point for using the SDK.
- * 
+ *
  * @example
  * ```typescript
  * import { TrustIdSDK } from '@trustid/portalapi-sdk';
- * 
+ *
  * const sdk = new TrustIdSDK({
  *   baseUrl: 'https://api.trustid.com'
  * });
- * 
+ *
  * // Register with OTP
  * await sdk.auth.registerOTP({ email: 'user@example.com' });
- * 
+ *
  * // Confirm OTP
  * const tokens = await sdk.auth.confirmOTP({
  *   email: 'user@example.com',
  *   otp: '123456'
  * });
- * 
+ *
  * // Set tokens for authenticated requests (includes automatic refresh)
  * sdk.setTokens(tokens);
- * 
+ *
  * // Generate encryption key (will auto-refresh token if expired)
  * await sdk.encryption.generateKey({
  *   did: 'did:iden3:trustid:main:...',
@@ -45,16 +45,16 @@ export class TrustIdSDK {
 
   /**
    * Creates a new TrustID SDK instance
-   * 
+   *
    * @param config - SDK configuration
    */
   constructor(config: TrustIdSDKConfig) {
     if (!config.baseUrl) {
-      throw new Error('baseUrl is required in SDK configuration');
+      throw new Error("baseUrl is required in SDK configuration");
     }
 
     // Remove trailing slash from baseUrl
-    this._baseUrl = config.baseUrl.replace(/\/$/, '');
+    this._baseUrl = config.baseUrl.replace(/\/$/, "");
 
     // Create getter functions for tokens
     const getAuthToken = () => this._authToken;
@@ -71,7 +71,9 @@ export class TrustIdSDK {
     this.auth = new AuthOTP(httpClient);
 
     // Callback to refresh token using SDK's refreshToken method
-    const refreshTokenCallback = async (refreshToken: string): Promise<TokenResponse> => {
+    const refreshTokenCallback = async (
+      refreshToken: string
+    ): Promise<TokenResponse> => {
       return await this.auth.refreshToken({ refreshToken });
     };
 
@@ -99,9 +101,9 @@ export class TrustIdSDK {
 
   /**
    * Sets the authorization and refresh tokens for authenticated requests
-   * 
+   *
    * @param tokens - Token response containing access_token and refresh_token
-   * 
+   *
    * @example
    * ```typescript
    * const tokens = await sdk.auth.confirmOTP({ email: 'user@example.com', otp: '123456' });
@@ -115,9 +117,9 @@ export class TrustIdSDK {
 
   /**
    * Sets the authorization token for authenticated requests
-   * 
+   *
    * @param token - JWT access token
-   * 
+   *
    * @example
    * ```typescript
    * const tokens = await sdk.auth.confirmOTP({ email: 'user@example.com', otp: '123456' });
@@ -130,7 +132,7 @@ export class TrustIdSDK {
 
   /**
    * Sets the refresh token
-   * 
+   *
    * @param token - JWT refresh token
    */
   setRefreshToken(token: string): void {
@@ -151,4 +153,3 @@ export class TrustIdSDK {
     return this._refreshToken;
   }
 }
-

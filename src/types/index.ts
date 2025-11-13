@@ -36,14 +36,6 @@ export interface InitiateOTPOptions {
   email?: string;
   /** User's phone number (with country code, e.g., +1234567890) */
   phone?: string;
-  /** Optional anonymous ID for tracking */
-  anonymous_id?: string;
-  /** Optional brand ID */
-  brand_id?: string;
-  /** Optional brand name */
-  brand_name?: string;
-  /** Optional session ID */
-  session_id?: string;
 }
 
 /**
@@ -120,8 +112,7 @@ export class TrustIdSDKError extends Error {
     public response?: any
   ) {
     super(message);
-    this.name = 'TrustIdSDKError';
+    this.name = "TrustIdSDKError";
     Object.setPrototypeOf(this, TrustIdSDKError.prototype);
   }
 }
-
