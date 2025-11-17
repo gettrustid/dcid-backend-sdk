@@ -35,6 +35,16 @@ export interface StartSessionResponse {
 }
 
 /**
+ * End session event payload
+ */
+export interface EndSessionEvent extends BaseAnalyticsEvent {
+  event: 'end_session';
+  event_name?: 'end_session';
+  session_id: string; // Required
+  ended_at?: string;
+}
+
+/**
  * Generic analytics event response
  */
 export interface AnalyticsEventResponse {

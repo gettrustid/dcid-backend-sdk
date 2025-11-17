@@ -2,6 +2,8 @@ import { AxiosInstance } from 'axios';
 import {
   StartSessionEvent,
   StartSessionResponse,
+  EndSessionEvent,
+  AnalyticsEventResponse,
 } from './types';
 
 /**
@@ -44,6 +46,29 @@ export class Analytics {
         ...params,
         event: 'start_session',
         event_name: 'start_session',
+      }
+    );
+
+    return response.data;
+  }
+
+  /**
+   * End session - Marks a session as ended
+   * 
+   * @param event - End session event data
+   * @returns Promise with success status
+   */
+  async endSession(event: EndSessionEvent): Promise<AnalyticsEventResponse> {
+    if (!event.session_id) {
+      throw new Error('session_id is required for end_session event');
+    }
+
+    const response = await this.httpClient.post<AnalyticsEventResponse>(
+      `${this.sgtmProxyBaseUrl}/sgtm`,
+      {
+        ...event,
+        event: 'end_session',
+        event_name: 'end_session',
       }
     );
 

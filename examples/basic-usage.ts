@@ -11,7 +11,7 @@ async function example1_BasicOTP() {
   console.log('=== Example 1: Basic OTP Flow ===\n');
 
   const sdk = new TrustIdSDK({
-    baseUrl: 'http://localhost:4000/api', // Adjust to your API URL
+    baseUrl: 'http://localhost:3000/api', // Adjust to your API URL
   });
 
   try {
