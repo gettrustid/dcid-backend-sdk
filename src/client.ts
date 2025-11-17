@@ -1,6 +1,7 @@
 import { createHttpClient } from "./utils/http";
 import { AuthOTP } from "./auth/otp";
 import { KeyManager } from "./modules/encryption";
+import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
 
 /**
@@ -33,11 +34,26 @@ import { TrustIdSDKConfig, TokenResponse } from "./types";
  *   did: 'did:iden3:trustid:main:...',
  *   ownerEmail: 'user@example.com'
  * });
+ * 
+ * // Track analytics events (if sgtmProxyBaseUrl is configured)
+ * if (sdk.analytics) {
+ *   // Start a session
+ *   const session = await sdk.analytics.startSession({
+ *     user_id?: string;
+ *     anonymous_id?: string;
+ *     page_location?: string;
+ *     page_title?: string;
+ *     timestamp?: number;
+ *     engagement_time_msec?: number;
+ *     device_type?: string;
+ *   });
+ * }
  * ```
  */
 export class TrustIdSDK {
   public readonly auth: AuthOTP;
   public readonly encryption: KeyManager;
+  public readonly analytics?: Analytics;
 
   private _authToken?: string;
   private _refreshToken?: string;
@@ -97,6 +113,17 @@ export class TrustIdSDK {
 
     // Initialize encryption module
     this.encryption = new KeyManager(authenticatedHttpClient);
+
+    // Initialize analytics module if sgtmProxyBaseUrl is provided
+    if (config.sgtmProxyBaseUrl) {
+      // Analytics uses unauthenticated HTTP client (public endpoint)
+      const analyticsHttpClient = createHttpClient(
+        '', // Base URL is empty since we use full URL in analytics methods
+        config.timeout,
+        config.defaultHeaders
+      );
+      this.analytics = new Analytics(analyticsHttpClient, config.sgtmProxyBaseUrl);
+    }
   }
 
   /**

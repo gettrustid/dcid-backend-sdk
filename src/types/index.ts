@@ -4,6 +4,8 @@
 export interface TrustIdSDKConfig {
   /** Base URL of the PortalAPI (e.g., 'https://api.trustid.com' or 'http://localhost:4000') */
   baseUrl: string;
+  /** Base URL of the SGTM Proxy server for analytics events (e.g., 'https://sgtm-proxy.trustid.com/api/analytics') */
+  sgtmProxyBaseUrl?: string;
   /** Optional timeout for requests in milliseconds (default: 30000) */
   timeout?: number;
   /** Optional default headers to include with all requests */
