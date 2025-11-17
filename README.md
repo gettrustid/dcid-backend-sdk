@@ -8,9 +8,13 @@ A TypeScript/JavaScript SDK for interacting with the TrustID PortalAPI. This SDK
 npm install @trustid/portalapi-sdk
 # or
 yarn add @trustid/portalapi-sdk
+# or
+pnpm add @trustid/portalapi-sdk
 ```
 
 ## Quick Start
+
+### ES Modules (Modern JavaScript/TypeScript)
 
 ```typescript
 import { TrustIdSDK } from "@trustid/portalapi-sdk";
@@ -33,6 +37,35 @@ console.log("Access Token:", tokens.access_token);
 console.log("Refresh Token:", tokens.refresh_token);
 ```
 
+### CommonJS (Node.js)
+
+```javascript
+const { TrustIdSDK } = require("@trustid/portalapi-sdk");
+
+// Initialize the SDK
+const sdk = new TrustIdSDK({
+  baseUrl: "https://api.trustid.com",
+});
+
+// Use the SDK the same way...
+await sdk.auth.registerOTP({ email: "user@example.com" });
+```
+
+## Universal Import Syntax
+
+**The SDK automatically detects your module system!** Use the same import syntax regardless of whether you're using ES modules or CommonJS:
+
+```typescript
+// Works in both ES modules AND CommonJS projects
+import { TrustIdSDK } from "@trustid/portalapi-sdk";
+```
+
+The SDK is built as a **dual package** that supports both:
+- **ES Modules** (`import`/`export`) - for modern bundlers (Vite, Webpack 5, Rollup, etc.)
+- **CommonJS** (`require`/`module.exports`) - for Node.js and older bundlers
+
+When you import the SDK, Node.js or your bundler automatically selects the correct format based on your project's module system.
+
 ## API Reference
 
 ### Initialization
@@ -40,8 +73,9 @@ console.log("Refresh Token:", tokens.refresh_token);
 ```typescript
 const sdk = new TrustIdSDK({
   baseUrl: string, // Required: API base URL
-  timeout: number, // Optional: Request timeout (default: 30000ms)
-  defaultHeaders: Record<string, string>, // Optional: Default headers
+  sgtmProxyBaseUrl?: string, // Optional: SGTM proxy URL for analytics
+  timeout?: number, // Optional: Request timeout (default: 30000ms)
+  defaultHeaders?: Record<string, string>, // Optional: Default headers
 });
 ```
 
@@ -93,194 +127,51 @@ const tokens = await sdk.auth.confirmOTP({
   otp: "123456",
 });
 
-// Use tokens for authenticated requests
-localStorage.setItem("access_token", tokens.access_token);
-localStorage.setItem("refresh_token", tokens.refresh_token);
+// Set tokens for authenticated requests
+sdk.setTokens(tokens);
 ```
 
-#### `auth.adminLogin(options)`
+### Analytics Methods
 
-Admin OTP registration/sign-in initiation. Covers `POST /auth/sign-in/initiate?type=admin`.
-
-Similar to `registerOTP()` but for admin users. After calling this, use `confirmOTP()` to complete the authentication.
-
-**Parameters:**
-
-- `email?: string` - Admin's email address
-- `phone?: string` - Admin's phone number (with country code)
-
-**Returns:** `Promise<InitiateOTPResponse>`
-
-- `otp?: string` - OTP code (only in dev environment)
-
-**Example:**
+If `sgtmProxyBaseUrl` is configured, you can use analytics methods:
 
 ```typescript
-// Step 1: Initiate admin OTP
-const result = await sdk.auth.adminLogin({ email: "admin@example.com" });
-// In dev: result.otp contains the code
+if (sdk.analytics) {
+  // Start a session
+  await sdk.analytics.startSession({
+    user_id?: string;
+    anonymous_id?: string;
+    page_location?: string;
+    page_title?: string;
+    timestamp?: number;
+    engagement_time_msec?: number;
+    device_type?: string;
+  });
+}
+```
 
-// Step 2: Confirm OTP to get tokens
-const tokens = await sdk.auth.confirmOTP({
-  email: "admin@example.com",
-  otp: result.otp || "123456",
+### Encryption Methods
+
+```typescript
+// Generate encryption key (will auto-refresh token if expired)
+await sdk.encryption.generateKey({
+  did: "did:iden3:trustid:main:...",
+  ownerEmail: "user@example.com",
 });
 ```
 
-#### `auth.refreshToken(options)`
+## Module System Support
 
-Refreshes the access token using refresh token. Covers `POST /auth/refresh-token`.
+This SDK uses the **Package Exports** feature to automatically provide the correct module format:
 
-**Parameters:**
+- **ES Modules**: Automatically used when your project uses `import`/`export` or has `"type": "module"` in package.json
+- **CommonJS**: Automatically used when your project uses `require()` or doesn't specify module type
 
-- `refreshToken: string` - The refresh token
+You don't need to change your import syntax - it works the same way in both systems!
 
-**Returns:** `Promise<TokenResponse>`
+## TypeScript Support
 
-**Example:**
-
-```typescript
-const newTokens = await sdk.auth.refreshToken({
-  refreshToken: "your-refresh-token",
-});
-```
-
-## Error Handling
-
-The SDK throws `TrustIdSDKError` for API errors:
-
-```typescript
-import { TrustIdSDKError } from "@trustid/portalapi-sdk";
-
-try {
-  await sdk.auth.confirmOTP({ email: "user@example.com", otp: "wrong" });
-} catch (error) {
-  if (error instanceof TrustIdSDKError) {
-    console.error("API Error:", error.message);
-    console.error("Status Code:", error.statusCode);
-    console.error("Response:", error.response);
-  } else {
-    console.error("Unexpected error:", error);
-  }
-}
-```
-
-## Complete Example
-
-### Regular User Flow
-
-```typescript
-import { TrustIdSDK, TrustIdSDKError } from "@trustid/portalapi-sdk";
-
-async function authenticateUser() {
-  const sdk = new TrustIdSDK({
-    baseUrl: "https://api.trustid.com",
-  });
-
-  try {
-    // Step 1: Initiate OTP
-    console.log("Sending OTP...");
-    const initiateResult = await sdk.auth.registerOTP({
-      email: "user@example.com",
-    });
-    console.log("OTP sent! Check your email.");
-    if (initiateResult.otp) {
-      console.log("Dev OTP:", initiateResult.otp);
-    }
-
-    // Step 2: Get OTP from user (in real app, from input)
-    const otp = initiateResult.otp || "123456"; // User enters this
-
-    // Step 3: Confirm OTP
-    console.log("Confirming OTP...");
-    const tokens = await sdk.auth.confirmOTP({
-      email: "user@example.com",
-      otp: otp,
-    });
-
-    console.log("Authentication successful!");
-    console.log("Access Token:", tokens.access_token);
-
-    // Step 4: Store tokens
-    localStorage.setItem("access_token", tokens.access_token);
-    localStorage.setItem("refresh_token", tokens.refresh_token);
-
-    // Step 5: Refresh token when needed
-    const newTokens = await sdk.auth.refreshToken({
-      refreshToken: tokens.refresh_token,
-    });
-
-    console.log("Token refreshed!");
-  } catch (error) {
-    if (error instanceof TrustIdSDKError) {
-      console.error("API Error:", error.message);
-    } else {
-      console.error("Error:", error);
-    }
-  }
-}
-
-authenticateUser();
-```
-
-### Admin User Flow
-
-```typescript
-import { TrustIdSDK, TrustIdSDKError } from "@trustid/portalapi-sdk";
-
-async function authenticateAdmin() {
-  const sdk = new TrustIdSDK({
-    baseUrl: "https://api.trustid.com",
-  });
-
-  try {
-    // Step 1: Initiate admin OTP
-    console.log("Sending admin OTP...");
-    const initiateResult = await sdk.auth.adminLogin({
-      email: "admin@example.com",
-    });
-    console.log("OTP sent! Check your email.");
-    if (initiateResult.otp) {
-      console.log("Dev OTP:", initiateResult.otp);
-    }
-
-    // Step 2: Get OTP from admin (in real app, from input)
-    const otp = initiateResult.otp || "123456";
-
-    // Step 3: Confirm OTP
-    console.log("Confirming OTP...");
-    const tokens = await sdk.auth.confirmOTP({
-      email: "admin@example.com",
-      otp: otp,
-    });
-
-    console.log("Admin authentication successful!");
-    console.log("Access Token:", tokens.access_token);
-  } catch (error) {
-    if (error instanceof TrustIdSDKError) {
-      console.error("API Error:", error.message);
-    } else {
-      console.error("Error:", error);
-    }
-  }
-}
-
-authenticateAdmin();
-```
-
-## Development
-
-### Building
-
-```bash
-npm run build
-```
-
-### Development Mode
-
-```bash
-npm run dev
-```
+Full TypeScript support is included. Types are automatically resolved based on your module system.
 
 ## License
 
