@@ -1,6 +1,7 @@
 import { createHttpClient } from "./utils/http";
 import { AuthOTP } from "./modules/auth/otp";
 import { KeyManager } from "./modules/encryption";
+import { Issuer } from "./modules/identity/issuer";
 import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
 
@@ -53,6 +54,7 @@ import { TrustIdSDKConfig, TokenResponse } from "./types";
 export class TrustIdSDK {
   public readonly auth: AuthOTP;
   public readonly encryption: KeyManager;
+  public readonly issuer: Issuer;
   public readonly analytics?: Analytics;
 
   private _authToken?: string;
@@ -113,6 +115,9 @@ export class TrustIdSDK {
 
     // Initialize encryption module
     this.encryption = new KeyManager(authenticatedHttpClient);
+
+    // Initialize issuer module
+    this.issuer = new Issuer(authenticatedHttpClient);
 
     // Initialize analytics module if sgtmProxyBaseUrl is provided
     if (config.sgtmProxyBaseUrl) {

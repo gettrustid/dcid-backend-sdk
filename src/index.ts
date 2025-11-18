@@ -10,5 +10,6 @@ export { TrustIdSDK } from "./client";
 export * from "./types";
 export { AuthOTP } from "./modules/auth/otp";
 export { KeyManager } from "./modules/encryption";
+export { Issuer } from "./modules/identity/issuer";
 export { Analytics } from "./modules/analytics";
 export * from "./modules/analytics/types";

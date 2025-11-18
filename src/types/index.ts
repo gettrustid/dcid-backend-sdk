@@ -105,6 +105,67 @@ export interface GetEncryptedKeyResponse {
 }
 
 /**
+ * Options for issuing a credential
+ */
+export interface IssueCredentialOptions {
+  /** The DID of the user to issue the credential for */
+  did: string;
+  /** The name of the credential to issue (e.g., 'KYCAgeCredential') */
+  credentialName: string;
+  /** The values required for the credential */
+  values: Record<string, any>;
+}
+
+/**
+ * Response from issuing a credential
+ * For SIG credentials: returns qrCodeLink and schemaType
+ * For MTP credentials: returns txId and claimId (use getCredentialOffer to get qrCodeLink)
+ */
+export type IssueCredentialResponse =
+  | {
+      /** QR code link for SIG credentials */
+      qrCodeLink: string;
+      /** The type of the issued schema */
+      schemaType: string;
+    }
+  | {
+      /** Blockchain transaction ID for MTP credentials */
+      txId: string;
+      /** Credential claim ID for MTP credentials */
+      claimId: string;
+    };
+
+/**
+ * Options for getting credential offer
+ */
+export interface GetCredentialOfferOptions {
+  /** The credential claim ID */
+  claimId: string;
+  /** The blockchain transaction ID */
+  txId: string;
+}
+
+/**
+ * Response from getting credential offer
+ */
+export interface GetCredentialOfferResponse {
+  /** Status of the credential offer ('published' or 'pending') */
+  status: "published" | "pending";
+  /** The blockchain transaction ID */
+  txId: string;
+  /** The credential claim ID */
+  claimId: string;
+  /** Whether the offer is available */
+  offerAvailable: boolean;
+  /** QR code link (only present if status is 'published') */
+  qrCodeLink?: string;
+  /** Full offer data (only present if status is 'published') */
+  offer?: any;
+  /** Message explaining the status (only present if status is 'pending') */
+  message?: string;
+}
+
+/**
  * Custom error class for SDK errors
  */
 export class TrustIdSDKError extends Error {
