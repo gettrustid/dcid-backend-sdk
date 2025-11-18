@@ -5,7 +5,7 @@ import {
   ConfirmOTPOptions,
   TokenResponse,
   RefreshTokenOptions,
-} from "../types";
+} from "../../types";
 
 /**
  * Authentication module for OTP-based registration and sign-in

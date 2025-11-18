@@ -1,5 +1,5 @@
 import { createHttpClient } from "./utils/http";
-import { AuthOTP } from "./auth/otp";
+import { AuthOTP } from "./modules/auth/otp";
 import { KeyManager } from "./modules/encryption";
 import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
