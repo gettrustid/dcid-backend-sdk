@@ -8,10 +8,18 @@ import {
 } from "../../types";
 
 /**
+ * Callback function type for automatically setting tokens after authentication
+ */
+export type OnTokensReceivedCallback = (tokens: TokenResponse) => void;
+
+/**
  * Authentication module for OTP-based registration and sign-in
  */
 export class AuthOTP {
-  constructor(private httpClient: AxiosInstance) {}
+  constructor(
+    private httpClient: AxiosInstance,
+    private onTokensReceived?: OnTokensReceivedCallback
+  ) {}
 
   /**
    * Register-OTP: Initiates OTP registration/sign-in process
@@ -54,6 +62,9 @@ export class AuthOTP {
    * This method covers the endpoint: POST /auth/sign-in/confirm
    *
    * After user receives OTP, call this method to verify and get access tokens.
+   * If the SDK was configured with automatic token setting, tokens will be
+   * automatically set in the SDK context. Otherwise, you can manually set them
+   * using `sdk.setTokens(tokens)`.
    *
    * @param options - Email/phone and the OTP code
    * @returns Promise with access_token and refresh_token
@@ -64,6 +75,7 @@ export class AuthOTP {
    *   email: 'user@example.com',
    *   otp: '123456'
    * });
+   * // Tokens are automatically set in SDK context (no need to call setTokens)
    * // tokens.access_token - use for authenticated requests
    * // tokens.refresh_token - use to refresh access token
    * ```
@@ -85,7 +97,14 @@ export class AuthOTP {
       }
     );
 
-    return response.data;
+    const tokens = response.data;
+
+    // Automatically set tokens in SDK context if callback is provided
+    if (this.onTokensReceived) {
+      this.onTokensReceived(tokens);
+    }
+
+    return tokens;
   }
 
   /**

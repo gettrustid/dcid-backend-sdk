@@ -21,14 +21,12 @@ import { TrustIdSDKConfig, TokenResponse } from "./types";
  * // Register with OTP
  * await sdk.auth.registerOTP({ email: 'user@example.com' });
  *
- * // Confirm OTP
+ * // Confirm OTP (tokens are automatically set in SDK context)
  * const tokens = await sdk.auth.confirmOTP({
  *   email: 'user@example.com',
  *   otp: '123456'
  * });
- *
- * // Set tokens for authenticated requests (includes automatic refresh)
- * sdk.setTokens(tokens);
+ * // No need to call sdk.setTokens() - tokens are set automatically, unless you want to set them manually
  *
  * // Generate encryption key (will auto-refresh token if expired)
  * await sdk.encryption.generateKey({
@@ -85,8 +83,14 @@ export class TrustIdSDK {
       config.defaultHeaders
     );
 
+    // Callback to automatically set tokens after successful OTP confirmation
+    const onTokensReceived = (tokens: TokenResponse) => {
+      this._authToken = tokens.access_token;
+      this._refreshToken = tokens.refresh_token;
+    };
+
     // Initialize auth module first (needed for refresh callback)
-    this.auth = new AuthOTP(httpClient);
+    this.auth = new AuthOTP(httpClient, onTokensReceived);
 
     // Callback to refresh token using SDK's refreshToken method
     const refreshTokenCallback = async (
