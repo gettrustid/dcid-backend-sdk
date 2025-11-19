@@ -4,6 +4,7 @@ import { KeyManager } from "./modules/encryption";
 import { Issuer } from "./modules/identity/issuer";
 import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
+import { getEnvironmentConfig } from "./config/environments";
 
 /**
  * Main TrustID PortalAPI SDK Client
@@ -15,7 +16,8 @@ import { TrustIdSDKConfig, TokenResponse } from "./types";
  * import { TrustIdSDK } from '@trustid/portalapi-sdk';
  *
  * const sdk = new TrustIdSDK({
- *   baseUrl: 'https://api.trustid.com'
+ *   environment: 'prod', // or 'dev'
+ *   apiKey: 'your-api-key-here'
  * });
  *
  * // Register with OTP
@@ -33,8 +35,8 @@ import { TrustIdSDKConfig, TokenResponse } from "./types";
  *   did: 'did:iden3:trustid:main:...',
  *   ownerEmail: 'user@example.com'
  * });
- * 
- * // Track analytics events (if sgtmProxyBaseUrl is configured)
+ *
+ * // Track analytics events (analytics is automatically enabled)
  * if (sdk.analytics) {
  *   // Start a session
  *   const session = await sdk.analytics.startSession({
@@ -65,12 +67,25 @@ export class TrustIdSDK {
    * @param config - SDK configuration
    */
   constructor(config: TrustIdSDKConfig) {
-    if (!config.baseUrl) {
-      throw new Error("baseUrl is required in SDK configuration");
+    if (!config.environment) {
+      throw new Error("environment is required in SDK configuration");
     }
 
+    if (!config.apiKey) {
+      throw new Error("apiKey is required in SDK configuration");
+    }
+
+    // Get environment configuration (hard-coded URLs)
+    const envConfig = getEnvironmentConfig(config.environment);
+
     // Remove trailing slash from baseUrl
-    this._baseUrl = config.baseUrl.replace(/\/$/, "");
+    this._baseUrl = envConfig.baseUrl.replace(/\/$/, "");
+
+    // Create default headers with API key
+    const defaultHeaders: Record<string, string> = {
+      "X-API-Key": config.apiKey,
+      ...config.defaultHeaders,
+    };
 
     // Create getter functions for tokens
     const getAuthToken = () => this._authToken;
@@ -80,7 +95,7 @@ export class TrustIdSDK {
     const httpClient = createHttpClient(
       this._baseUrl,
       config.timeout,
-      config.defaultHeaders
+      defaultHeaders
     );
 
     // Callback to automatically set tokens after successful OTP confirmation
@@ -110,7 +125,7 @@ export class TrustIdSDK {
     const authenticatedHttpClient = createHttpClient(
       this._baseUrl,
       config.timeout,
-      config.defaultHeaders,
+      defaultHeaders,
       getAuthToken,
       getRefreshToken,
       refreshTokenCallback,
@@ -120,23 +135,24 @@ export class TrustIdSDK {
     // Initialize encryption module
     this.encryption = new KeyManager(authenticatedHttpClient);
 
-    // Initialize issuer module (with WebSocket support if wsUrl is provided)
+    // Initialize issuer module (with WebSocket support - wsUrl from environment config)
     this.issuer = new Issuer(
       authenticatedHttpClient,
-      config.wsUrl,
+      envConfig.wsUrl,
       getAuthToken
     );
 
-    // Initialize analytics module if sgtmProxyBaseUrl is provided
-    if (config.sgtmProxyBaseUrl) {
-      // Analytics uses unauthenticated HTTP client (public endpoint)
-      const analyticsHttpClient = createHttpClient(
-        '', // Base URL is empty since we use full URL in analytics methods
-        config.timeout,
-        config.defaultHeaders
-      );
-      this.analytics = new Analytics(analyticsHttpClient, config.sgtmProxyBaseUrl);
-    }
+    // Initialize analytics module (sgtmProxyBaseUrl from environment config)
+    // Analytics uses unauthenticated HTTP client (public endpoint)
+    const analyticsHttpClient = createHttpClient(
+      "", // Base URL is empty since we use full URL in analytics methods
+      config.timeout,
+      defaultHeaders
+    );
+    this.analytics = new Analytics(
+      analyticsHttpClient,
+      envConfig.sgtmProxyBaseUrl
+    );
   }
 
   /**

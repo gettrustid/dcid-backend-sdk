@@ -13,3 +13,5 @@ export { KeyManager } from "./modules/encryption";
 export { Issuer } from "./modules/identity/issuer";
 export { Analytics } from "./modules/analytics";
 export * from "./modules/analytics/types";
+export { ENVIRONMENTS, getEnvironmentConfig } from "./config/environments";
+export type { EnvironmentConfig } from "./config/environments";
