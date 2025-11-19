@@ -6,6 +6,8 @@ export interface TrustIdSDKConfig {
   baseUrl: string;
   /** Base URL of the SGTM Proxy server for analytics events (e.g., 'https://sgtm-proxy.trustid.com/api/analytics') */
   sgtmProxyBaseUrl?: string;
+  /** WebSocket URL for MTP credential updates (e.g., 'wss://dev-identity.trustid.life/ws') */
+  wsUrl?: string;
   /** Optional timeout for requests in milliseconds (default: 30000) */
   timeout?: number;
   /** Optional default headers to include with all requests */
@@ -143,6 +145,20 @@ export interface GetCredentialOfferOptions {
   claimId: string;
   /** The blockchain transaction ID */
   txId: string;
+}
+
+/**
+ * Options for waiting for credential offer via WebSocket
+ */
+export interface WaitForCredentialOfferOptions {
+  /** The credential claim ID */
+  claimId: string;
+  /** The blockchain transaction ID */
+  txId: string;
+  /** Optional WebSocket URL (overrides SDK config) */
+  wsUrl?: string;
+  /** Optional timeout in milliseconds (default: 120000 = 2 minutes) */
+  timeout?: number;
 }
 
 /**

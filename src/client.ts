@@ -120,8 +120,12 @@ export class TrustIdSDK {
     // Initialize encryption module
     this.encryption = new KeyManager(authenticatedHttpClient);
 
-    // Initialize issuer module
-    this.issuer = new Issuer(authenticatedHttpClient);
+    // Initialize issuer module (with WebSocket support if wsUrl is provided)
+    this.issuer = new Issuer(
+      authenticatedHttpClient,
+      config.wsUrl,
+      getAuthToken
+    );
 
     // Initialize analytics module if sgtmProxyBaseUrl is provided
     if (config.sgtmProxyBaseUrl) {
