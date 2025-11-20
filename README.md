@@ -150,13 +150,62 @@ if (sdk.analytics) {
 }
 ```
 
-### Encryption Methods
+### Identity Methods
+
+#### Encryption
 
 ```typescript
 // Generate encryption key (will auto-refresh token if expired)
-await sdk.encryption.generateKey({
+await sdk.identity.encryption.generateKey({
   did: "did:iden3:trustid:main:...",
   ownerEmail: "user@example.com",
+});
+
+// Get encrypted key
+await sdk.identity.encryption.getKey({
+  did: "did:iden3:trustid:main:...",
+});
+```
+
+#### Issuer
+
+```typescript
+// Issue a credential
+await sdk.identity.issuer.issueCredential({
+  did: "did:iden3:trust-id:main:...",
+  credentialName: "KYCAgeCredential",
+  values: { birthday: 25, documentType: 2 },
+});
+
+// Get credential offer (for MTP credentials)
+await sdk.identity.issuer.getCredentialOffer({
+  claimId: "abc123...",
+  txId: "0x1234567890abcdef...",
+});
+```
+
+#### IPFS
+
+```typescript
+// Store credential to IPFS
+await sdk.identity.ipfs.storeCredential({
+  did: "did:iden3:trust-id:main:...",
+  credentialType: "KYCAgeCredential",
+  credential: "U2FsdGVkX1+vupppZksvRf...",
+  encrypted: true,
+});
+
+// Retrieve user credential
+await sdk.identity.ipfs.retrieveUserCredential({
+  did: "did:iden3:trust-id:main:...",
+  credentialType: "KYCAgeCredential",
+  includeCidOnly: false,
+});
+
+// Get all user credentials
+await sdk.identity.ipfs.getAllUserCredentials({
+  did: "did:iden3:trust-id:main:...",
+  includeCredentialData: false,
 });
 ```
 

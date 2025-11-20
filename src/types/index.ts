@@ -179,6 +179,98 @@ export interface GetCredentialOfferResponse {
 }
 
 /**
+ * Options for storing a credential to IPFS
+ */
+export interface StoreCredentialOptions {
+  /** The DID of the user */
+  did: string;
+  /** The type of credential being stored */
+  credentialType: string;
+  /** The credential data (string if encrypted, object if unencrypted) */
+  credential: string | object;
+  /** Whether the credential is encrypted (defaults to true) */
+  encrypted?: boolean;
+}
+
+/**
+ * Response from storing a credential to IPFS
+ */
+export interface StoreCredentialResponse {
+  /** IPFS Content Identifier for the stored credential */
+  cid: string;
+  /** The DID of the user */
+  did: string;
+  /** The type of credential */
+  credentialType: string;
+  /** Informational message */
+  message: string;
+  /** Whether the credential is encrypted */
+  encrypted: boolean;
+}
+
+/**
+ * Options for retrieving a user credential from IPFS
+ */
+export interface RetrieveUserCredentialOptions {
+  /** The DID of the user */
+  did: string;
+  /** The type of credential being retrieved */
+  credentialType: string;
+  /** If true, returns only the CID without downloading credential data (faster) */
+  includeCidOnly?: boolean;
+}
+
+/**
+ * Response from retrieving a user credential from IPFS
+ */
+export interface RetrieveUserCredentialResponse {
+  /** Credential data (string if encrypted, object if unencrypted, only when includeCidOnly=false) */
+  credential?: string | object;
+  /** The CID for the credential */
+  cid: string;
+  /** The DID of the user */
+  did: string;
+  /** The type of credential */
+  credentialType: string;
+  /** Whether the credential is encrypted (only when includeCidOnly=false) */
+  encrypted?: boolean;
+  /** Informational message */
+  message: string;
+}
+
+/**
+ * Options for getting all user credentials from IPFS
+ */
+export interface GetAllUserCredentialsOptions {
+  /** The DID of the user */
+  did: string;
+  /** If true, downloads and includes credential data from IPFS (slower but complete) */
+  includeCredentialData?: boolean;
+}
+
+/**
+ * Response from getting all user credentials from IPFS
+ */
+export interface GetAllUserCredentialsResponse {
+  /** Credentials object - either CIDs only or full credential data */
+  credentials: Record<
+    string,
+    | string
+    | {
+        cid: string;
+        credential: string | object;
+        encrypted: boolean;
+      }
+  >;
+  /** The DID of the user */
+  did: string;
+  /** Number of credentials */
+  count: number;
+  /** Informational message */
+  message: string;
+}
+
+/**
  * Custom error class for SDK errors
  */
 export class TrustIdSDKError extends Error {

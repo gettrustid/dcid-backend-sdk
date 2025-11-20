@@ -1,7 +1,8 @@
 import { createHttpClient } from "./utils/http";
 import { AuthOTP } from "./modules/auth/otp";
-import { KeyManager } from "./modules/encryption";
+import { KeyManager } from "./modules/identity/encryption";
 import { Issuer } from "./modules/identity/issuer";
+import { IPFS } from "./modules/identity/ipfs";
 import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
 import { getEnvironmentConfig } from "./config/environments";
@@ -31,7 +32,7 @@ import { getEnvironmentConfig } from "./config/environments";
  * // No need to call sdk.setTokens() - tokens are set automatically, unless you want to set them manually
  *
  * // Generate encryption key (will auto-refresh token if expired)
- * await sdk.encryption.generateKey({
+ * await sdk.identity.encryption.generateKey({
  *   did: 'did:iden3:trustid:main:...',
  *   ownerEmail: 'user@example.com'
  * });
@@ -53,9 +54,13 @@ import { getEnvironmentConfig } from "./config/environments";
  */
 export class TrustIdSDK {
   public readonly auth: AuthOTP;
-  public readonly encryption: KeyManager;
-  public readonly issuer: Issuer;
   public readonly analytics?: Analytics;
+
+  public readonly identity: {
+    encryption: KeyManager;
+    issuer: Issuer;
+    ipfs: IPFS;
+  };
 
   private _authToken?: string;
   private _refreshToken?: string;
@@ -132,15 +137,16 @@ export class TrustIdSDK {
       onTokenRefreshed
     );
 
-    // Initialize encryption module
-    this.encryption = new KeyManager(authenticatedHttpClient);
-
-    // Initialize issuer module (with WebSocket support - wsUrl from environment config)
-    this.issuer = new Issuer(
-      authenticatedHttpClient,
-      envConfig.wsUrl,
-      getAuthToken
-    );
+    // Initialize identity modules
+    this.identity = {
+      encryption: new KeyManager(authenticatedHttpClient),
+      issuer: new Issuer(
+        authenticatedHttpClient,
+        envConfig.wsUrl,
+        getAuthToken
+      ),
+      ipfs: new IPFS(authenticatedHttpClient),
+    };
 
     // Initialize analytics module (sgtmProxyBaseUrl from environment config)
     // Analytics uses unauthenticated HTTP client (public endpoint)

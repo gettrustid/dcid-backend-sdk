@@ -46,7 +46,7 @@ export class Issuer {
    * @example
    * ```typescript
    * // Issue a SIG credential
-   * const result = await sdk.issuer.issueCredential({
+   * const result = await sdk.identity.issuer.issueCredential({
    *   did: 'did:iden3:trust-id:main:...',
    *   credentialName: 'KYCAgeCredential',
    *   values: { birthday: 25, documentType: 2 }
@@ -95,7 +95,7 @@ export class Issuer {
    *
    * @example
    * ```typescript
-   * const result = await sdk.issuer.getCredentialOffer({
+   * const result = await sdk.identity.issuer.getCredentialOffer({
    *   claimId: 'abc123...',
    *   txId: '0x1234567890abcdef...'
    * });
@@ -140,7 +140,7 @@ export class Issuer {
    * @example
    * ```typescript
    * // Wait for credential to be published (blocks until ready)
-   * const result = await sdk.issuer.waitForCredentialOffer({
+   * const result = await sdk.identity.issuer.waitForCredentialOffer({
    *   claimId: 'abc123...',
    *   txId: '0x1234567890abcdef...'
    * });

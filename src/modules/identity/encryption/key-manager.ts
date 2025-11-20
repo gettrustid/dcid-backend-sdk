@@ -4,7 +4,7 @@ import {
   GenerateEncryptionKeyResponse,
   GetEncryptedKeyOptions,
   GetEncryptedKeyResponse,
-} from "../../types";
+} from "../../../types";
 
 /**
  * KeyManager module for encryption key operations
@@ -29,7 +29,7 @@ export class KeyManager {
    *
    * @example
    * ```typescript
-   * const result = await sdk.encryption.generateKey({
+   * const result = await sdk.identity.encryption.generateKey({
    *   did: 'did:iden3:trustid:main:2qadKcedyt3zCeTg7AqSvqsnBmwPvnSaX5qnGohLMT',
    *   ownerEmail: 'user@example.com'
    * });
@@ -71,7 +71,7 @@ export class KeyManager {
    *
    * @example
    * ```typescript
-   * const result = await sdk.encryption.getKey({
+   * const result = await sdk.identity.encryption.getKey({
    *   did: 'did:iden3:trustid:main:2qadKcedyt3zCeTg7AqSvqsnBmwPvnSaX5qnGohLMT'
    * });
    * // result.encryptedKey - MetaKeep encrypted key (decrypt with MetaKeep SDK)
@@ -94,3 +94,4 @@ export class KeyManager {
     return response.data;
   }
 }
+
