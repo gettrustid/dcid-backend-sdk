@@ -113,6 +113,8 @@ export interface IssueCredentialOptions {
   credentialName: string;
   /** The values required for the credential */
   values: Record<string, any>;
+  /** The email address of the credential owner */
+  ownerEmail: string;
 }
 
 /**

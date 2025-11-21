@@ -36,11 +36,11 @@ export class Issuer {
    *
    * This method covers the endpoint: POST /identity/issuer/issue-credential
    *
-   * Issues a new SIG or MTP credential for a user based on the provided DID, credential name, and values.
+   * Issues a new SIG or MTP credential for a user based on the provided DID, credential name, values, and owner email.
    * For SIG credentials, returns a QR code link immediately.
    * For MTP credentials, returns txId and claimId (use getCredentialOffer to fetch the QR code link after state is published).
    *
-   * @param options - DID, credential name, and values
+   * @param options - DID, credential name, values, and owner email
    * @returns Promise with credential response (either QR code link for SIG or txId/claimId for MTP)
    *
    * @example
@@ -49,7 +49,8 @@ export class Issuer {
    * const result = await sdk.identity.issuer.issueCredential({
    *   did: 'did:iden3:trust-id:main:...',
    *   credentialName: 'KYCAgeCredential',
-   *   values: { birthday: 25, documentType: 2 }
+   *   values: { birthday: 25, documentType: 2 },
+   *   ownerEmail: 'user@example.com'
    * });
    * // For SIG: result.qrCodeLink - QR code link for the credential
    * // For MTP: result.txId and result.claimId - use getCredentialOffer to get QR code link
@@ -70,12 +71,17 @@ export class Issuer {
       throw new Error("Valid values object is required");
     }
 
+    if (!options.ownerEmail || !options.ownerEmail.includes("@")) {
+      throw new Error("Valid owner email is required");
+    }
+
     const response = await this.httpClient.post<IssueCredentialResponse>(
       "/identity/issuer/issue-credential",
       {
         did: options.did,
         credentialName: options.credentialName,
         values: options.values,
+        ownerEmail: options.ownerEmail,
       }
     );
 
