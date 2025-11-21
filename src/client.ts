@@ -3,6 +3,7 @@ import { AuthOTP } from "./modules/auth/otp";
 import { KeyManager } from "./modules/identity/encryption";
 import { Issuer } from "./modules/identity/issuer";
 import { IPFS } from "./modules/identity/ipfs";
+import { Verification } from "./modules/identity/verification";
 import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
 import { getEnvironmentConfig } from "./config/environments";
@@ -60,6 +61,7 @@ export class TrustIdSDK {
     encryption: KeyManager;
     issuer: Issuer;
     ipfs: IPFS;
+    verification: Verification;
   };
 
   private _authToken?: string;
@@ -146,6 +148,7 @@ export class TrustIdSDK {
         getAuthToken
       ),
       ipfs: new IPFS(authenticatedHttpClient),
+      verification: new Verification(authenticatedHttpClient),
     };
 
     // Initialize analytics module (sgtmProxyBaseUrl from environment config)
