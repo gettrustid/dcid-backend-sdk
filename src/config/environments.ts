@@ -17,9 +17,11 @@ export interface EnvironmentConfig {
  */
 export const ENVIRONMENTS: Record<"dev" | "prod", EnvironmentConfig> = {
   dev: {
+    // baseUrl: "http://localhost:5000/api",
     baseUrl: "https://dev.trustid.life/api",
     wsUrl: "wss://dev-identity.trustid.life/ws",
-    sgtmProxyBaseUrl: "https://dev.trustid.life/server/api",
+    // sgtmProxyBaseUrl: "http://localhost:5000/api/analytics",
+    sgtmProxyBaseUrl: "https://dev.trustid.life/server/api/analytics",
   },
   prod: {
     baseUrl: "https://portal-api.external.trustid.life/api",
