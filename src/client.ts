@@ -142,11 +142,7 @@ export class TrustIdSDK {
     // Initialize identity modules
     this.identity = {
       encryption: new KeyManager(authenticatedHttpClient),
-      issuer: new Issuer(
-        authenticatedHttpClient,
-        envConfig.wsUrl,
-        getAuthToken
-      ),
+      issuer: new Issuer(authenticatedHttpClient),
       ipfs: new IPFS(authenticatedHttpClient),
       verification: new Verification(authenticatedHttpClient),
     };

@@ -147,20 +147,6 @@ export interface GetCredentialOfferOptions {
 }
 
 /**
- * Options for waiting for credential offer via WebSocket
- */
-export interface WaitForCredentialOfferOptions {
-  /** The credential claim ID */
-  claimId: string;
-  /** The blockchain transaction ID */
-  txId: string;
-  /** Optional WebSocket URL (overrides SDK config) */
-  wsUrl?: string;
-  /** Optional timeout in milliseconds (default: 120000 = 2 minutes) */
-  timeout?: number;
-}
-
-/**
  * Response from getting credential offer
  */
 export interface GetCredentialOfferResponse {
