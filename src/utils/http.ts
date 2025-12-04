@@ -97,29 +97,73 @@ function isKrakendError(error: AxiosError): boolean {
 
 /**
  * Checks if error is an API-KEY authentication error (from KrakenD)
+ * Note: When KrakenD acts as a proxy (no-op mode), it still adds X-Krakend header
+ * to backend responses, so we need to check the error message content first.
  */
 function isApiKeyError(error: AxiosError): boolean {
   if (error.response?.status !== 401) return false;
 
-  const isKrakend = isKrakendError(error);
   const responseData = error.response.data as any;
-
-  // If it's from KrakenD and 401, it's likely an API-KEY error
-  if (isKrakend) return true;
-
-  // Check error message for API-KEY related errors
   const errorMessage = (
     responseData?.error ||
     responseData?.message ||
     ""
   ).toLowerCase();
 
-  return !!(
-    errorMessage.includes("api key") ||
-    errorMessage.includes("api-key") ||
-    errorMessage.includes("invalid api key") ||
-    errorMessage.includes("missing api key")
+  // First, check if it's a JWT/token error (backend authentication)
+  // These keywords indicate JWT token issues, not API-KEY issues
+  const jwtTokenKeywords = [
+    "invalid token",
+    "invalid signature",
+    "token expired",
+    "expired token",
+    "jwt",
+    "bearer",
+    "unauthorized",
+    "access denied",
+    "token invalid",
+    "malformed token",
+  ];
+
+  const isJwtTokenError = jwtTokenKeywords.some((keyword) =>
+    errorMessage.includes(keyword)
   );
+
+  // If it's a JWT token error, it's NOT an API-KEY error
+  // (even if it has X-Krakend header from proxy mode)
+  if (isJwtTokenError) return false;
+
+  // Check if error message explicitly mentions API-KEY
+  const apiKeyKeywords = [
+    "api key",
+    "api-key",
+    "invalid api key",
+    "missing api key",
+    "api key required",
+    "unauthorized: missing api key",
+    "unauthorized: invalid api key",
+  ];
+
+  const hasApiKeyMessage = apiKeyKeywords.some((keyword) =>
+    errorMessage.includes(keyword)
+  );
+
+  // If error message mentions API-KEY, it's an API-KEY error
+  if (hasApiKeyMessage) return true;
+
+  // If no specific error message, check if it's from KrakenD
+  // (but only if it doesn't look like a token error)
+  const isKrakend = isKrakendError(error);
+  if (isKrakend && !isJwtTokenError) {
+    // When KrakenD is in proxy mode, it adds X-Krakend header to all responses
+    // So we need to be more careful - only treat as API-KEY error if:
+    // 1. It's from KrakenD AND
+    // 2. Error message is empty/generic (likely API-KEY validation failed before reaching backend)
+    // 3. OR error message explicitly mentions API key
+    return !errorMessage || hasApiKeyMessage;
+  }
+
+  return false;
 }
 
 /**
