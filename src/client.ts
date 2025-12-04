@@ -7,6 +7,7 @@ import { Verification } from "./modules/identity/verification";
 import { Analytics } from "./modules/analytics";
 import { TrustIdSDKConfig, TokenResponse } from "./types";
 import { getEnvironmentConfig } from "./config/environments";
+import { ConsoleLogger, NoOpLogger } from "./utils/logger";
 
 /**
  * Main TrustID PortalAPI SDK Client
@@ -74,19 +75,30 @@ export class TrustIdSDK {
    * @param config - SDK configuration
    */
   constructor(config: TrustIdSDKConfig) {
-    if (!config.environment) {
-      throw new Error("environment is required in SDK configuration");
-    }
 
     if (!config.apiKey) {
       throw new Error("apiKey is required in SDK configuration");
     }
 
     // Get environment configuration (hard-coded URLs)
-    const envConfig = getEnvironmentConfig(config.environment);
+    const envConfig = getEnvironmentConfig(config.environment || "prod");
 
     // Remove trailing slash from baseUrl
     this._baseUrl = envConfig.baseUrl.replace(/\/$/, "");
+
+    // Setup logger (use provided logger or default based on environment)
+    const environment = config.environment || "prod";
+    const logger =
+      config.logger ||
+      (environment === "dev"
+        ? new ConsoleLogger(true)
+        : new NoOpLogger());
+
+    // Determine if request logging should be enabled
+    const enableRequestLogging =
+      config.enableRequestLogging !== undefined
+        ? config.enableRequestLogging
+        : environment === "dev";
 
     // Create default headers with API key
     const defaultHeaders: Record<string, string> = {
@@ -102,7 +114,13 @@ export class TrustIdSDK {
     const httpClient = createHttpClient(
       this._baseUrl,
       config.timeout,
-      defaultHeaders
+      defaultHeaders,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      logger,
+      enableRequestLogging
     );
 
     // Callback to automatically set tokens after successful OTP confirmation
@@ -136,7 +154,9 @@ export class TrustIdSDK {
       getAuthToken,
       getRefreshToken,
       refreshTokenCallback,
-      onTokenRefreshed
+      onTokenRefreshed,
+      logger,
+      enableRequestLogging
     );
 
     // Initialize identity modules
@@ -152,7 +172,13 @@ export class TrustIdSDK {
     const analyticsHttpClient = createHttpClient(
       "", // Base URL is empty since we use full URL in analytics methods
       config.timeout,
-      defaultHeaders
+      defaultHeaders,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      logger,
+      enableRequestLogging
     );
     this.analytics = new Analytics(
       analyticsHttpClient,

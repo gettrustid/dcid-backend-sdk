@@ -1,14 +1,20 @@
+import { Logger } from "../utils/logger";
+
 /**
  * Configuration options for the TrustID SDK
  */
 export interface TrustIdSDKConfig {
-  environment: "dev" | "prod";
+  environment?: "dev" | "prod";
   /** API key for authentication (required for API access) */
   apiKey: string;
   /** Optional timeout for requests in milliseconds (default: 30000) */
   timeout?: number;
   /** Optional default headers to include with all requests */
   defaultHeaders?: Record<string, string>;
+  /** Optional logger instance for SDK logging (default: ConsoleLogger in dev, NoOpLogger in prod) */
+  logger?: Logger;
+  /** Enable request/response logging (default: false in prod, true in dev) */
+  enableRequestLogging?: boolean;
 }
 
 /**
@@ -407,16 +413,82 @@ export interface VerifyCallbackResponse {
 }
 
 /**
+ * Error context information for debugging
+ */
+export interface ErrorContext {
+  url?: string;
+  method?: string;
+  statusCode?: number;
+  statusText?: string;
+  responseHeaders?: any;
+  requestHeaders?: Record<string, string>;
+  timestamp: string;
+  requestId?: string;
+  isKrakendError?: boolean;
+  errorSource?: "krakend" | "backend" | "network";
+}
+
+/**
  * Custom error class for SDK errors
  */
 export class TrustIdSDKError extends Error {
   constructor(
     message: string,
     public statusCode?: number,
-    public response?: any
+    public response?: any,
+    public context?: ErrorContext
   ) {
     super(message);
     this.name = "TrustIdSDKError";
     Object.setPrototypeOf(this, TrustIdSDKError.prototype);
+  }
+}
+
+/**
+ * Network error (connectivity issues, timeouts, etc.)
+ */
+export class NetworkError extends TrustIdSDKError {
+  constructor(
+    message: string,
+    public code?: string,
+    context?: ErrorContext
+  ) {
+    super(message, 0, { code }, context);
+    this.name = "NetworkError";
+    Object.setPrototypeOf(this, NetworkError.prototype);
+  }
+}
+
+/**
+ * Authentication error (API-KEY or JWT token issues)
+ */
+export class AuthenticationError extends TrustIdSDKError {
+  constructor(
+    message: string,
+    public isApiKeyError: boolean,
+    statusCode?: number,
+    response?: any,
+    context?: ErrorContext
+  ) {
+    super(message, statusCode, response, context);
+    this.name = "AuthenticationError";
+    Object.setPrototypeOf(this, AuthenticationError.prototype);
+  }
+}
+
+/**
+ * Server error (backend or gateway errors)
+ */
+export class ServerError extends TrustIdSDKError {
+  constructor(
+    message: string,
+    public isBackendConnectivityError: boolean,
+    statusCode?: number,
+    response?: any,
+    context?: ErrorContext
+  ) {
+    super(message, statusCode, response, context);
+    this.name = "ServerError";
+    Object.setPrototypeOf(this, ServerError.prototype);
   }
 }

@@ -17,3 +17,5 @@ export { Analytics } from "./modules/analytics";
 export * from "./modules/analytics/types";
 export { ENVIRONMENTS, getEnvironmentConfig } from "./config/environments";
 export type { EnvironmentConfig } from "./config/environments";
+export { ConsoleLogger, NoOpLogger } from "./utils/logger";
+export type { Logger } from "./utils/logger";
