@@ -17,7 +17,7 @@ import {
 export class Analytics {
   constructor(
     private httpClient: AxiosInstance,
-    private sgtmProxyBaseUrl: string
+    private baseUrl: string
   ) {}
 
   /**
@@ -41,7 +41,7 @@ export class Analytics {
    */
   async startSession(params?: Partial<StartSessionEvent>): Promise<StartSessionResponse> {
     const response = await this.httpClient.post<StartSessionResponse>(
-      `${this.sgtmProxyBaseUrl}/sgtm`,
+      `${this.baseUrl}/analytics/sgtm`,
       {
         ...params,
         event: 'start_session',
@@ -64,7 +64,7 @@ export class Analytics {
     }
 
     const response = await this.httpClient.post<AnalyticsEventResponse>(
-      `${this.sgtmProxyBaseUrl}/sgtm`,
+      `${this.baseUrl}/analytics/sgtm`,
       {
         ...event,
         event: 'end_session',

@@ -167,7 +167,6 @@ export class TrustIdSDK {
       verification: new Verification(authenticatedHttpClient),
     };
 
-    // Initialize analytics module (sgtmProxyBaseUrl from environment config)
     // Analytics uses unauthenticated HTTP client (public endpoint)
     const analyticsHttpClient = createHttpClient(
       "", // Base URL is empty since we use full URL in analytics methods
@@ -182,7 +181,7 @@ export class TrustIdSDK {
     );
     this.analytics = new Analytics(
       analyticsHttpClient,
-      envConfig.sgtmProxyBaseUrl
+      this._baseUrl
     );
   }
 

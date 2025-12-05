@@ -72,10 +72,12 @@ When you import the SDK, Node.js or your bundler automatically selects the corre
 
 ```typescript
 const sdk = new TrustIdSDK({
-  baseUrl: string, // Required: API base URL
-  sgtmProxyBaseUrl?: string, // Optional: SGTM proxy URL for analytics
+  environment?: "dev" | "prod", // Optional: Environment (default: "prod")
+  apiKey: string, // Required: API key
   timeout?: number, // Optional: Request timeout (default: 30000ms)
   defaultHeaders?: Record<string, string>, // Optional: Default headers
+  logger?: Logger, // Optional: Custom logger
+  enableRequestLogging?: boolean, // Optional: Enable request logging
 });
 ```
 
@@ -132,8 +134,6 @@ sdk.setTokens(tokens);
 ```
 
 ### Analytics Methods
-
-If `sgtmProxyBaseUrl` is configured, you can use analytics methods:
 
 ```typescript
 if (sdk.analytics) {
