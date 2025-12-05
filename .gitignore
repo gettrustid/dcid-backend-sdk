@@ -5,7 +5,15 @@ yarn.lock
 
 # Build output
 dist/
+typescript/dist/
 *.tsbuildinfo
+
+# Go
+golang/vendor/
+golang/*.exe
+golang/*.test
+golang/*.out
+golang/go.sum
 
 # IDE
 .vscode/
