@@ -8,12 +8,14 @@ dist/
 typescript/dist/
 *.tsbuildinfo
 
-# Go
+# Go (see golang/.gitignore for details)
 golang/vendor/
 golang/*.exe
 golang/*.test
 golang/*.out
-golang/go.sum
+golang/test-server
+golang/test-server.exe
+# Note: go.sum SHOULD be committed (like package-lock.json)
 
 # IDE
 .vscode/
