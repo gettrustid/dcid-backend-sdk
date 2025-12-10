@@ -13,9 +13,9 @@ export interface EnvironmentConfig {
  */
 export const ENVIRONMENTS: Record<"dev" | "prod", EnvironmentConfig> = {
   dev: {
-    // baseUrl: "http://localhost:5000/api",
+    baseUrl: "http://localhost:5000/api",
     // baseUrl: "https://dev.trustid.life/api",
-    baseUrl: "http://krakend.dev-external.trustid.life/api",
+    // baseUrl: "http://krakend.dev-external.trustid.life/api",
   },
   prod: {
     baseUrl: "http://krakend.dev-external.trustid.life/api",
