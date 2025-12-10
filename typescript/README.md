@@ -209,6 +209,65 @@ await sdk.identity.ipfs.getAllUserCredentials({
 });
 ```
 
+## Test Server
+
+The TypeScript SDK includes a test server that exposes HTTP endpoints for all SDK methods.
+
+### Running the Test Server
+
+```bash
+# Navigate to test server directory
+cd test_server
+
+# Install dependencies
+npm install
+
+# Set environment variables
+export TRUSTID_API_KEY="your-api-key"
+export TRUSTID_ENVIRONMENT="dev"  # or "prod"
+export PORT="8080"  # optional
+
+# Run the server
+npm run dev
+```
+
+The server will start on `http://localhost:8080`.
+
+### Test Server Endpoints
+
+The test server provides 21 endpoints covering all SDK functionality:
+
+#### Authentication
+- `POST /api/auth/register-otp` - Register OTP
+- `POST /api/auth/confirm-otp` - Confirm OTP
+- `POST /api/auth/admin-login` - Admin login
+- `POST /api/auth/refresh-token` - Refresh token
+
+#### Identity - Encryption
+- `POST /api/identity/encryption/generate-key` - Generate encryption key
+- `POST /api/identity/encryption/get-key` - Get encrypted key
+
+#### Identity - Issuer
+- `POST /api/identity/issuer/issue-credential` - Issue credential
+- `GET /api/identity/issuer/get-credential-offer` - Get credential offer
+
+#### Identity - IPFS
+- `POST /api/identity/ipfs/store-credential` - Store credential
+- `POST /api/identity/ipfs/retrieve-user-credential` - Retrieve user credential
+- `POST /api/identity/ipfs/get-all-user-credentials` - Get all user credentials
+
+#### Identity - Verification
+- `POST /api/identity/verification/verify-sign-in` - Verify sign-in
+- `GET /api/identity/verification/link-store` - Get link store
+- `POST /api/identity/verification/link-store` - Post link store
+- `POST /api/identity/verification/callback` - Verify callback
+
+#### Analytics
+- `POST /api/analytics/start-session` - Start session
+- `POST /api/analytics/end-session` - End session
+
+See [test_server/README.md](./test_server/README.md) for complete documentation.
+
 ## Module System Support
 
 This SDK uses the **Package Exports** feature to automatically provide the correct module format:
