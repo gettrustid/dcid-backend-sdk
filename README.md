@@ -1,6 +1,6 @@
-# TrustID SDK - Multi-Language SDK Repository
+# DCID Backend SDK - Multi-Language SDK Repository
 
-This repository contains the TrustID SDK implementations for multiple programming languages.
+This repository contains the DCID Backend SDK implementations for multiple programming languages.
 
 ## 📦 Available SDKs
 
