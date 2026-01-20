@@ -1,16 +1,16 @@
 /**
- * Basic usage examples for TrustID PortalAPI SDK
+ * Basic usage examples for DCID Backend SDK
  *
  * This file demonstrates how to use the SDK for OTP authentication.
  */
 
-import { TrustIdSDK, TrustIdSDKError } from "../src";
+import { DCIDBackendSDK, DCIDBackendSDKError } from "../src";
 
 // Example 1: Basic OTP Registration and Confirmation
 async function example1_BasicOTP() {
   console.log("=== Example 1: Basic OTP Flow ===\n");
 
-  const sdk = new TrustIdSDK({
+  const sdk = new DCIDBackendSDK({
     environment: "dev", // or 'prod'
     apiKey: "your-api-key-here",
   });
@@ -50,7 +50,7 @@ async function example1_BasicOTP() {
       `   ✓ New Access Token: ${newTokens.access_token.substring(0, 20)}...`
     );
   } catch (error) {
-    if (error instanceof TrustIdSDKError) {
+    if (error instanceof DCIDBackendSDKError) {
       console.error("   ✗ SDK Error:", error.message);
       console.error("   Status:", error.statusCode);
     } else {
@@ -63,7 +63,7 @@ async function example1_BasicOTP() {
 async function example2_PhoneOTP() {
   console.log("\n\n=== Example 2: Phone-based OTP ===\n");
 
-  const sdk = new TrustIdSDK({
+  const sdk = new DCIDBackendSDK({
     environment: "dev",
     apiKey: "your-api-key-here",
   });
@@ -82,7 +82,7 @@ async function example2_PhoneOTP() {
     });
     console.log("   ✓ Authentication successful");
   } catch (error) {
-    if (error instanceof TrustIdSDKError) {
+    if (error instanceof DCIDBackendSDKError) {
       console.error("   ✗ Error:", error.message);
     } else {
       console.error("   ✗ Unexpected error:", error);
@@ -94,7 +94,7 @@ async function example2_PhoneOTP() {
 async function example3_AdminLogin() {
   console.log("\n\n=== Example 3: Admin Login (OTP Flow) ===\n");
 
-  const sdk = new TrustIdSDK({
+  const sdk = new DCIDBackendSDK({
     environment: "dev",
     apiKey: "your-api-key-here",
   });
@@ -124,7 +124,7 @@ async function example3_AdminLogin() {
       `   ✓ Refresh Token: ${tokens.refresh_token.substring(0, 20)}...`
     );
   } catch (error) {
-    if (error instanceof TrustIdSDKError) {
+    if (error instanceof DCIDBackendSDKError) {
       console.error("   ✗ Error:", error.message);
       console.error("   Status:", error.statusCode);
     } else {
@@ -137,7 +137,7 @@ async function example3_AdminLogin() {
 async function example4_ErrorHandling() {
   console.log("\n\n=== Example 4: Error Handling ===\n");
 
-  const sdk = new TrustIdSDK({
+  const sdk = new DCIDBackendSDK({
     environment: "dev",
     apiKey: "your-api-key-here",
   });
@@ -149,7 +149,7 @@ async function example4_ErrorHandling() {
       otp: "000000", // Wrong OTP
     });
   } catch (error) {
-    if (error instanceof TrustIdSDKError) {
+    if (error instanceof DCIDBackendSDKError) {
       console.log("   ✓ Caught SDK error properly");
       console.log(`   Message: ${error.message}`);
       console.log(`   Status Code: ${error.statusCode}`);
@@ -164,7 +164,7 @@ async function example4_ErrorHandling() {
 
 // Run all examples
 async function runExamples() {
-  console.log("TrustID PortalAPI SDK - Usage Examples\n");
+  console.log("DCID Backend SDK - Usage Examples\n");
   console.log("=".repeat(50) + "\n");
 
   await example1_BasicOTP();

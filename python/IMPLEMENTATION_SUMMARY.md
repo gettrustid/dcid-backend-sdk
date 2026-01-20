@@ -1,6 +1,6 @@
 # Python SDK Implementation Summary
 
-This document provides a comprehensive overview of the TrustID Python SDK implementation.
+This document provides a comprehensive overview of the DCID Backend Python SDK implementation.
 
 ## Overview
 
@@ -20,7 +20,7 @@ The implementation includes:
 
 ```
 python/
-├── trustid_sdk/                    # Main SDK package
+├── dcid_backend_sdk/                    # Main SDK package
 │   ├── __init__.py                # Package exports
 │   ├── client.py                  # Main SDK client
 │   ├── types.py                   # Type definitions
@@ -112,7 +112,7 @@ python/
 - ✅ Header sanitization for security
 
 ### 5. Error Handling
-- ✅ `TrustIdSDKError` - Base error class
+- ✅ `DCIDBackendSDKError` - Base error class
 - ✅ `NetworkError` - Network issues
 - ✅ `AuthenticationError` - Auth issues
 - ✅ `ServerError` - Server errors
@@ -146,8 +146,8 @@ A complete FastAPI-based test server has been implemented with:
 
 ### Running the Server
 ```bash
-export TRUSTID_API_KEY="your-api-key"
-export TRUSTID_ENVIRONMENT="dev"
+export DCID_API_KEY="your-api-key"
+export DCID_ENVIRONMENT="dev"
 python test_server/main.py
 ```
 
@@ -263,7 +263,7 @@ curl http://localhost:8080/api/auth/register-otp \
 
 The SDK is packaged for distribution via PyPI:
 ```bash
-pip install trustid-portalapi-sdk
+pip install dcid-backend-sdk
 ```
 
 Or install from source:

@@ -1,12 +1,12 @@
 """
-TrustID PortalAPI SDK for Python
+DCID Backend SDK for Python
 
-A Python SDK for interacting with the TrustID PortalAPI.
+A Python SDK for interacting with the DCID Backend API.
 """
 
-from .client import TrustIdSDK
+from .client import DCIDBackendSDK
 from .types import (
-    TrustIdSDKConfig,
+    DCIDBackendSDKConfig,
     InitiateOTPResponse,
     TokenResponse,
     InitiateOTPOptions,
@@ -34,7 +34,7 @@ from .types import (
     GetLinkStoreResponse,
     VerifyCallbackOptions,
     VerifyCallbackResponse,
-    TrustIdSDKError,
+    DCIDBackendSDKError,
     NetworkError,
     AuthenticationError,
     ServerError,
@@ -51,8 +51,8 @@ from .utils.logger import Logger, ConsoleLogger, NoOpLogger
 __version__ = "0.1.0"
 
 __all__ = [
-    "TrustIdSDK",
-    "TrustIdSDKConfig",
+    "DCIDBackendSDK",
+    "DCIDBackendSDKConfig",
     "InitiateOTPResponse",
     "TokenResponse",
     "InitiateOTPOptions",
@@ -80,7 +80,7 @@ __all__ = [
     "GetLinkStoreResponse",
     "VerifyCallbackOptions",
     "VerifyCallbackResponse",
-    "TrustIdSDKError",
+    "DCIDBackendSDKError",
     "NetworkError",
     "AuthenticationError",
     "ServerError",

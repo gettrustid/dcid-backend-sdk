@@ -1,4 +1,4 @@
-package trustid
+package dcid
 
 // IdentityClient provides identity management methods
 type IdentityClient struct {

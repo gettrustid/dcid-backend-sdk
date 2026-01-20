@@ -1,22 +1,22 @@
 # SDK Language Comparison
 
-This document provides a comparison of the TrustID SDK across TypeScript, Python, and Go implementations.
+This document provides a comparison of the DCID Backend SDK across TypeScript, Python, and Go implementations.
 
 ## Installation
 
 | Language   | Installation Command                        |
 |------------|---------------------------------------------|
-| TypeScript | `npm install @trustid/portalapi-sdk`        |
-| Python     | `pip install trustid-portalapi-sdk`         |
-| Go         | `go get github.com/gettrustid/trustid-sdk`  |
+| TypeScript | `npm install @dcid/backend-sdk`        |
+| Python     | `pip install dcid-backend-sdk`         |
+| Go         | `go get github.com/getdcid/dcid-backend-sdk`  |
 
 ## Initialization
 
 ### TypeScript
 ```typescript
-import { TrustIdSDK } from '@trustid/portalapi-sdk';
+import { DCIDBackendSDK } from '@dcid/backend-sdk';
 
-const sdk = new TrustIdSDK({
+const sdk = new DCIDBackendSDK({
   apiKey: 'your-api-key',
   environment: 'prod'
 });
@@ -24,9 +24,9 @@ const sdk = new TrustIdSDK({
 
 ### Python
 ```python
-from trustid_sdk import TrustIdSDK
+from dcid_backend_sdk import DCIDBackendSDK
 
-sdk = TrustIdSDK(
+sdk = DCIDBackendSDK(
     api_key='your-api-key',
     environment='prod'
 )
@@ -34,11 +34,11 @@ sdk = TrustIdSDK(
 
 ### Go
 ```go
-import "github.com/gettrustid/trustid-sdk/golang/pkg/trustid"
+import "github.com/getdcid/dcid-backend-sdk/golang/pkg/trustid"
 
-sdk, err := trustid.NewClient(trustid.Config{
+sdk, err := dcid.NewClient(dcid.Config{
     APIKey:      "your-api-key",
-    Environment: trustid.EnvironmentProd,
+    Environment: dcid.EnvironmentProd,
 })
 ```
 
@@ -58,7 +58,7 @@ const tokens = await sdk.auth.confirmOTP({
 
 ### Python
 ```python
-from trustid_sdk import InitiateOTPOptions, ConfirmOTPOptions
+from dcid_backend_sdk import InitiateOTPOptions, ConfirmOTPOptions
 
 # Register OTP
 sdk.auth.register_otp(InitiateOTPOptions(email='user@example.com'))
@@ -72,12 +72,12 @@ tokens = sdk.auth.confirm_otp(
 ### Go
 ```go
 // Register OTP
-result, err := sdk.Auth.RegisterOTP(trustid.RegisterOTPOptions{
+result, err := sdk.Auth.RegisterOTP(dcid.RegisterOTPOptions{
     Email: "user@example.com",
 })
 
 // Confirm OTP
-tokens, err := sdk.Auth.ConfirmOTP(trustid.ConfirmOTPOptions{
+tokens, err := sdk.Auth.ConfirmOTP(dcid.ConfirmOTPOptions{
     Email: "user@example.com",
     OTP:   "123456",
 })
@@ -95,7 +95,7 @@ await sdk.identity.encryption.generateKey({
 
 ### Python
 ```python
-from trustid_sdk import GenerateEncryptionKeyOptions
+from dcid_backend_sdk import GenerateEncryptionKeyOptions
 
 sdk.identity.encryption.generate_key(
     GenerateEncryptionKeyOptions(
@@ -107,7 +107,7 @@ sdk.identity.encryption.generate_key(
 
 ### Go
 ```go
-result, err := sdk.Identity.Encryption.GenerateKey(trustid.GenerateEncryptionKeyOptions{
+result, err := sdk.Identity.Encryption.GenerateKey(dcid.GenerateEncryptionKeyOptions{
     DID:        "did:iden3:trustid:main:...",
     OwnerEmail: "user@example.com",
 })
@@ -127,7 +127,7 @@ await sdk.identity.issuer.issueCredential({
 
 ### Python
 ```python
-from trustid_sdk import IssueCredentialOptions
+from dcid_backend_sdk import IssueCredentialOptions
 
 sdk.identity.issuer.issue_credential(
     IssueCredentialOptions(
@@ -141,7 +141,7 @@ sdk.identity.issuer.issue_credential(
 
 ### Go
 ```go
-result, err := sdk.Identity.Issuer.IssueCredential(trustid.IssueCredentialOptions{
+result, err := sdk.Identity.Issuer.IssueCredential(dcid.IssueCredentialOptions{
     DID:            "did:iden3:trust-id:main:...",
     CredentialName: "KYCAgeCredential",
     Values: map[string]interface{}{
@@ -164,7 +164,7 @@ await sdk.analytics.startSession({
 
 ### Python
 ```python
-from trustid_sdk.modules.analytics.types import StartSessionEvent
+from dcid_backend_sdk.modules.analytics.types import StartSessionEvent
 
 sdk.analytics.start_session(
     StartSessionEvent(
@@ -176,7 +176,7 @@ sdk.analytics.start_session(
 
 ### Go
 ```go
-result, err := sdk.Analytics.StartSession(&trustid.StartSessionOptions{
+result, err := sdk.Analytics.StartSession(&dcid.StartSessionOptions{
     UserID:       "user123",
     PageLocation: "https://example.com",
 })
@@ -217,16 +217,16 @@ npm run dev
 ### Python
 ```bash
 cd python
-export TRUSTID_API_KEY="your-api-key"
-export TRUSTID_ENVIRONMENT="dev"
+export DCID_API_KEY="your-api-key"
+export DCID_ENVIRONMENT="dev"
 python test_server/main.py
 ```
 
 ### Go
 ```bash
 cd golang
-export TRUSTID_API_KEY="your-api-key"
-export TRUSTID_ENVIRONMENT="dev"
+export DCID_API_KEY="your-api-key"
+export DCID_ENVIRONMENT="dev"
 go run cmd/test-server/main.go
 ```
 
@@ -265,7 +265,7 @@ All servers run on port 8080 by default.
 
 All three implementations provide similar error types:
 
-- `TrustIdSDKError` / `SDKError`: Base error class
+- `DCIDBackendSDKError` / `SDKError`: Base error class
 - `NetworkError`: Network connectivity issues
 - `AuthenticationError`: API-KEY or JWT token issues
 - `ServerError`: Backend or gateway errors

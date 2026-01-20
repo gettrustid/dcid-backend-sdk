@@ -1,4 +1,4 @@
-package trustid
+package dcid
 
 // InitiateOTPResponse is the response from OTP initiation
 type InitiateOTPResponse struct {

@@ -1,4 +1,4 @@
-package trustid
+package dcid
 
 import (
 	"os"
@@ -38,7 +38,7 @@ type EnvironmentConfig struct {
 // getEnvironmentConfig returns the configuration for the given environment
 func getEnvironmentConfig(env Environment) EnvironmentConfig {
 	// Check for environment variable override (useful for Docker)
-	baseURL := os.Getenv("TRUSTID_BASE_URL")
+	baseURL := os.Getenv("DCID_BASE_URL")
 	if baseURL != "" {
 		return EnvironmentConfig{BaseURL: baseURL}
 	}

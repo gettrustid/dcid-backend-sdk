@@ -1,6 +1,6 @@
-# TrustID SDK Test Server
+# DCID Backend SDK Test Server
 
-A FastAPI-based test server that exposes HTTP endpoints for all TrustID SDK methods.
+A FastAPI-based test server that exposes HTTP endpoints for all DCID Backend SDK methods.
 
 ## Features
 
@@ -24,16 +24,16 @@ pip install -r requirements-server.txt
 Set the required environment variables:
 
 ```bash
-export TRUSTID_API_KEY="your-api-key"
-export TRUSTID_ENVIRONMENT="dev"  # or "prod"
+export DCID_API_KEY="your-api-key"
+export DCID_ENVIRONMENT="dev"  # or "prod"
 export PORT="8080"  # optional
 ```
 
 Or create a `.env` file:
 
 ```
-TRUSTID_API_KEY=your-api-key
-TRUSTID_ENVIRONMENT=dev
+DCID_API_KEY=your-api-key
+DCID_ENVIRONMENT=dev
 PORT=8080
 ```
 
@@ -89,7 +89,7 @@ curl -X POST http://localhost:8080/api/auth/confirm-otp \
 curl -X POST http://localhost:8080/api/identity/encryption/generate-key \
   -H "Content-Type: application/json" \
   -d '{
-    "did": "did:iden3:trustid:main:...",
+    "did": "did:iden3:dcid:main:...",
     "ownerEmail": "user@example.com"
   }'
 ```

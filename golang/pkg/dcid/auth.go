@@ -1,10 +1,10 @@
-package trustid
+package dcid
 
 import (
 	"fmt"
 	"time"
 
-	httpclient "github.com/gettrustid/trustid-sdk/golang/internal/http"
+	httpclient "github.com/getdcid/dcid-backend-sdk/golang/internal/http"
 )
 
 // AuthClient provides authentication methods
@@ -23,7 +23,7 @@ type AuthClient struct {
 //
 // Example:
 //
-//	result, err := client.Auth.RegisterOTP(trustid.RegisterOTPOptions{
+//	result, err := client.Auth.RegisterOTP(dcid.RegisterOTPOptions{
 //		Email: stringPtr("user@example.com"),
 //	})
 func (a *AuthClient) RegisterOTP(options RegisterOTPOptions) (*InitiateOTPResponse, error) {
@@ -48,7 +48,7 @@ func (a *AuthClient) RegisterOTP(options RegisterOTPOptions) (*InitiateOTPRespon
 //
 // Example:
 //
-//	tokens, err := client.Auth.ConfirmOTP(trustid.ConfirmOTPOptions{
+//	tokens, err := client.Auth.ConfirmOTP(dcid.ConfirmOTPOptions{
 //		Email: stringPtr("user@example.com"),
 //		OTP:   "123456",
 //	})
@@ -78,7 +78,7 @@ func (a *AuthClient) ConfirmOTP(options ConfirmOTPOptions) (*TokenResponse, erro
 //
 // Example:
 //
-//	result, err := client.Auth.AdminLogin(trustid.RegisterOTPOptions{
+//	result, err := client.Auth.AdminLogin(dcid.RegisterOTPOptions{
 //		Email: stringPtr("admin@example.com"),
 //	})
 func (a *AuthClient) AdminLogin(options RegisterOTPOptions) (*InitiateOTPResponse, error) {
@@ -100,7 +100,7 @@ func (a *AuthClient) AdminLogin(options RegisterOTPOptions) (*InitiateOTPRespons
 //
 // Example:
 //
-//	tokens, err := client.Auth.RefreshToken(trustid.RefreshTokenOptions{
+//	tokens, err := client.Auth.RefreshToken(dcid.RefreshTokenOptions{
 //		RefreshToken: "your-refresh-token",
 //	})
 func (a *AuthClient) RefreshToken(options RefreshTokenOptions) (*TokenResponse, error) {

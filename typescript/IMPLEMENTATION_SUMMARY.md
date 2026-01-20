@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-A complete TypeScript SDK for the TrustID PortalAPI that provides easy-to-use methods for OTP authentication. The SDK covers the 4 endpoints your team leader specified:
+A complete TypeScript SDK for the DCID Backend API that provides easy-to-use methods for OTP authentication. The SDK covers the 4 endpoints your team leader specified:
 
 ### Methods Implemented
 
@@ -28,7 +28,7 @@ A complete TypeScript SDK for the TrustID PortalAPI that provides easy-to-use me
 ## Project Structure
 
 ```
-trustid-sdk/
+dcid-backend-sdk/
 ├── src/
 │   ├── index.ts              # Main exports
 │   ├── client.ts             # Main SDK class
@@ -62,7 +62,7 @@ trustid-sdk/
 ### 1. Install Dependencies
 
 ```bash
-cd trustid-sdk
+cd dcid-backend-sdk
 npm install
 ```
 
@@ -77,9 +77,9 @@ This compiles TypeScript to JavaScript in the `dist/` folder.
 ### 3. Use in Your Project
 
 ```typescript
-import { TrustIdSDK } from './dist';
+import { DCIDBackendSDK } from './dist';
 
-const sdk = new TrustIdSDK({
+const sdk = new DCIDBackendSDK({
   baseUrl: 'http://localhost:4000/api'
 });
 

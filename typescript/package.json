@@ -1,7 +1,7 @@
 {
-  "name": "@trustid/portalapi-sdk",
+  "name": "@dcid/backend-sdk",
   "version": "0.1.0",
-  "description": "SDK for TrustID PortalAPI - Authentication and OTP methods",
+  "description": "DCID Backend SDK - Authentication and OTP methods",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/cjs/index.d.ts",
@@ -20,7 +20,7 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": [
-    "trustid",
+    "dcid",
     "sdk",
     "authentication",
     "otp"

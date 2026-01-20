@@ -35,13 +35,13 @@ class ConsoleLogger(Logger):
 
     def __init__(self, enabled: bool = True):
         self.enabled = enabled
-        self.logger = logging.getLogger("TrustID SDK")
+        self.logger = logging.getLogger("DCID SDK")
         self.logger.setLevel(logging.DEBUG)
 
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
-                "[TrustID SDK] %(levelname)s - %(message)s"
+                "[DCID SDK] %(levelname)s - %(message)s"
             )
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)

@@ -1,9 +1,9 @@
-package trustid
+package dcid
 
 import (
 	"time"
 
-	httpclient "github.com/gettrustid/trustid-sdk/golang/internal/http"
+	httpclient "github.com/getdcid/dcid-backend-sdk/golang/internal/http"
 )
 
 // AnalyticsClient provides analytics tracking methods

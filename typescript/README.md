@@ -1,15 +1,15 @@
-# TrustID PortalAPI SDK
+# DCID Backend SDK
 
-A TypeScript/JavaScript SDK for interacting with the TrustID PortalAPI. This SDK provides a simple, type-safe interface for authentication and OTP operations.
+A TypeScript/JavaScript SDK for interacting with the DCID Backend API. This SDK provides a simple, type-safe interface for authentication and OTP operations.
 
 ## Installation
 
 ```bash
-npm install @trustid/portalapi-sdk
+npm install @dcid/backend-sdk
 # or
-yarn add @trustid/portalapi-sdk
+yarn add @dcid/backend-sdk
 # or
-pnpm add @trustid/portalapi-sdk
+pnpm add @dcid/backend-sdk
 ```
 
 ## Quick Start
@@ -17,11 +17,11 @@ pnpm add @trustid/portalapi-sdk
 ### ES Modules (Modern JavaScript/TypeScript)
 
 ```typescript
-import { TrustIdSDK } from "@trustid/portalapi-sdk";
+import { DCIDBackendSDK } from "@dcid/backend-sdk";
 
 // Initialize the SDK
-const sdk = new TrustIdSDK({
-  baseUrl: "https://api.trustid.com", // or 'http://localhost:4000' for local dev
+const sdk = new DCIDBackendSDK({
+  baseUrl: "https://api.dcid.com", // or 'http://localhost:4000' for local dev
 });
 
 // Register/Sign-in with OTP
@@ -40,11 +40,11 @@ console.log("Refresh Token:", tokens.refresh_token);
 ### CommonJS (Node.js)
 
 ```javascript
-const { TrustIdSDK } = require("@trustid/portalapi-sdk");
+const { DCIDBackendSDK } = require("@dcid/backend-sdk");
 
 // Initialize the SDK
-const sdk = new TrustIdSDK({
-  baseUrl: "https://api.trustid.com",
+const sdk = new DCIDBackendSDK({
+  baseUrl: "https://api.dcid.com",
 });
 
 // Use the SDK the same way...
@@ -57,7 +57,7 @@ await sdk.auth.registerOTP({ email: "user@example.com" });
 
 ```typescript
 // Works in both ES modules AND CommonJS projects
-import { TrustIdSDK } from "@trustid/portalapi-sdk";
+import { DCIDBackendSDK } from "@dcid/backend-sdk";
 ```
 
 The SDK is built as a **dual package** that supports both:
@@ -71,7 +71,7 @@ When you import the SDK, Node.js or your bundler automatically selects the corre
 ### Initialization
 
 ```typescript
-const sdk = new TrustIdSDK({
+const sdk = new DCIDBackendSDK({
   environment?: "dev" | "prod", // Optional: Environment (default: "prod")
   apiKey: string, // Required: API key
   timeout?: number, // Optional: Request timeout (default: 30000ms)
@@ -157,13 +157,13 @@ if (sdk.analytics) {
 ```typescript
 // Generate encryption key (will auto-refresh token if expired)
 await sdk.identity.encryption.generateKey({
-  did: "did:iden3:trustid:main:...",
+  did: "did:iden3:dcid:main:...",
   ownerEmail: "user@example.com",
 });
 
 // Get encrypted key
 await sdk.identity.encryption.getKey({
-  did: "did:iden3:trustid:main:...",
+  did: "did:iden3:dcid:main:...",
 });
 ```
 
@@ -172,7 +172,7 @@ await sdk.identity.encryption.getKey({
 ```typescript
 // Issue a credential
 await sdk.identity.issuer.issueCredential({
-  did: "did:iden3:trust-id:main:...",
+  did: "did:iden3:dcid:main:...",
   credentialName: "KYCAgeCredential",
   values: { birthday: 25, documentType: 2 },
 });
@@ -189,7 +189,7 @@ await sdk.identity.issuer.getCredentialOffer({
 ```typescript
 // Store credential to IPFS
 await sdk.identity.ipfs.storeCredential({
-  did: "did:iden3:trust-id:main:...",
+  did: "did:iden3:dcid:main:...",
   credentialType: "KYCAgeCredential",
   credential: "U2FsdGVkX1+vupppZksvRf...",
   encrypted: true,
@@ -197,14 +197,14 @@ await sdk.identity.ipfs.storeCredential({
 
 // Retrieve user credential
 await sdk.identity.ipfs.retrieveUserCredential({
-  did: "did:iden3:trust-id:main:...",
+  did: "did:iden3:dcid:main:...",
   credentialType: "KYCAgeCredential",
   includeCidOnly: false,
 });
 
 // Get all user credentials
 await sdk.identity.ipfs.getAllUserCredentials({
-  did: "did:iden3:trust-id:main:...",
+  did: "did:iden3:dcid:main:...",
   includeCredentialData: false,
 });
 ```
@@ -223,8 +223,8 @@ cd test_server
 npm install
 
 # Set environment variables
-export TRUSTID_API_KEY="your-api-key"
-export TRUSTID_ENVIRONMENT="dev"  # or "prod"
+export DCID_API_KEY="your-api-key"
+export DCID_ENVIRONMENT="dev"  # or "prod"
 export PORT="8080"  # optional
 
 # Run the server

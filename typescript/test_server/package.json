@@ -1,7 +1,7 @@
 {
-  "name": "@trustid/test-server",
+  "name": "@dcid/test-server",
   "version": "0.1.0",
-  "description": "Express test server for TrustID TypeScript SDK",
+  "description": "Express test server for DCID Backend TypeScript SDK",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -10,12 +10,12 @@
     "watch": "tsc --watch"
   },
   "keywords": [
-    "trustid",
+    "dcid",
     "sdk",
     "test-server",
     "express"
   ],
-  "author": "TrustID",
+  "author": "DCID",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",

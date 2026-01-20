@@ -1,10 +1,10 @@
-"""HTTP client utilities for TrustID SDK"""
+"""HTTP client utilities for DCID Backend SDK"""
 
 import requests
 from typing import Optional, Dict, Any, Callable
 from datetime import datetime
 from ..types import (
-    TrustIdSDKError,
+    DCIDBackendSDKError,
     NetworkError,
     AuthenticationError,
     ServerError,
@@ -272,7 +272,7 @@ class HTTPClient:
             self.logger.error("Server error", {"error": message, "context": context})
             raise error
         else:
-            error = TrustIdSDKError(message, response.status_code, response_data, context)
+            error = DCIDBackendSDKError(message, response.status_code, response_data, context)
             self.logger.error("API request failed", {"error": message, "context": context})
             raise error
 

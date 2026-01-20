@@ -1,11 +1,11 @@
-# TrustID PortalAPI SDK - Python
+# DCID Backend SDK - Python
 
-A Python SDK for interacting with the TrustID PortalAPI. This SDK provides a simple, type-safe interface for authentication and identity operations.
+A Python SDK for interacting with the DCID Backend API. This SDK provides a simple, type-safe interface for authentication and identity operations.
 
 ## Installation
 
 ```bash
-pip install trustid-portalapi-sdk
+pip install dcid-backend-sdk
 ```
 
 Or install from source:
@@ -18,10 +18,10 @@ pip install -e .
 ## Quick Start
 
 ```python
-from trustid_sdk import TrustIdSDK, InitiateOTPOptions, ConfirmOTPOptions
+from dcid_backend_sdk import DCIDBackendSDK, InitiateOTPOptions, ConfirmOTPOptions
 
 # Initialize the SDK
-sdk = TrustIdSDK(
+sdk = DCIDBackendSDK(
     api_key="your-api-key-here",
     environment="prod"  # or 'dev'
 )
@@ -46,9 +46,9 @@ print(f"Refresh Token: {tokens.refresh_token}")
 ### Initialization
 
 ```python
-from trustid_sdk import TrustIdSDK
+from dcid_backend_sdk import DCIDBackendSDK
 
-sdk = TrustIdSDK(
+sdk = DCIDBackendSDK(
     api_key="your-api-key-here",  # Required: API key
     environment="prod",  # Optional: Environment (default: "prod")
     timeout=30000,  # Optional: Request timeout in ms (default: 30000)
@@ -74,7 +74,7 @@ Initiates OTP registration/sign-in process. Covers `POST /auth/sign-in/initiate`
 **Example:**
 
 ```python
-from trustid_sdk import InitiateOTPOptions
+from dcid_backend_sdk import InitiateOTPOptions
 
 # With email
 result = sdk.auth.register_otp(InitiateOTPOptions(email="user@example.com"))
@@ -99,7 +99,7 @@ Confirms OTP and completes registration/sign-in. Covers `POST /auth/sign-in/conf
 **Example:**
 
 ```python
-from trustid_sdk import ConfirmOTPOptions
+from dcid_backend_sdk import ConfirmOTPOptions
 
 tokens = sdk.auth.confirm_otp(
     ConfirmOTPOptions(
@@ -124,7 +124,7 @@ Refreshes the access token using refresh token. Covers `POST /auth/refresh-token
 **Example:**
 
 ```python
-from trustid_sdk import RefreshTokenOptions
+from dcid_backend_sdk import RefreshTokenOptions
 
 new_tokens = sdk.auth.refresh_token(
     RefreshTokenOptions(refresh_token="your-refresh-token")
@@ -136,31 +136,31 @@ new_tokens = sdk.auth.refresh_token(
 #### Encryption
 
 ```python
-from trustid_sdk import GenerateEncryptionKeyOptions, GetEncryptedKeyOptions
+from dcid_backend_sdk import GenerateEncryptionKeyOptions, GetEncryptedKeyOptions
 
 # Generate encryption key (will auto-refresh token if expired)
 result = sdk.identity.encryption.generate_key(
     GenerateEncryptionKeyOptions(
-        did="did:iden3:trustid:main:...",
+        did="did:iden3:dcid:main:...",
         owner_email="user@example.com"
     )
 )
 
 # Get encrypted key
 result = sdk.identity.encryption.get_key(
-    GetEncryptedKeyOptions(did="did:iden3:trustid:main:...")
+    GetEncryptedKeyOptions(did="did:iden3:dcid:main:...")
 )
 ```
 
 #### Issuer
 
 ```python
-from trustid_sdk import IssueCredentialOptions, GetCredentialOfferOptions
+from dcid_backend_sdk import IssueCredentialOptions, GetCredentialOfferOptions
 
 # Issue a credential
 result = sdk.identity.issuer.issue_credential(
     IssueCredentialOptions(
-        did="did:iden3:trust-id:main:...",
+        did="did:iden3:dcid:main:...",
         credential_name="KYCAgeCredential",
         values={"birthday": 25, "documentType": 2},
         owner_email="user@example.com"
@@ -179,7 +179,7 @@ result = sdk.identity.issuer.get_credential_offer(
 #### IPFS
 
 ```python
-from trustid_sdk import (
+from dcid_backend_sdk import (
     StoreCredentialOptions,
     RetrieveUserCredentialOptions,
     GetAllUserCredentialsOptions
@@ -188,7 +188,7 @@ from trustid_sdk import (
 # Store credential to IPFS
 result = sdk.identity.ipfs.store_credential(
     StoreCredentialOptions(
-        did="did:iden3:trust-id:main:...",
+        did="did:iden3:dcid:main:...",
         credential_type="KYCAgeCredential",
         credential="U2FsdGVkX1+vupppZksvRf...",
         encrypted=True
@@ -198,7 +198,7 @@ result = sdk.identity.ipfs.store_credential(
 # Retrieve user credential
 result = sdk.identity.ipfs.retrieve_user_credential(
     RetrieveUserCredentialOptions(
-        did="did:iden3:trust-id:main:...",
+        did="did:iden3:dcid:main:...",
         credential_type="KYCAgeCredential",
         include_cid_only=False
     )
@@ -207,7 +207,7 @@ result = sdk.identity.ipfs.retrieve_user_credential(
 # Get all user credentials
 result = sdk.identity.ipfs.get_all_user_credentials(
     GetAllUserCredentialsOptions(
-        did="did:iden3:trust-id:main:...",
+        did="did:iden3:dcid:main:...",
         include_credential_data=False
     )
 )
@@ -216,7 +216,7 @@ result = sdk.identity.ipfs.get_all_user_credentials(
 #### Verification
 
 ```python
-from trustid_sdk import (
+from dcid_backend_sdk import (
     VerifySignInOptions,
     GetLinkStoreOptions,
     VerifyCallbackOptions
@@ -244,7 +244,7 @@ result = sdk.identity.verification.verify_callback(
 ### Analytics Methods
 
 ```python
-from trustid_sdk.modules.analytics.types import StartSessionEvent, EndSessionEvent
+from dcid_backend_sdk.modules.analytics.types import StartSessionEvent, EndSessionEvent
 
 # Start a session
 result = sdk.analytics.start_session(
@@ -274,8 +274,8 @@ The Python SDK includes a test server that exposes HTTP endpoints for all SDK me
 pip install -r requirements-server.txt
 
 # Set environment variables
-export TRUSTID_API_KEY="your-api-key"
-export TRUSTID_ENVIRONMENT="dev"  # or "prod"
+export DCID_API_KEY="your-api-key"
+export DCID_ENVIRONMENT="dev"  # or "prod"
 export PORT="8080"  # optional, defaults to 8080
 
 # Run the server
@@ -347,13 +347,13 @@ curl -X POST http://localhost:8080/api/analytics/start-session \
 
 The SDK uses custom exception classes for different error types:
 
-- `TrustIdSDKError`: Base error class
+- `DCIDBackendSDKError`: Base error class
 - `NetworkError`: Network connectivity issues
 - `AuthenticationError`: API-KEY or JWT token issues
 - `ServerError`: Backend or gateway errors
 
 ```python
-from trustid_sdk import TrustIdSDKError, NetworkError, AuthenticationError, ServerError
+from dcid_backend_sdk import DCIDBackendSDKError, NetworkError, AuthenticationError, ServerError
 
 try:
     result = sdk.auth.register_otp(InitiateOTPOptions(email="user@example.com"))
@@ -364,7 +364,7 @@ except NetworkError as e:
     print(f"Network error: {e}")
 except ServerError as e:
     print(f"Server error: {e}")
-except TrustIdSDKError as e:
+except DCIDBackendSDKError as e:
     print(f"SDK error: {e}")
 ```
 

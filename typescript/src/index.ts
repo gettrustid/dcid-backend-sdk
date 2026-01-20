@@ -1,12 +1,12 @@
 /**
- * TrustID PortalAPI SDK
+ * DCID Backend SDK
  *
- * A TypeScript/JavaScript SDK for interacting with the TrustID PortalAPI.
+ * A TypeScript/JavaScript SDK for interacting with the DCID Backend API.
  *
  * @packageDocumentation
  */
 
-export { TrustIdSDK } from "./client";
+export { DCIDBackendSDK } from "./client";
 export * from "./types";
 export { AuthOTP } from "./modules/auth/otp";
 export { KeyManager } from "./modules/identity/encryption";

@@ -1,4 +1,4 @@
-"""Test server for TrustID Python SDK"""
+"""Test server for DCID Backend Python SDK"""
 
 import os
 import sys
@@ -8,11 +8,11 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 import uvicorn
 
-# Add parent directory to path to import trustid_sdk
+# Add parent directory to path to import dcid_backend_sdk
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from trustid_sdk import (
-    TrustIdSDK,
+from dcid_backend_sdk import (
+    DCIDBackendSDK,
     InitiateOTPOptions,
     ConfirmOTPOptions,
     RefreshTokenOptions,
@@ -27,22 +27,22 @@ from trustid_sdk import (
     PostLinkStoreOptions,
     GetLinkStoreOptions,
     VerifyCallbackOptions,
-    TrustIdSDKError,
+    DCIDBackendSDKError,
     NetworkError,
     AuthenticationError,
     ServerError,
 )
-from trustid_sdk.modules.analytics.types import StartSessionEvent, EndSessionEvent
+from dcid_backend_sdk.modules.analytics.types import StartSessionEvent, EndSessionEvent
 
-app = FastAPI(title="TrustID SDK Test Server", version="0.1.0")
+app = FastAPI(title="DCID Backend SDK Test Server", version="0.1.0")
 
 # Initialize SDK
-api_key = os.getenv("TRUSTID_API_KEY")
+api_key = os.getenv("DCID_API_KEY")
 if not api_key:
-    raise RuntimeError("TRUSTID_API_KEY environment variable is required")
+    raise RuntimeError("DCID_API_KEY environment variable is required")
 
-environment = os.getenv("TRUSTID_ENVIRONMENT", "dev")
-sdk = TrustIdSDK(api_key=api_key, environment=environment)
+environment = os.getenv("DCID_ENVIRONMENT", "dev")
+sdk = DCIDBackendSDK(api_key=api_key, environment=environment)
 
 
 # Pydantic models for request bodies
@@ -156,7 +156,7 @@ def handle_sdk_error(error: Exception):
             status_code=error.status_code or status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"error": str(error), "type": "ServerError"},
         )
-    elif isinstance(error, TrustIdSDKError):
+    elif isinstance(error, DCIDBackendSDKError):
         return JSONResponse(
             status_code=error.status_code or status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"error": str(error), "type": "SDKError"},
@@ -171,7 +171,7 @@ def handle_sdk_error(error: Exception):
 @app.get("/health")
 def health():
     """Health check endpoint"""
-    return {"status": "ok", "service": "trustid-sdk-test-server"}
+    return {"status": "ok", "service": "dcid-backend-sdk-test-server"}
 
 
 @app.post("/api/auth/register-otp")

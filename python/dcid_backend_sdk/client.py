@@ -1,7 +1,7 @@
-"""Main TrustID PortalAPI SDK Client"""
+"""Main DCID Backend SDK Client"""
 
 from typing import Optional
-from .types import TrustIdSDKConfig, TokenResponse
+from .types import DCIDBackendSDKConfig, TokenResponse
 from .config.environments import get_environment_config
 from .utils.logger import ConsoleLogger, NoOpLogger
 from .utils.http import create_http_client
@@ -29,17 +29,17 @@ class Identity:
         self.verification = verification
 
 
-class TrustIdSDK:
+class DCIDBackendSDK:
     """
-    Main TrustID PortalAPI SDK Client
+    Main DCID Backend SDK Client
 
     This is the main entry point for using the SDK.
 
     Example:
         ```python
-        from trustid_sdk import TrustIdSDK
+        from dcid_backend_sdk import DCIDBackendSDK
 
-        sdk = TrustIdSDK(
+        sdk = DCIDBackendSDK(
             api_key='your-api-key-here',
             environment='prod'  # or 'dev'
         )
@@ -55,15 +55,15 @@ class TrustIdSDK:
 
         # Generate encryption key (will auto-refresh token if expired)
         await sdk.identity.encryption.generate_key(
-            did='did:iden3:trustid:main:...',
+            did='did:iden3:dcid:main:...',
             owner_email='user@example.com'
         )
         ```
     """
 
-    def __init__(self, config: Optional[TrustIdSDKConfig] = None, **kwargs):
+    def __init__(self, config: Optional[DCIDBackendSDKConfig] = None, **kwargs):
         """
-        Creates a new TrustID SDK instance
+        Creates a new DCID Backend SDK instance
 
         Args:
             config: SDK configuration (can also pass as kwargs)
@@ -71,7 +71,7 @@ class TrustIdSDK:
         """
         # Support both config object and kwargs
         if config is None:
-            config = TrustIdSDKConfig(**kwargs)
+            config = DCIDBackendSDKConfig(**kwargs)
         elif kwargs:
             # Merge kwargs into config
             for key, value in kwargs.items():

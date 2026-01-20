@@ -1,13 +1,13 @@
-# TrustID SDK Test Server
+# DCID Backend SDK Test Server
 
-A Go HTTP server for testing the TrustID Go SDK. This server provides REST endpoints that use the SDK to interact with the TrustID API.
+A Go HTTP server for testing the DCID Backend Go SDK. This server provides REST endpoints that use the SDK to interact with the DCID Backend API.
 
 ## Quick Start with Docker Desktop
 
 ### Prerequisites
 
 - Docker Desktop installed and running on Windows
-- TrustID API key
+- DCID Backend API key
 
 ### Steps
 
@@ -16,9 +16,9 @@ A Go HTTP server for testing the TrustID Go SDK. This server provides REST endpo
    Create a `.env` file in the `golang/` directory (or copy from `env.example`):
 
    ```env
-   TRUSTID_API_KEY=your-api-key-here
-   TRUSTID_ENVIRONMENT=dev
-   TRUSTID_BASE_URL=http://host.docker.internal:5000/api
+   DCID_API_KEY=your-api-key-here
+   DCID_ENVIRONMENT=dev
+   DCID_BASE_URL=http://host.docker.internal:5000/api
    PORT=8080
    ```
 
@@ -132,8 +132,8 @@ Content-Type: application/json
 cd golang
 
 # Set environment variables
-export TRUSTID_API_KEY=your-api-key-here
-export TRUSTID_ENVIRONMENT=dev
+export DCID_API_KEY=your-api-key-here
+export DCID_ENVIRONMENT=dev
 export PORT=8080
 
 # Run the server
@@ -144,11 +144,11 @@ go run ./cmd/test-server
 
 ```bash
 cd golang
-docker build -t trustid-sdk-test-server .
+docker build -t dcid-sdk-test-server .
 docker run -p 8080:8080 \
-  -e TRUSTID_API_KEY=your-api-key-here \
-  -e TRUSTID_ENVIRONMENT=dev \
-  trustid-sdk-test-server
+  -e DCID_API_KEY=your-api-key-here \
+  -e DCID_ENVIRONMENT=dev \
+  dcid-sdk-test-server
 ```
 
 ## Connecting to KrakenD Container
@@ -181,9 +181,9 @@ If KrakenD is on a specific Docker network, connect the test server to that netw
        external: true  # Use existing network
    ```
 
-3. **Update TRUSTID_BASE_URL** to use KrakenD's container name:
+3. **Update DCID_BASE_URL** to use KrakenD's container name:
    ```env
-   TRUSTID_BASE_URL=http://krakend-container-name:5000/api
+   DCID_BASE_URL=http://krakend-container-name:5000/api
    ```
 
 ## Stopping the Server

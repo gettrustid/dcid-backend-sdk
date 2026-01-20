@@ -8,36 +8,36 @@ import (
 	"os"
 	"time"
 
-	"github.com/gettrustid/trustid-sdk/golang/pkg/trustid"
+	"github.com/getdcid/dcid-backend-sdk/golang/pkg/dcid"
 )
 
 type Server struct {
-	sdk *trustid.Client
+	sdk *dcid.Client
 }
 
 func main() {
 	// Get configuration from environment variables
-	apiKey := os.Getenv("TRUSTID_API_KEY")
+	apiKey := os.Getenv("DCID_API_KEY")
 	if apiKey == "" {
-		log.Fatal("TRUSTID_API_KEY environment variable is required")
+		log.Fatal("DCID_API_KEY environment variable is required")
 	}
 
-	environment := os.Getenv("TRUSTID_ENVIRONMENT")
+	environment := os.Getenv("DCID_ENVIRONMENT")
 	if environment == "" {
 		environment = "dev"
 	}
 
-	env := trustid.EnvironmentDev
+	env := dcid.EnvironmentDev
 	if environment == "prod" {
-		env = trustid.EnvironmentProd
+		env = dcid.EnvironmentProd
 	}
 
 	// Initialize SDK
-	sdk, err := trustid.NewClient(trustid.Config{
+	sdk, err := dcid.NewClient(dcid.Config{
 		Environment: env,
 		APIKey:      apiKey,
 		Timeout:     30 * time.Second,
-		Logger:      trustid.NewConsoleLogger(true),
+		Logger:      dcid.NewConsoleLogger(true),
 	})
 	if err != nil {
 		log.Fatalf("Failed to initialize SDK: %v", err)
@@ -67,7 +67,7 @@ func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{
 		"status": "ok",
-		"service": "trustid-sdk-test-server",
+		"service": "dcid-backend-sdk-test-server",
 	})
 }
 
@@ -77,7 +77,7 @@ func (s *Server) registerOTPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req trustid.RegisterOTPOptions
+	var req dcid.RegisterOTPOptions
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, fmt.Sprintf("Invalid request: %v", err), http.StatusBadRequest)
 		return
@@ -99,7 +99,7 @@ func (s *Server) confirmOTPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req trustid.ConfirmOTPOptions
+	var req dcid.ConfirmOTPOptions
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, fmt.Sprintf("Invalid request: %v", err), http.StatusBadRequest)
 		return
@@ -124,7 +124,7 @@ func (s *Server) adminLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req trustid.RegisterOTPOptions
+	var req dcid.RegisterOTPOptions
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, fmt.Sprintf("Invalid request: %v", err), http.StatusBadRequest)
 		return
@@ -146,7 +146,7 @@ func (s *Server) refreshTokenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req trustid.RefreshTokenOptions
+	var req dcid.RefreshTokenOptions
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, fmt.Sprintf("Invalid request: %v", err), http.StatusBadRequest)
 		return
@@ -170,7 +170,7 @@ func (s *Server) startSessionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req trustid.StartSessionOptions
+	var req dcid.StartSessionOptions
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, fmt.Sprintf("Invalid request: %v", err), http.StatusBadRequest)
 		return
@@ -190,27 +190,27 @@ func (s *Server) handleError(w http.ResponseWriter, err error) {
 	w.Header().Set("Content-Type", "application/json")
 
 	switch e := err.(type) {
-	case *trustid.AuthenticationError:
+	case *dcid.AuthenticationError:
 		w.WriteHeader(e.StatusCode)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"error": e.Error(),
 			"type":  "AuthenticationError",
 			"isAPIKeyError": e.IsAPIKeyError,
 		})
-	case *trustid.NetworkError:
+	case *dcid.NetworkError:
 		w.WriteHeader(http.StatusBadGateway)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"error": e.Error(),
 			"type":  "NetworkError",
 			"code":  e.Code,
 		})
-	case *trustid.ServerError:
+	case *dcid.ServerError:
 		w.WriteHeader(e.StatusCode)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"error": e.Error(),
 			"type":  "ServerError",
 		})
-	case *trustid.SDKError:
+	case *dcid.SDKError:
 		w.WriteHeader(e.StatusCode)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"error": e.Error(),

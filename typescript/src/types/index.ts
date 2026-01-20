@@ -1,9 +1,9 @@
 import { Logger } from "../utils/logger";
 
 /**
- * Configuration options for the TrustID SDK
+ * Configuration options for the DCID Backend SDK
  */
-export interface TrustIdSDKConfig {
+export interface DCIDBackendSDKConfig {
   environment?: "dev" | "prod";
   /** API key for authentication (required for API access) */
   apiKey: string;
@@ -431,7 +431,7 @@ export interface ErrorContext {
 /**
  * Custom error class for SDK errors
  */
-export class TrustIdSDKError extends Error {
+export class DCIDBackendSDKError extends Error {
   constructor(
     message: string,
     public statusCode?: number,
@@ -439,15 +439,15 @@ export class TrustIdSDKError extends Error {
     public context?: ErrorContext
   ) {
     super(message);
-    this.name = "TrustIdSDKError";
-    Object.setPrototypeOf(this, TrustIdSDKError.prototype);
+    this.name = "DCIDBackendSDKError";
+    Object.setPrototypeOf(this, DCIDBackendSDKError.prototype);
   }
 }
 
 /**
  * Network error (connectivity issues, timeouts, etc.)
  */
-export class NetworkError extends TrustIdSDKError {
+export class NetworkError extends DCIDBackendSDKError {
   constructor(
     message: string,
     public code?: string,
@@ -462,7 +462,7 @@ export class NetworkError extends TrustIdSDKError {
 /**
  * Authentication error (API-KEY or JWT token issues)
  */
-export class AuthenticationError extends TrustIdSDKError {
+export class AuthenticationError extends DCIDBackendSDKError {
   constructor(
     message: string,
     public isApiKeyError: boolean,
@@ -479,7 +479,7 @@ export class AuthenticationError extends TrustIdSDKError {
 /**
  * Server error (backend or gateway errors)
  */
-export class ServerError extends TrustIdSDKError {
+export class ServerError extends DCIDBackendSDKError {
   constructor(
     message: string,
     public isBackendConnectivityError: boolean,

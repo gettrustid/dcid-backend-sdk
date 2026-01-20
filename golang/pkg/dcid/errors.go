@@ -1,4 +1,4 @@
-package trustid
+package dcid
 
 import (
 	"fmt"

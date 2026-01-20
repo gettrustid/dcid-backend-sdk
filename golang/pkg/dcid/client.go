@@ -1,4 +1,4 @@
-package trustid
+package dcid
 
 import (
 	"errors"
@@ -6,10 +6,10 @@ import (
 	"sync"
 	"time"
 
-	httpclient "github.com/gettrustid/trustid-sdk/golang/internal/http"
+	httpclient "github.com/getdcid/dcid-backend-sdk/golang/internal/http"
 )
 
-// Client is the main TrustID SDK client
+// Client is the main DCID Backend SDK client
 type Client struct {
 	// Auth provides authentication methods
 	Auth *AuthClient
@@ -25,12 +25,12 @@ type Client struct {
 	mu           sync.RWMutex // Protects token access
 }
 
-// NewClient creates a new TrustID SDK client
+// NewClient creates a new DCID Backend SDK client
 //
 // Example:
 //
-//	client, err := trustid.NewClient(trustid.Config{
-//		Environment: trustid.EnvironmentDev,
+//	client, err := dcid.NewClient(dcid.Config{
+//		Environment: dcid.EnvironmentDev,
 //		APIKey:      "your-api-key",
 //	})
 //	if err != nil {
@@ -38,7 +38,7 @@ type Client struct {
 //	}
 //
 //	// Register OTP
-//	result, err := client.Auth.RegisterOTP(trustid.RegisterOTPOptions{
+//	result, err := client.Auth.RegisterOTP(dcid.RegisterOTPOptions{
 //		Email: stringPtr("user@example.com"),
 //	})
 func NewClient(config Config) (*Client, error) {

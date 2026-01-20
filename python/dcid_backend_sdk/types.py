@@ -1,4 +1,4 @@
-"""Type definitions for TrustID SDK"""
+"""Type definitions for DCID Backend SDK"""
 
 from typing import Optional, Dict, Any, Union, List, Literal, TypedDict
 from dataclasses import dataclass
@@ -6,8 +6,8 @@ from datetime import datetime
 
 
 @dataclass
-class TrustIdSDKConfig:
-    """Configuration options for the TrustID SDK"""
+class DCIDBackendSDKConfig:
+    """Configuration options for the DCID Backend SDK"""
     api_key: str
     environment: Literal["dev", "prod"] = "prod"
     timeout: int = 30000
@@ -298,7 +298,7 @@ class ErrorContext:
     error_source: Optional[Literal["krakend", "backend", "network"]] = None
 
 
-class TrustIdSDKError(Exception):
+class DCIDBackendSDKError(Exception):
     """Custom error class for SDK errors"""
 
     def __init__(
@@ -315,7 +315,7 @@ class TrustIdSDKError(Exception):
         self.context = context
 
 
-class NetworkError(TrustIdSDKError):
+class NetworkError(DCIDBackendSDKError):
     """Network error (connectivity issues, timeouts, etc.)"""
 
     def __init__(
@@ -328,7 +328,7 @@ class NetworkError(TrustIdSDKError):
         self.code = code
 
 
-class AuthenticationError(TrustIdSDKError):
+class AuthenticationError(DCIDBackendSDKError):
     """Authentication error (API-KEY or JWT token issues)"""
 
     def __init__(
@@ -343,7 +343,7 @@ class AuthenticationError(TrustIdSDKError):
         self.is_api_key_error = is_api_key_error
 
 
-class ServerError(TrustIdSDKError):
+class ServerError(DCIDBackendSDKError):
     """Server error (backend or gateway errors)"""
 
     def __init__(

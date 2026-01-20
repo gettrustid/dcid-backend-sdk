@@ -1,11 +1,11 @@
 /**
- * Test server for TrustID TypeScript SDK
+ * Test server for DCID Backend TypeScript SDK
  */
 
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { TrustIdSDK } from "../dist/cjs";
+import { DCIDBackendSDK } from "../dist/cjs";
 
 // Load environment variables
 dotenv.config();
@@ -14,21 +14,21 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Get API key from environment
-const apiKey = process.env.TRUSTID_API_KEY;
+const apiKey = process.env.DCID_API_KEY;
 if (!apiKey) {
-  console.error("❌ TRUSTID_API_KEY environment variable is required");
+  console.error("DCID_API_KEY environment variable is required");
   process.exit(1);
 }
 
 const environment =
-  (process.env.TRUSTID_ENVIRONMENT as "dev" | "prod") || "dev";
+  (process.env.DCID_ENVIRONMENT as "dev" | "prod") || "dev";
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Initialize SDK instance
-const sdk = new TrustIdSDK({
+const sdk = new DCIDBackendSDK({
   environment,
   apiKey,
   timeout: parseInt(process.env.SDK_TIMEOUT || "30000"),
@@ -61,7 +61,7 @@ const errorHandler = (
       error: err.message,
       type: "ServerError",
     });
-  } else if (err.name === "TrustIdSDKError") {
+  } else if (err.name === "DCIDBackendSDKError") {
     return res.status(err.statusCode || 500).json({
       error: err.message,
       type: "SDKError",
@@ -78,7 +78,7 @@ const errorHandler = (
 app.get("/health", (req, res) => {
   res.json({
     status: "ok",
-    service: "trustid-sdk-test-server",
+    service: "dcid-backend-sdk-test-server",
   });
 });
 
@@ -293,7 +293,7 @@ app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 TrustID SDK Test Server running on port ${PORT}`);
-  console.log(`   SDK Environment: ${environment}`);
-  console.log(`   Health check: http://localhost:${PORT}/health`);
+  console.log(`DCID Backend SDK Test Server running on port ${PORT}`);
+  console.log(`SDK Environment: ${environment}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
 });

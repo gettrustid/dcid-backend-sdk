@@ -5,20 +5,20 @@ import { Issuer } from "./modules/identity/issuer";
 import { IPFS } from "./modules/identity/ipfs";
 import { Verification } from "./modules/identity/verification";
 import { Analytics } from "./modules/analytics";
-import { TrustIdSDKConfig, TokenResponse } from "./types";
+import { DCIDBackendSDKConfig, TokenResponse } from "./types";
 import { getEnvironmentConfig } from "./config/environments";
 import { ConsoleLogger, NoOpLogger } from "./utils/logger";
 
 /**
- * Main TrustID PortalAPI SDK Client
+ * Main DCID Backend SDK Client
  *
  * This is the main entry point for using the SDK.
  *
  * @example
  * ```typescript
- * import { TrustIdSDK } from '@trustid/portalapi-sdk';
+ * import { DCIDBackendSDK } from '@dcid/backend-sdk';
  *
- * const sdk = new TrustIdSDK({
+ * const sdk = new DCIDBackendSDK({
  *   environment: 'prod', // or 'dev'
  *   apiKey: 'your-api-key-here'
  * });
@@ -35,7 +35,7 @@ import { ConsoleLogger, NoOpLogger } from "./utils/logger";
  *
  * // Generate encryption key (will auto-refresh token if expired)
  * await sdk.identity.encryption.generateKey({
- *   did: 'did:iden3:trustid:main:...',
+ *   did: 'did:iden3:dcid:main:...',
  *   ownerEmail: 'user@example.com'
  * });
  *
@@ -54,7 +54,7 @@ import { ConsoleLogger, NoOpLogger } from "./utils/logger";
  * }
  * ```
  */
-export class TrustIdSDK {
+export class DCIDBackendSDK {
   public readonly auth: AuthOTP;
   public readonly analytics?: Analytics;
 
@@ -70,11 +70,11 @@ export class TrustIdSDK {
   private _baseUrl: string;
 
   /**
-   * Creates a new TrustID SDK instance
+   * Creates a new DCID Backend SDK instance
    *
    * @param config - SDK configuration
    */
-  constructor(config: TrustIdSDKConfig) {
+  constructor(config: DCIDBackendSDKConfig) {
 
     if (!config.apiKey) {
       throw new Error("apiKey is required in SDK configuration");
