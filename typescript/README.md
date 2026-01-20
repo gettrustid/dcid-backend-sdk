@@ -1,15 +1,15 @@
-# DCID Backend SDK
+# DCID Server SDK
 
-A TypeScript/JavaScript SDK for interacting with the DCID Backend API. This SDK provides a simple, type-safe interface for authentication and OTP operations.
+A TypeScript/JavaScript SDK for interacting with the DCID Server API. This SDK provides a simple, type-safe interface for authentication and OTP operations.
 
 ## Installation
 
 ```bash
-npm install @dcid/backend-sdk
+npm install @dcid/server-sdk
 # or
-yarn add @dcid/backend-sdk
+yarn add @dcid/server-sdk
 # or
-pnpm add @dcid/backend-sdk
+pnpm add @dcid/server-sdk
 ```
 
 ## Quick Start
@@ -17,10 +17,10 @@ pnpm add @dcid/backend-sdk
 ### ES Modules (Modern JavaScript/TypeScript)
 
 ```typescript
-import { DCIDBackendSDK } from "@dcid/backend-sdk";
+import { DCIDServerSDK } from "@dcid/server-sdk";
 
 // Initialize the SDK
-const sdk = new DCIDBackendSDK({
+const sdk = new DCIDServerSDK({
   baseUrl: "https://api.dcid.com", // or 'http://localhost:4000' for local dev
 });
 
@@ -40,10 +40,10 @@ console.log("Refresh Token:", tokens.refresh_token);
 ### CommonJS (Node.js)
 
 ```javascript
-const { DCIDBackendSDK } = require("@dcid/backend-sdk");
+const { DCIDServerSDK } = require("@dcid/server-sdk");
 
 // Initialize the SDK
-const sdk = new DCIDBackendSDK({
+const sdk = new DCIDServerSDK({
   baseUrl: "https://api.dcid.com",
 });
 
@@ -57,7 +57,7 @@ await sdk.auth.registerOTP({ email: "user@example.com" });
 
 ```typescript
 // Works in both ES modules AND CommonJS projects
-import { DCIDBackendSDK } from "@dcid/backend-sdk";
+import { DCIDServerSDK } from "@dcid/server-sdk";
 ```
 
 The SDK is built as a **dual package** that supports both:
@@ -71,7 +71,7 @@ When you import the SDK, Node.js or your bundler automatically selects the corre
 ### Initialization
 
 ```typescript
-const sdk = new DCIDBackendSDK({
+const sdk = new DCIDServerSDK({
   environment?: "dev" | "prod", // Optional: Environment (default: "prod")
   apiKey: string, // Required: API key
   timeout?: number, // Optional: Request timeout (default: 30000ms)

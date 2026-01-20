@@ -1,12 +1,12 @@
 /**
- * DCID Backend SDK
+ * DCID Server SDK
  *
- * A TypeScript/JavaScript SDK for interacting with the DCID Backend API.
+ * A TypeScript/JavaScript SDK for interacting with the DCID Server API.
  *
  * @packageDocumentation
  */
 
-export { DCIDBackendSDK } from "./client";
+export { DCIDServerSDK } from "./client";
 export * from "./types";
 export { AuthOTP } from "./modules/auth/otp";
 export { KeyManager } from "./modules/identity/encryption";

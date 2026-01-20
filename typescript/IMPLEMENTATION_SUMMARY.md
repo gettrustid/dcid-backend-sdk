@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-A complete TypeScript SDK for the DCID Backend API that provides easy-to-use methods for OTP authentication. The SDK covers the 4 endpoints your team leader specified:
+A complete TypeScript SDK for the DCID Server API that provides easy-to-use methods for OTP authentication. The SDK covers the 4 endpoints your team leader specified:
 
 ### Methods Implemented
 
@@ -28,7 +28,7 @@ A complete TypeScript SDK for the DCID Backend API that provides easy-to-use met
 ## Project Structure
 
 ```
-dcid-backend-sdk/
+dcid-server-sdk/
 ├── src/
 │   ├── index.ts              # Main exports
 │   ├── client.ts             # Main SDK class
@@ -62,7 +62,7 @@ dcid-backend-sdk/
 ### 1. Install Dependencies
 
 ```bash
-cd dcid-backend-sdk
+cd dcid-server-sdk
 npm install
 ```
 
@@ -77,9 +77,9 @@ This compiles TypeScript to JavaScript in the `dist/` folder.
 ### 3. Use in Your Project
 
 ```typescript
-import { DCIDBackendSDK } from './dist';
+import { DCIDServerSDK } from './dist';
 
-const sdk = new DCIDBackendSDK({
+const sdk = new DCIDServerSDK({
   baseUrl: 'http://localhost:4000/api'
 });
 

@@ -1,7 +1,7 @@
 {
-  "name": "@dcid/backend-sdk",
+  "name": "@dcid/server-sdk",
   "version": "0.1.0",
-  "description": "DCID Backend SDK - Authentication and OTP methods",
+  "description": "DCID Server SDK - Authentication and OTP methods",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/cjs/index.d.ts",

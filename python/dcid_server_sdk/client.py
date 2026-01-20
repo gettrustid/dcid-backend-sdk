@@ -1,7 +1,7 @@
-"""Main DCID Backend SDK Client"""
+"""Main DCID Server SDK Client"""
 
 from typing import Optional
-from .types import DCIDBackendSDKConfig, TokenResponse
+from .types import DCIDServerSDKConfig, TokenResponse
 from .config.environments import get_environment_config
 from .utils.logger import ConsoleLogger, NoOpLogger
 from .utils.http import create_http_client
@@ -29,17 +29,17 @@ class Identity:
         self.verification = verification
 
 
-class DCIDBackendSDK:
+class DCIDServerSDK:
     """
-    Main DCID Backend SDK Client
+    Main DCID Server SDK Client
 
     This is the main entry point for using the SDK.
 
     Example:
         ```python
-        from dcid_backend_sdk import DCIDBackendSDK
+        from dcid_server_sdk import DCIDServerSDK
 
-        sdk = DCIDBackendSDK(
+        sdk = DCIDServerSDK(
             api_key='your-api-key-here',
             environment='prod'  # or 'dev'
         )
@@ -61,9 +61,9 @@ class DCIDBackendSDK:
         ```
     """
 
-    def __init__(self, config: Optional[DCIDBackendSDKConfig] = None, **kwargs):
+    def __init__(self, config: Optional[DCIDServerSDKConfig] = None, **kwargs):
         """
-        Creates a new DCID Backend SDK instance
+        Creates a new DCID Server SDK instance
 
         Args:
             config: SDK configuration (can also pass as kwargs)
@@ -71,7 +71,7 @@ class DCIDBackendSDK:
         """
         # Support both config object and kwargs
         if config is None:
-            config = DCIDBackendSDKConfig(**kwargs)
+            config = DCIDServerSDKConfig(**kwargs)
         elif kwargs:
             # Merge kwargs into config
             for key, value in kwargs.items():

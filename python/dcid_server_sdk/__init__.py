@@ -1,12 +1,12 @@
 """
-DCID Backend SDK for Python
+DCID Server SDK for Python
 
-A Python SDK for interacting with the DCID Backend API.
+A Python SDK for interacting with the DCID Server API.
 """
 
-from .client import DCIDBackendSDK
+from .client import DCIDServerSDK
 from .types import (
-    DCIDBackendSDKConfig,
+    DCIDServerSDKConfig,
     InitiateOTPResponse,
     TokenResponse,
     InitiateOTPOptions,
@@ -34,7 +34,7 @@ from .types import (
     GetLinkStoreResponse,
     VerifyCallbackOptions,
     VerifyCallbackResponse,
-    DCIDBackendSDKError,
+    DCIDServerSDKError,
     NetworkError,
     AuthenticationError,
     ServerError,
@@ -51,8 +51,8 @@ from .utils.logger import Logger, ConsoleLogger, NoOpLogger
 __version__ = "0.1.0"
 
 __all__ = [
-    "DCIDBackendSDK",
-    "DCIDBackendSDKConfig",
+    "DCIDServerSDK",
+    "DCIDServerSDKConfig",
     "InitiateOTPResponse",
     "TokenResponse",
     "InitiateOTPOptions",
@@ -80,7 +80,7 @@ __all__ = [
     "GetLinkStoreResponse",
     "VerifyCallbackOptions",
     "VerifyCallbackResponse",
-    "DCIDBackendSDKError",
+    "DCIDServerSDKError",
     "NetworkError",
     "AuthenticationError",
     "ServerError",

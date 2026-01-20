@@ -1,11 +1,11 @@
 /**
- * Test server for DCID Backend TypeScript SDK
+ * Test server for DCID Server TypeScript SDK
  */
 
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { DCIDBackendSDK } from "../dist/cjs";
+import { DCIDServerSDK } from "../dist/cjs";
 
 // Load environment variables
 dotenv.config();
@@ -28,7 +28,7 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize SDK instance
-const sdk = new DCIDBackendSDK({
+const sdk = new DCIDServerSDK({
   environment,
   apiKey,
   timeout: parseInt(process.env.SDK_TIMEOUT || "30000"),
@@ -61,7 +61,7 @@ const errorHandler = (
       error: err.message,
       type: "ServerError",
     });
-  } else if (err.name === "DCIDBackendSDKError") {
+  } else if (err.name === "DCIDServerSDKError") {
     return res.status(err.statusCode || 500).json({
       error: err.message,
       type: "SDKError",
@@ -78,7 +78,7 @@ const errorHandler = (
 app.get("/health", (req, res) => {
   res.json({
     status: "ok",
-    service: "dcid-backend-sdk-test-server",
+    service: "dcid-server-sdk-test-server",
   });
 });
 
@@ -293,7 +293,7 @@ app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`DCID Backend SDK Test Server running on port ${PORT}`);
+  console.log(`DCID Server SDK Test Server running on port ${PORT}`);
   console.log(`SDK Environment: ${environment}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
 });

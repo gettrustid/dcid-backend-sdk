@@ -6,10 +6,10 @@ import (
 	"sync"
 	"time"
 
-	httpclient "github.com/getdcid/dcid-backend-sdk/golang/internal/http"
+	httpclient "github.com/gettrustid/dcid-server-sdk/golang/internal/http"
 )
 
-// Client is the main DCID Backend SDK client
+// Client is the main DCID Server SDK client
 type Client struct {
 	// Auth provides authentication methods
 	Auth *AuthClient
@@ -25,7 +25,7 @@ type Client struct {
 	mu           sync.RWMutex // Protects token access
 }
 
-// NewClient creates a new DCID Backend SDK client
+// NewClient creates a new DCID Server SDK client
 //
 // Example:
 //

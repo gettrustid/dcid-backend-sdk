@@ -1,11 +1,11 @@
-# DCID Backend SDK - Python
+# DCID Server SDK - Python
 
-A Python SDK for interacting with the DCID Backend API. This SDK provides a simple, type-safe interface for authentication and identity operations.
+A Python SDK for interacting with the DCID Server API. This SDK provides a simple, type-safe interface for authentication and identity operations.
 
 ## Installation
 
 ```bash
-pip install dcid-backend-sdk
+pip install dcid-server-sdk
 ```
 
 Or install from source:
@@ -18,10 +18,10 @@ pip install -e .
 ## Quick Start
 
 ```python
-from dcid_backend_sdk import DCIDBackendSDK, InitiateOTPOptions, ConfirmOTPOptions
+from dcid_server_sdk import DCIDServerSDK, InitiateOTPOptions, ConfirmOTPOptions
 
 # Initialize the SDK
-sdk = DCIDBackendSDK(
+sdk = DCIDServerSDK(
     api_key="your-api-key-here",
     environment="prod"  # or 'dev'
 )
@@ -46,9 +46,9 @@ print(f"Refresh Token: {tokens.refresh_token}")
 ### Initialization
 
 ```python
-from dcid_backend_sdk import DCIDBackendSDK
+from dcid_server_sdk import DCIDServerSDK
 
-sdk = DCIDBackendSDK(
+sdk = DCIDServerSDK(
     api_key="your-api-key-here",  # Required: API key
     environment="prod",  # Optional: Environment (default: "prod")
     timeout=30000,  # Optional: Request timeout in ms (default: 30000)
@@ -74,7 +74,7 @@ Initiates OTP registration/sign-in process. Covers `POST /auth/sign-in/initiate`
 **Example:**
 
 ```python
-from dcid_backend_sdk import InitiateOTPOptions
+from dcid_server_sdk import InitiateOTPOptions
 
 # With email
 result = sdk.auth.register_otp(InitiateOTPOptions(email="user@example.com"))
@@ -99,7 +99,7 @@ Confirms OTP and completes registration/sign-in. Covers `POST /auth/sign-in/conf
 **Example:**
 
 ```python
-from dcid_backend_sdk import ConfirmOTPOptions
+from dcid_server_sdk import ConfirmOTPOptions
 
 tokens = sdk.auth.confirm_otp(
     ConfirmOTPOptions(
@@ -124,7 +124,7 @@ Refreshes the access token using refresh token. Covers `POST /auth/refresh-token
 **Example:**
 
 ```python
-from dcid_backend_sdk import RefreshTokenOptions
+from dcid_server_sdk import RefreshTokenOptions
 
 new_tokens = sdk.auth.refresh_token(
     RefreshTokenOptions(refresh_token="your-refresh-token")
@@ -136,7 +136,7 @@ new_tokens = sdk.auth.refresh_token(
 #### Encryption
 
 ```python
-from dcid_backend_sdk import GenerateEncryptionKeyOptions, GetEncryptedKeyOptions
+from dcid_server_sdk import GenerateEncryptionKeyOptions, GetEncryptedKeyOptions
 
 # Generate encryption key (will auto-refresh token if expired)
 result = sdk.identity.encryption.generate_key(
@@ -155,7 +155,7 @@ result = sdk.identity.encryption.get_key(
 #### Issuer
 
 ```python
-from dcid_backend_sdk import IssueCredentialOptions, GetCredentialOfferOptions
+from dcid_server_sdk import IssueCredentialOptions, GetCredentialOfferOptions
 
 # Issue a credential
 result = sdk.identity.issuer.issue_credential(
@@ -179,7 +179,7 @@ result = sdk.identity.issuer.get_credential_offer(
 #### IPFS
 
 ```python
-from dcid_backend_sdk import (
+from dcid_server_sdk import (
     StoreCredentialOptions,
     RetrieveUserCredentialOptions,
     GetAllUserCredentialsOptions
@@ -216,7 +216,7 @@ result = sdk.identity.ipfs.get_all_user_credentials(
 #### Verification
 
 ```python
-from dcid_backend_sdk import (
+from dcid_server_sdk import (
     VerifySignInOptions,
     GetLinkStoreOptions,
     VerifyCallbackOptions
@@ -244,7 +244,7 @@ result = sdk.identity.verification.verify_callback(
 ### Analytics Methods
 
 ```python
-from dcid_backend_sdk.modules.analytics.types import StartSessionEvent, EndSessionEvent
+from dcid_server_sdk.modules.analytics.types import StartSessionEvent, EndSessionEvent
 
 # Start a session
 result = sdk.analytics.start_session(
@@ -347,13 +347,13 @@ curl -X POST http://localhost:8080/api/analytics/start-session \
 
 The SDK uses custom exception classes for different error types:
 
-- `DCIDBackendSDKError`: Base error class
+- `DCIDServerSDKError`: Base error class
 - `NetworkError`: Network connectivity issues
 - `AuthenticationError`: API-KEY or JWT token issues
 - `ServerError`: Backend or gateway errors
 
 ```python
-from dcid_backend_sdk import DCIDBackendSDKError, NetworkError, AuthenticationError, ServerError
+from dcid_server_sdk import DCIDServerSDKError, NetworkError, AuthenticationError, ServerError
 
 try:
     result = sdk.auth.register_otp(InitiateOTPOptions(email="user@example.com"))
@@ -364,7 +364,7 @@ except NetworkError as e:
     print(f"Network error: {e}")
 except ServerError as e:
     print(f"Server error: {e}")
-except DCIDBackendSDKError as e:
+except DCIDServerSDKError as e:
     print(f"SDK error: {e}")
 ```
 

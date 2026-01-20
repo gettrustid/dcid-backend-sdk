@@ -5,20 +5,20 @@ import { Issuer } from "./modules/identity/issuer";
 import { IPFS } from "./modules/identity/ipfs";
 import { Verification } from "./modules/identity/verification";
 import { Analytics } from "./modules/analytics";
-import { DCIDBackendSDKConfig, TokenResponse } from "./types";
+import { DCIDServerSDKConfig, TokenResponse } from "./types";
 import { getEnvironmentConfig } from "./config/environments";
 import { ConsoleLogger, NoOpLogger } from "./utils/logger";
 
 /**
- * Main DCID Backend SDK Client
+ * Main DCID Server SDK Client
  *
  * This is the main entry point for using the SDK.
  *
  * @example
  * ```typescript
- * import { DCIDBackendSDK } from '@dcid/backend-sdk';
+ * import { DCIDServerSDK } from '@dcid/server-sdk';
  *
- * const sdk = new DCIDBackendSDK({
+ * const sdk = new DCIDServerSDK({
  *   environment: 'prod', // or 'dev'
  *   apiKey: 'your-api-key-here'
  * });
@@ -54,7 +54,7 @@ import { ConsoleLogger, NoOpLogger } from "./utils/logger";
  * }
  * ```
  */
-export class DCIDBackendSDK {
+export class DCIDServerSDK {
   public readonly auth: AuthOTP;
   public readonly analytics?: Analytics;
 
@@ -70,11 +70,11 @@ export class DCIDBackendSDK {
   private _baseUrl: string;
 
   /**
-   * Creates a new DCID Backend SDK instance
+   * Creates a new DCID Server SDK instance
    *
    * @param config - SDK configuration
    */
-  constructor(config: DCIDBackendSDKConfig) {
+  constructor(config: DCIDServerSDKConfig) {
 
     if (!config.apiKey) {
       throw new Error("apiKey is required in SDK configuration");

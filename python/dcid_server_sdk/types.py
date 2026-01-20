@@ -1,4 +1,4 @@
-"""Type definitions for DCID Backend SDK"""
+"""Type definitions for DCID Server SDK"""
 
 from typing import Optional, Dict, Any, Union, List, Literal, TypedDict
 from dataclasses import dataclass
@@ -6,8 +6,8 @@ from datetime import datetime
 
 
 @dataclass
-class DCIDBackendSDKConfig:
-    """Configuration options for the DCID Backend SDK"""
+class DCIDServerSDKConfig:
+    """Configuration options for the DCID Server SDK"""
     api_key: str
     environment: Literal["dev", "prod"] = "prod"
     timeout: int = 30000
@@ -298,7 +298,7 @@ class ErrorContext:
     error_source: Optional[Literal["krakend", "backend", "network"]] = None
 
 
-class DCIDBackendSDKError(Exception):
+class DCIDServerSDKError(Exception):
     """Custom error class for SDK errors"""
 
     def __init__(
@@ -315,7 +315,7 @@ class DCIDBackendSDKError(Exception):
         self.context = context
 
 
-class NetworkError(DCIDBackendSDKError):
+class NetworkError(DCIDServerSDKError):
     """Network error (connectivity issues, timeouts, etc.)"""
 
     def __init__(
@@ -328,7 +328,7 @@ class NetworkError(DCIDBackendSDKError):
         self.code = code
 
 
-class AuthenticationError(DCIDBackendSDKError):
+class AuthenticationError(DCIDServerSDKError):
     """Authentication error (API-KEY or JWT token issues)"""
 
     def __init__(
@@ -343,7 +343,7 @@ class AuthenticationError(DCIDBackendSDKError):
         self.is_api_key_error = is_api_key_error
 
 
-class ServerError(DCIDBackendSDKError):
+class ServerError(DCIDServerSDKError):
     """Server error (backend or gateway errors)"""
 
     def __init__(

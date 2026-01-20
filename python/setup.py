@@ -1,4 +1,4 @@
-"""Setup script for DCID Backend SDK"""
+"""Setup script for DCID Server SDK"""
 
 from setuptools import setup, find_packages
 
@@ -6,13 +6,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="dcid-backend-sdk",
+    name="dcid-server-sdk",
     version="0.1.0",
     author="DCID",
-    description="Python SDK for DCID Backend - Authentication and Identity operations",
+    description="Python SDK for DCID Server - Authentication and Identity operations",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/getdcid/dcid-backend-sdk",
+    url="https://github.com/gettrustid/dcid-server-sdk",
     packages=find_packages(exclude=["tests", "test_server", "examples"]),
     classifiers=[
         "Development Status :: 3 - Alpha",

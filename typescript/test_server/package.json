@@ -1,7 +1,7 @@
 {
   "name": "@dcid/test-server",
   "version": "0.1.0",
-  "description": "Express test server for DCID Backend TypeScript SDK",
+  "description": "Express test server for DCID Server TypeScript SDK",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

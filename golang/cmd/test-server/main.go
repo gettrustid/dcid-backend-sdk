@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/getdcid/dcid-backend-sdk/golang/pkg/dcid"
+	"github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
 )
 
 type Server struct {
@@ -67,7 +67,7 @@ func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{
 		"status": "ok",
-		"service": "dcid-backend-sdk-test-server",
+		"service": "dcid-server-sdk-test-server",
 	})
 }
 

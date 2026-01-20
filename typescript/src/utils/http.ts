@@ -5,7 +5,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import {
-  DCIDBackendSDKError,
+  DCIDServerSDKError,
   NetworkError,
   AuthenticationError,
   ServerError,
@@ -371,7 +371,7 @@ export function createHttpClient(
         }
 
         // Create appropriate error type
-        let enhancedError: DCIDBackendSDKError;
+        let enhancedError: DCIDServerSDKError;
 
         if (apiKeyError) {
           enhancedError = new AuthenticationError(
@@ -409,7 +409,7 @@ export function createHttpClient(
             context
           );
         } else {
-          enhancedError = new DCIDBackendSDKError(
+          enhancedError = new DCIDServerSDKError(
             message,
             error.response.status,
             responseData,
@@ -458,7 +458,7 @@ export function createHttpClient(
         throw networkError;
       } else {
         // Error setting up the request
-        const setupError = new DCIDBackendSDKError(
+        const setupError = new DCIDServerSDKError(
           error.message || "Request setup failed",
           0,
           undefined,

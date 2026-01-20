@@ -1,6 +1,6 @@
-# DCID Backend SDK - Go
+# DCID Server SDK - Go
 
-Go SDK for interacting with the DCID Backend API. This SDK provides a simple, type-safe interface for authentication, identity management, and analytics operations.
+Go SDK for interacting with the DCID Server API. This SDK provides a simple, type-safe interface for authentication, identity management, and analytics operations.
 
 ## Status
 
@@ -9,7 +9,7 @@ Go SDK for interacting with the DCID Backend API. This SDK provides a simple, ty
 ## Installation
 
 ```bash
-go get github.com/getdcid/dcid-backend-sdk/golang/pkg/dcid
+go get github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid
 ```
 
 ## Quick Start
@@ -21,7 +21,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/getdcid/dcid-backend-sdk/golang/pkg/dcid"
+    "github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
 )
 
 func main() {

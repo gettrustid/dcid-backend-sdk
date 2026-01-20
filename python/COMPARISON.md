@@ -1,22 +1,22 @@
 # SDK Language Comparison
 
-This document provides a comparison of the DCID Backend SDK across TypeScript, Python, and Go implementations.
+This document provides a comparison of the DCID Server SDK across TypeScript, Python, and Go implementations.
 
 ## Installation
 
 | Language   | Installation Command                        |
 |------------|---------------------------------------------|
-| TypeScript | `npm install @dcid/backend-sdk`        |
-| Python     | `pip install dcid-backend-sdk`         |
-| Go         | `go get github.com/getdcid/dcid-backend-sdk`  |
+| TypeScript | `npm install @dcid/server-sdk`        |
+| Python     | `pip install dcid-server-sdk`         |
+| Go         | `go get github.com/gettrustid/dcid-server-sdk`  |
 
 ## Initialization
 
 ### TypeScript
 ```typescript
-import { DCIDBackendSDK } from '@dcid/backend-sdk';
+import { DCIDServerSDK } from '@dcid/server-sdk';
 
-const sdk = new DCIDBackendSDK({
+const sdk = new DCIDServerSDK({
   apiKey: 'your-api-key',
   environment: 'prod'
 });
@@ -24,9 +24,9 @@ const sdk = new DCIDBackendSDK({
 
 ### Python
 ```python
-from dcid_backend_sdk import DCIDBackendSDK
+from dcid_server_sdk import DCIDServerSDK
 
-sdk = DCIDBackendSDK(
+sdk = DCIDServerSDK(
     api_key='your-api-key',
     environment='prod'
 )
@@ -34,7 +34,7 @@ sdk = DCIDBackendSDK(
 
 ### Go
 ```go
-import "github.com/getdcid/dcid-backend-sdk/golang/pkg/trustid"
+import "github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
 
 sdk, err := dcid.NewClient(dcid.Config{
     APIKey:      "your-api-key",
@@ -58,7 +58,7 @@ const tokens = await sdk.auth.confirmOTP({
 
 ### Python
 ```python
-from dcid_backend_sdk import InitiateOTPOptions, ConfirmOTPOptions
+from dcid_server_sdk import InitiateOTPOptions, ConfirmOTPOptions
 
 # Register OTP
 sdk.auth.register_otp(InitiateOTPOptions(email='user@example.com'))
@@ -95,7 +95,7 @@ await sdk.identity.encryption.generateKey({
 
 ### Python
 ```python
-from dcid_backend_sdk import GenerateEncryptionKeyOptions
+from dcid_server_sdk import GenerateEncryptionKeyOptions
 
 sdk.identity.encryption.generate_key(
     GenerateEncryptionKeyOptions(
@@ -127,7 +127,7 @@ await sdk.identity.issuer.issueCredential({
 
 ### Python
 ```python
-from dcid_backend_sdk import IssueCredentialOptions
+from dcid_server_sdk import IssueCredentialOptions
 
 sdk.identity.issuer.issue_credential(
     IssueCredentialOptions(
@@ -164,7 +164,7 @@ await sdk.analytics.startSession({
 
 ### Python
 ```python
-from dcid_backend_sdk.modules.analytics.types import StartSessionEvent
+from dcid_server_sdk.modules.analytics.types import StartSessionEvent
 
 sdk.analytics.start_session(
     StartSessionEvent(
@@ -265,7 +265,7 @@ All servers run on port 8080 by default.
 
 All three implementations provide similar error types:
 
-- `DCIDBackendSDKError` / `SDKError`: Base error class
+- `DCIDServerSDKError` / `SDKError`: Base error class
 - `NetworkError`: Network connectivity issues
 - `AuthenticationError`: API-KEY or JWT token issues
 - `ServerError`: Backend or gateway errors

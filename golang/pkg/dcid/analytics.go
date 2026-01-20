@@ -3,7 +3,7 @@ package dcid
 import (
 	"time"
 
-	httpclient "github.com/getdcid/dcid-backend-sdk/golang/internal/http"
+	httpclient "github.com/gettrustid/dcid-server-sdk/golang/internal/http"
 )
 
 // AnalyticsClient provides analytics tracking methods

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	httpclient "github.com/getdcid/dcid-backend-sdk/golang/internal/http"
+	httpclient "github.com/gettrustid/dcid-server-sdk/golang/internal/http"
 )
 
 // AuthClient provides authentication methods

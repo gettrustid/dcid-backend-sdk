@@ -1,9 +1,9 @@
 import { Logger } from "../utils/logger";
 
 /**
- * Configuration options for the DCID Backend SDK
+ * Configuration options for the DCID Server SDK
  */
-export interface DCIDBackendSDKConfig {
+export interface DCIDServerSDKConfig {
   environment?: "dev" | "prod";
   /** API key for authentication (required for API access) */
   apiKey: string;
@@ -431,7 +431,7 @@ export interface ErrorContext {
 /**
  * Custom error class for SDK errors
  */
-export class DCIDBackendSDKError extends Error {
+export class DCIDServerSDKError extends Error {
   constructor(
     message: string,
     public statusCode?: number,
@@ -439,15 +439,15 @@ export class DCIDBackendSDKError extends Error {
     public context?: ErrorContext
   ) {
     super(message);
-    this.name = "DCIDBackendSDKError";
-    Object.setPrototypeOf(this, DCIDBackendSDKError.prototype);
+    this.name = "DCIDServerSDKError";
+    Object.setPrototypeOf(this, DCIDServerSDKError.prototype);
   }
 }
 
 /**
  * Network error (connectivity issues, timeouts, etc.)
  */
-export class NetworkError extends DCIDBackendSDKError {
+export class NetworkError extends DCIDServerSDKError {
   constructor(
     message: string,
     public code?: string,
@@ -462,7 +462,7 @@ export class NetworkError extends DCIDBackendSDKError {
 /**
  * Authentication error (API-KEY or JWT token issues)
  */
-export class AuthenticationError extends DCIDBackendSDKError {
+export class AuthenticationError extends DCIDServerSDKError {
   constructor(
     message: string,
     public isApiKeyError: boolean,
@@ -479,7 +479,7 @@ export class AuthenticationError extends DCIDBackendSDKError {
 /**
  * Server error (backend or gateway errors)
  */
-export class ServerError extends DCIDBackendSDKError {
+export class ServerError extends DCIDServerSDKError {
   constructor(
     message: string,
     public isBackendConnectivityError: boolean,
