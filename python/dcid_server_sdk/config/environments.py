@@ -15,7 +15,7 @@ ENVIRONMENTS = {
         base_url="http://krakend.dev-external.trustid.life/api"
     ),
     "prod": EnvironmentConfig(
-        base_url="http://krakend.dev-external.trustid.life/api"
+        base_url="https://gateway.trustid.life/api"
     ),
 }
 

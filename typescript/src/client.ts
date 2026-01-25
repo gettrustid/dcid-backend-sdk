@@ -14,45 +14,6 @@ import { ConsoleLogger, NoOpLogger } from "./utils/logger";
  *
  * This is the main entry point for using the SDK.
  *
- * @example
- * ```typescript
- * import { DCIDServerSDK } from '@dcid/server-sdk';
- *
- * const sdk = new DCIDServerSDK({
- *   environment: 'prod', // or 'dev'
- *   apiKey: 'your-api-key-here'
- * });
- *
- * // Register with OTP
- * await sdk.auth.registerOTP({ email: 'user@example.com' });
- *
- * // Confirm OTP (tokens are automatically set in SDK context)
- * const tokens = await sdk.auth.confirmOTP({
- *   email: 'user@example.com',
- *   otp: '123456'
- * });
- * // No need to call sdk.setTokens() - tokens are set automatically, unless you want to set them manually
- *
- * // Generate encryption key (will auto-refresh token if expired)
- * await sdk.identity.encryption.generateKey({
- *   did: 'did:iden3:dcid:main:...',
- *   ownerEmail: 'user@example.com'
- * });
- *
- * // Track analytics events (analytics is automatically enabled)
- * if (sdk.analytics) {
- *   // Start a session
- *   const session = await sdk.analytics.startSession({
- *     user_id?: string;
- *     anonymous_id?: string;
- *     page_location?: string;
- *     page_title?: string;
- *     timestamp?: number;
- *     engagement_time_msec?: number;
- *     device_type?: string;
- *   });
- * }
- * ```
  */
 export class DCIDServerSDK {
   public readonly auth: AuthOTP;

@@ -46,18 +46,16 @@ func getEnvironmentConfig(env Environment) EnvironmentConfig {
 	switch env {
 	case EnvironmentDev:
 		return EnvironmentConfig{
-			// Use host.docker.internal for Docker Desktop to access host/other containers
-			BaseURL: "http://host.docker.internal:5000/api",
-			// Alternative: "http://localhost:5000/api" (if running locally, not in Docker)
+			BaseURL: "http://krakend.dev-external.trustid.life/api",
 		}
 	case EnvironmentProd:
 		return EnvironmentConfig{
-			BaseURL: "http://host.docker.internal:5000/api",
+			BaseURL: "https://gateway.trustid.life/api",
 		}
 	default:
 		// Default to dev
 		return EnvironmentConfig{
-			BaseURL: "http://host.docker.internal:5000/api",
+			BaseURL: "http://krakend.dev-external.trustid.life/api",
 		}
 	}
 }

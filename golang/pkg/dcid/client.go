@@ -140,8 +140,8 @@ func NewClient(config Config) (*Client, error) {
 		nil, // No refresh handler for auth endpoints
 	)
 
-	// TODO: authenticatedHTTPClient will be used for Identity operations
-	_ = httpclient.NewClient(
+	// Authenticated HTTP client for Identity operations
+	authenticatedHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
 		timeout,
@@ -170,10 +170,10 @@ func NewClient(config Config) (*Client, error) {
 		httpClient: authHTTPClient,
 	}
 	client.Identity = &IdentityClient{
-		Encryption:   &Encryption{client: client},
-		Issuer:      &Issuer{client: client},
-		IPFS:        &IPFS{client: client},
-		Verification: &Verification{client: client},
+		Encryption:   &Encryption{client: client, httpClient: authenticatedHTTPClient},
+		Issuer:       &Issuer{client: client, httpClient: authenticatedHTTPClient},
+		IPFS:         &IPFS{client: client, httpClient: authenticatedHTTPClient},
+		Verification: &Verification{client: client, httpClient: authenticatedHTTPClient},
 	}
 	client.Analytics = &AnalyticsClient{
 		client:     client,

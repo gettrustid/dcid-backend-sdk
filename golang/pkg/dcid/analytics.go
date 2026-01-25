@@ -120,9 +120,62 @@ type StartSessionOptions struct {
 
 // StartSessionResponse is the response from starting a session
 type StartSessionResponse struct {
-	SessionID    string `json:"session_id"`
+	Success     bool   `json:"success"`
+	SessionID   string `json:"session_id"`
+	Timestamp   string `json:"timestamp,omitempty"`
 	AnonymousID string `json:"anonymous_id"`
 	Linked      bool   `json:"linked"`
+}
+
+// EndSessionOptions are options for ending a session
+type EndSessionOptions struct {
+	SessionID   string  `json:"session_id"`
+	UserID      *string `json:"user_id,omitempty"`
+	AnonymousID *string `json:"anonymous_id,omitempty"`
+	EndedAt     *string `json:"ended_at,omitempty"`
+}
+
+// EndSessionResponse is the response from ending a session
+type EndSessionResponse struct {
+	Success   bool   `json:"success"`
+	Timestamp string `json:"timestamp,omitempty"`
+}
+
+// EndSession ends a session
+//
+// This method covers the endpoint: POST /analytics/end-session
+//
+// Example:
+//
+//	result, err := client.Analytics.EndSession(&EndSessionOptions{
+//		SessionID: "session-123",
+//	})
+func (a *AnalyticsClient) EndSession(options *EndSessionOptions) (*EndSessionResponse, error) {
+	if options == nil || options.SessionID == "" {
+		return nil, &SDKError{Message: "session_id is required"}
+	}
+
+	requestBody := map[string]interface{}{
+		"event":      "end_session",
+		"event_name": "end_session",
+		"session_id": options.SessionID,
+	}
+	if options.UserID != nil {
+		requestBody["user_id"] = *options.UserID
+	}
+	if options.AnonymousID != nil {
+		requestBody["anonymous_id"] = *options.AnonymousID
+	}
+	if options.EndedAt != nil {
+		requestBody["ended_at"] = *options.EndedAt
+	}
+
+	var result EndSessionResponse
+	err := a.httpClient.Post("/analytics/sgtm", requestBody, &result)
+	if err != nil {
+		return nil, a.convertError(err)
+	}
+	return &result, nil
 }
 
 

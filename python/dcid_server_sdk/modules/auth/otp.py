@@ -40,9 +40,16 @@ class AuthOTP:
         if not options.email and not options.phone:
             raise ValueError("Either email or phone must be provided")
 
+        # Only include non-None values in the request
+        body = {}
+        if options.email:
+            body["email"] = options.email
+        if options.phone:
+            body["phone"] = options.phone
+
         response = self.http_client.post(
             "/auth/sign-in/initiate",
-            json={"email": options.email, "phone": options.phone},
+            json=body,
         )
 
         return InitiateOTPResponse(**response)
@@ -67,16 +74,24 @@ class AuthOTP:
         if not options.otp:
             raise ValueError("OTP code is required")
 
+        # Only include non-None values in the request
+        body = {"otp": options.otp}
+        if options.email:
+            body["email"] = options.email
+        if options.phone:
+            body["phone"] = options.phone
+
         response = self.http_client.post(
             "/auth/sign-in/confirm",
-            json={
-                "email": options.email,
-                "phone": options.phone,
-                "otp": options.otp,
-            },
+            json=body,
         )
 
-        tokens = TokenResponse(**response)
+        # Extract only the fields we need (backend may return extra Keycloak fields)
+        tokens = TokenResponse(
+            access_token=response.get("access_token"),
+            refresh_token=response.get("refresh_token"),
+            expires_in=response.get("expires_in"),
+        )
 
         # Automatically set tokens in SDK context if callback is provided
         if self.on_tokens_received:
@@ -102,9 +117,16 @@ class AuthOTP:
         if not options.email and not options.phone:
             raise ValueError("Either email or phone must be provided")
 
+        # Only include non-None values in the request
+        body = {}
+        if options.email:
+            body["email"] = options.email
+        if options.phone:
+            body["phone"] = options.phone
+
         response = self.http_client.post(
             "/auth/sign-in/initiate?type=admin",
-            json={"email": options.email, "phone": options.phone},
+            json=body,
         )
 
         return InitiateOTPResponse(**response)
@@ -132,4 +154,9 @@ class AuthOTP:
             json={"refreshToken": options.refresh_token},
         )
 
-        return TokenResponse(**response)
+        # Extract only the fields we need (backend may return extra Keycloak fields)
+        return TokenResponse(
+            access_token=response.get("access_token"),
+            refresh_token=response.get("refresh_token"),
+            expires_in=response.get("expires_in"),
+        )

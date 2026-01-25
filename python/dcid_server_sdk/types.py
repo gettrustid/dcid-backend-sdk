@@ -27,6 +27,7 @@ class TokenResponse:
     """Response from OTP confirmation or token refresh"""
     access_token: str
     refresh_token: str
+    expires_in: Optional[int] = None
 
 
 @dataclass
