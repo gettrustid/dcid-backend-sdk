@@ -5,7 +5,7 @@ Go SDK for interacting with the DCID Server API. This SDK provides a simple, typ
 ## Installation
 
 ```bash
-go get github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid
+go get github.com/gettrustid/dcid-backend-sdk/golang/pkg/dcid
 ```
 
 ## Quick Start
@@ -17,7 +17,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
+    "github.com/gettrustid/dcid-backend-sdk/golang/pkg/dcid"
 )
 
 func main() {

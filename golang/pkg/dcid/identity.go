@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	httpclient "github.com/gettrustid/dcid-server-sdk/golang/internal/http"
+	httpclient "github.com/gettrustid/dcid-backend-sdk/golang/internal/http"
 )
 
 // IdentityClient provides identity management methods

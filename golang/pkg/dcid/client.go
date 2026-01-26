@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	httpclient "github.com/gettrustid/dcid-server-sdk/golang/internal/http"
+	httpclient "github.com/gettrustid/dcid-backend-sdk/golang/internal/http"
 )
 
 // Client is the main DCID Server SDK client

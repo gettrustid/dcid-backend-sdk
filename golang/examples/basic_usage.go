@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
+	"github.com/gettrustid/dcid-backend-sdk/golang/pkg/dcid"
 )
 
 func main() {
