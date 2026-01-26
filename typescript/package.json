@@ -1,6 +1,6 @@
 {
   "name": "@dcid/server-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DCID Server SDK - Authentication and OTP methods",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -30,6 +30,11 @@
   ],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gettrustid/dcid-backend-sdk.git",
+    "directory": "typescript"
+  },
   "dependencies": {
     "axios": "^1.9.0"
   },
@@ -44,4 +49,3 @@
     "README.md"
   ]
 }
-
