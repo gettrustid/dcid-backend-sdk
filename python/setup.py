@@ -1,44 +1,5 @@
-"""Setup script for DCID Server SDK"""
+"""Setup script for DCID Server SDK — delegates to pyproject.toml."""
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
-
-setup(
-    name="dcid-server-sdk",
-    version="0.1.0",
-    author="DCID",
-    description="Python SDK for DCID Server - Authentication and Identity operations",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/gettrustid/dcid-server-sdk",
-    packages=find_packages(exclude=["tests", "test_server", "examples"]),
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: Developers",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-        "License :: OSI Approved :: ISC License (ISCL)",
-        "Operating System :: OS Independent",
-    ],
-    python_requires=">=3.8",
-    install_requires=[
-        "requests>=2.28.0",
-    ],
-    extras_require={
-        "server": [
-            "fastapi>=0.104.0",
-            "uvicorn[standard]>=0.24.0",
-            "pydantic>=2.0.0",
-        ],
-        "dev": [
-            "pytest>=7.0.0",
-            "black>=23.0.0",
-            "mypy>=1.0.0",
-        ],
-    },
-)
+setup()
