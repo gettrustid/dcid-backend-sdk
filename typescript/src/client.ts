@@ -5,56 +5,17 @@ import { Issuer } from "./modules/identity/issuer";
 import { IPFS } from "./modules/identity/ipfs";
 import { Verification } from "./modules/identity/verification";
 import { Analytics } from "./modules/analytics";
-import { TrustIdSDKConfig, TokenResponse } from "./types";
+import { DCIDServerSDKConfig, TokenResponse } from "./types";
 import { getEnvironmentConfig } from "./config/environments";
 import { ConsoleLogger, NoOpLogger } from "./utils/logger";
 
 /**
- * Main TrustID PortalAPI SDK Client
+ * Main DCID Server SDK Client
  *
  * This is the main entry point for using the SDK.
  *
- * @example
- * ```typescript
- * import { TrustIdSDK } from '@trustid/portalapi-sdk';
- *
- * const sdk = new TrustIdSDK({
- *   environment: 'prod', // or 'dev'
- *   apiKey: 'your-api-key-here'
- * });
- *
- * // Register with OTP
- * await sdk.auth.registerOTP({ email: 'user@example.com' });
- *
- * // Confirm OTP (tokens are automatically set in SDK context)
- * const tokens = await sdk.auth.confirmOTP({
- *   email: 'user@example.com',
- *   otp: '123456'
- * });
- * // No need to call sdk.setTokens() - tokens are set automatically, unless you want to set them manually
- *
- * // Generate encryption key (will auto-refresh token if expired)
- * await sdk.identity.encryption.generateKey({
- *   did: 'did:iden3:trustid:main:...',
- *   ownerEmail: 'user@example.com'
- * });
- *
- * // Track analytics events (analytics is automatically enabled)
- * if (sdk.analytics) {
- *   // Start a session
- *   const session = await sdk.analytics.startSession({
- *     user_id?: string;
- *     anonymous_id?: string;
- *     page_location?: string;
- *     page_title?: string;
- *     timestamp?: number;
- *     engagement_time_msec?: number;
- *     device_type?: string;
- *   });
- * }
- * ```
  */
-export class TrustIdSDK {
+export class DCIDServerSDK {
   public readonly auth: AuthOTP;
   public readonly analytics?: Analytics;
 
@@ -70,11 +31,11 @@ export class TrustIdSDK {
   private _baseUrl: string;
 
   /**
-   * Creates a new TrustID SDK instance
+   * Creates a new DCID Server SDK instance
    *
    * @param config - SDK configuration
    */
-  constructor(config: TrustIdSDKConfig) {
+  constructor(config: DCIDServerSDKConfig) {
 
     if (!config.apiKey) {
       throw new Error("apiKey is required in SDK configuration");

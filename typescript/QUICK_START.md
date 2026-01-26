@@ -5,7 +5,7 @@
 ### Step 1: Install Dependencies
 
 ```bash
-cd trustid-sdk
+cd dcid-server-sdk
 npm install
 ```
 
@@ -22,10 +22,10 @@ This creates the `dist/` folder with compiled JavaScript.
 Create a test file `test-sdk.ts`:
 
 ```typescript
-import { TrustIdSDK } from './dist';
+import { DCIDServerSDK } from './dist';
 
 async function test() {
-  const sdk = new TrustIdSDK({
+  const sdk = new DCIDServerSDK({
     baseUrl: 'http://localhost:4000/api', // Your portalapi URL
   });
 

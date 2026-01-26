@@ -39,6 +39,13 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+
 # Testing
 coverage/
 .nyc_output/
@@ -48,3 +55,4 @@ coverage/
 *.temp
 
 typescript/test-*.ts
+.claude

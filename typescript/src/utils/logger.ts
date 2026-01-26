@@ -21,25 +21,25 @@ export class ConsoleLogger implements Logger {
 
   debug(message: string, meta?: any): void {
     if (this.enabled && process.env.NODE_ENV !== 'production') {
-      console.debug(`[TrustID SDK] ${message}`, meta || '');
+      console.debug(`[DCID SDK] ${message}`, meta || '');
     }
   }
 
   info(message: string, meta?: any): void {
     if (this.enabled) {
-      console.info(`[TrustID SDK] ${message}`, meta || '');
+      console.info(`[DCID SDK] ${message}`, meta || '');
     }
   }
 
   warn(message: string, meta?: any): void {
     if (this.enabled) {
-      console.warn(`[TrustID SDK] ${message}`, meta || '');
+      console.warn(`[DCID SDK] ${message}`, meta || '');
     }
   }
 
   error(message: string, meta?: any): void {
     if (this.enabled) {
-      console.error(`[TrustID SDK] ${message}`, meta || '');
+      console.error(`[DCID SDK] ${message}`, meta || '');
     }
   }
 }

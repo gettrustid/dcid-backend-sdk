@@ -1,8 +1,8 @@
-"""Basic usage example for TrustID SDK"""
+"""Basic usage example for DCID Server SDK"""
 
 import os
-from trustid_sdk import (
-    TrustIdSDK,
+from dcid_server_sdk import (
+    DCIDServerSDK,
     InitiateOTPOptions,
     ConfirmOTPOptions,
     GenerateEncryptionKeyOptions,
@@ -12,18 +12,18 @@ from trustid_sdk import (
 
 def main():
     # Get API key from environment
-    api_key = os.getenv("TRUSTID_API_KEY")
+    api_key = os.getenv("DCID_API_KEY")
     if not api_key:
-        raise ValueError("TRUSTID_API_KEY environment variable is required")
+        raise ValueError("DCID_API_KEY environment variable is required")
 
     # Initialize SDK
-    sdk = TrustIdSDK(
+    sdk = DCIDServerSDK(
         api_key=api_key,
         environment="dev",  # or 'prod'
         enable_request_logging=True,  # Enable logging in dev
     )
 
-    print("=== TrustID SDK Basic Usage Example ===\n")
+    print("=== DCID Server SDK Basic Usage Example ===\n")
 
     # Example 1: OTP Registration/Sign-in
     print("1. Registering with OTP...")
@@ -46,7 +46,7 @@ def main():
     # Example 3: Generate Encryption Key (requires authentication)
     print("3. Generating encryption key...")
     try:
-        did = "did:iden3:trustid:main:2qadKcedyt3zCeTg7AqSvqsnBmwPvnSaX5qnGohLMT"
+        did = "did:iden3:dcid:main:2qadKcedyt3zCeTg7AqSvqsnBmwPvnSaX5qnGohLMT"
         key_result = sdk.identity.encryption.generate_key(
             GenerateEncryptionKeyOptions(did=did, owner_email=email)
         )
@@ -79,7 +79,7 @@ def main():
     # Example 5: Analytics - Start Session
     print("5. Starting analytics session...")
     try:
-        from trustid_sdk.modules.analytics.types import StartSessionEvent
+        from dcid_server_sdk.modules.analytics.types import StartSessionEvent
 
         session_result = sdk.analytics.start_session(
             StartSessionEvent(

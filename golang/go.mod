@@ -1,3 +1,3 @@
-module github.com/gettrustid/trustid-sdk/golang
+module github.com/gettrustid/dcid-server-sdk/golang
 
 go 1.21

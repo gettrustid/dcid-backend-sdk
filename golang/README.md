@@ -1,6 +1,6 @@
-# TrustID SDK - Go
+# DCID Server SDK - Go
 
-Go SDK for interacting with the TrustID PortalAPI. This SDK provides a simple, type-safe interface for authentication, identity management, and analytics operations.
+Go SDK for interacting with the DCID Server API. This SDK provides a simple, type-safe interface for authentication, identity management, and analytics operations.
 
 ## Status
 
@@ -9,7 +9,7 @@ Go SDK for interacting with the TrustID PortalAPI. This SDK provides a simple, t
 ## Installation
 
 ```bash
-go get github.com/gettrustid/trustid-sdk/golang/pkg/trustid
+go get github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid
 ```
 
 ## Quick Start
@@ -20,14 +20,14 @@ package main
 import (
     "fmt"
     "log"
-    
-    "github.com/gettrustid/trustid-sdk/golang/pkg/trustid"
+
+    "github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
 )
 
 func main() {
     // Initialize the SDK
-    client, err := trustid.NewClient(trustid.Config{
-        Environment: trustid.EnvironmentDev,
+    client, err := dcid.NewClient(dcid.Config{
+        Environment: dcid.EnvironmentDev,
         APIKey:      "your-api-key-here",
     })
     if err != nil {
@@ -35,7 +35,7 @@ func main() {
     }
 
     // Register OTP
-    result, err := client.Auth.RegisterOTP(trustid.RegisterOTPOptions{
+    result, err := client.Auth.RegisterOTP(dcid.RegisterOTPOptions{
         Email: stringPtr("user@example.com"),
     })
     if err != nil {
@@ -43,7 +43,7 @@ func main() {
     }
 
     // Confirm OTP
-    tokens, err := client.Auth.ConfirmOTP(trustid.ConfirmOTPOptions{
+    tokens, err := client.Auth.ConfirmOTP(dcid.ConfirmOTPOptions{
         Email: stringPtr("user@example.com"),
         OTP:   "123456",
     })
@@ -84,24 +84,24 @@ type Config struct {
 
 ```go
 // Register OTP
-result, err := client.Auth.RegisterOTP(trustid.RegisterOTPOptions{
+result, err := client.Auth.RegisterOTP(dcid.RegisterOTPOptions{
     Email: stringPtr("user@example.com"),
     // or Phone: stringPtr("+1234567890"),
 })
 
 // Confirm OTP
-tokens, err := client.Auth.ConfirmOTP(trustid.ConfirmOTPOptions{
+tokens, err := client.Auth.ConfirmOTP(dcid.ConfirmOTPOptions{
     Email: stringPtr("user@example.com"),
     OTP:   "123456",
 })
 
 // Admin Login
-result, err := client.Auth.AdminLogin(trustid.RegisterOTPOptions{
+result, err := client.Auth.AdminLogin(dcid.RegisterOTPOptions{
     Email: stringPtr("admin@example.com"),
 })
 
 // Refresh Token
-tokens, err := client.Auth.RefreshToken(trustid.RefreshTokenOptions{
+tokens, err := client.Auth.RefreshToken(dcid.RefreshTokenOptions{
     RefreshToken: "your-refresh-token",
 })
 ```
@@ -126,7 +126,7 @@ session, err := client.Identity.Verification.VerifySignIn(...)
 
 ```go
 // Start Session
-session, err := client.Analytics.StartSession(&trustid.StartSessionOptions{
+session, err := client.Analytics.StartSession(&dcid.StartSessionOptions{
     UserID:      stringPtr("user123"),
     AnonymousID: stringPtr("anon-123"),
 })
@@ -144,7 +144,7 @@ The SDK provides custom error types:
 ```go
 tokens, err := client.Auth.ConfirmOTP(...)
 if err != nil {
-    var authErr *trustid.AuthenticationError
+    var authErr *dcid.AuthenticationError
     if errors.As(err, &authErr) {
         fmt.Printf("Auth error: %s (API Key Error: %v)\n", authErr.Error(), authErr.IsAPIKeyError)
     }
@@ -159,6 +159,3 @@ This SDK is part of a monorepo. See the root [README](../README.md) for more inf
 ## License
 
 ISC
-
-
-

@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gettrustid/trustid-sdk/golang/pkg/trustid"
+	"github.com/gettrustid/dcid-server-sdk/golang/pkg/dcid"
 )
 
 func main() {
 	// Initialize the SDK
-	client, err := trustid.NewClient(trustid.Config{
-		Environment: trustid.EnvironmentDev,
+	client, err := dcid.NewClient(dcid.Config{
+		Environment: dcid.EnvironmentDev,
 		APIKey:      "your-api-key-here",
 	})
 	if err != nil {
@@ -19,7 +19,7 @@ func main() {
 
 	// Example 1: Register OTP
 	fmt.Println("=== Example 1: Register OTP ===")
-	result, err := client.Auth.RegisterOTP(trustid.RegisterOTPOptions{
+	result, err := client.Auth.RegisterOTP(dcid.RegisterOTPOptions{
 		Email: stringPtr("user@example.com"),
 	})
 	if err != nil {
@@ -29,7 +29,7 @@ func main() {
 
 	// Example 2: Confirm OTP
 	fmt.Println("\n=== Example 2: Confirm OTP ===")
-	tokens, err := client.Auth.ConfirmOTP(trustid.ConfirmOTPOptions{
+	tokens, err := client.Auth.ConfirmOTP(dcid.ConfirmOTPOptions{
 		Email: stringPtr("user@example.com"),
 		OTP:   "123456", // In dev, use the OTP from result
 	})
@@ -41,7 +41,7 @@ func main() {
 
 	// Example 3: Refresh Token
 	fmt.Println("\n=== Example 3: Refresh Token ===")
-	newTokens, err := client.Auth.RefreshToken(trustid.RefreshTokenOptions{
+	newTokens, err := client.Auth.RefreshToken(dcid.RefreshTokenOptions{
 		RefreshToken: tokens.RefreshToken,
 	})
 	if err != nil {
