@@ -2,10 +2,6 @@
 
 Go SDK for interacting with the DCID Server API. This SDK provides a simple, type-safe interface for authentication, identity management, and analytics operations.
 
-## Status
-
-🚧 **Work in Progress** - Core structure is in place. HTTP client and module implementations are coming next.
-
 ## Installation
 
 ```bash

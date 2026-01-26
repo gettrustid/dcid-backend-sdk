@@ -1,4 +1,4 @@
-"""IPFS module for TrustID SDK"""
+"""IPFS module for DCID SDK"""
 
 from .ipfs import IPFS
 

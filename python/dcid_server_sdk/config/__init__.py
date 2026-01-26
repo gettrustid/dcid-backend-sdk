@@ -1,4 +1,4 @@
-"""Configuration for TrustID SDK"""
+"""Configuration for DCID SDK"""
 
 from .environments import ENVIRONMENTS, get_environment_config, EnvironmentConfig
 

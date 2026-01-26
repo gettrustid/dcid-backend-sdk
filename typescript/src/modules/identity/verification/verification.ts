@@ -117,7 +117,7 @@ export class Verification {
    *   from: 'did:iden3:trust-id:main:...',
    *   typ: 'application/iden3comm-plain-json',
    *   body: {
-   *     reason: 'TrustID Verification',
+   *     reason: 'DCID Verification',
    *     message: '',
    *     callbackUrl: 'https://.../api/identity/verify/callback?sessionId=3297636436',
    *     scope: [...]

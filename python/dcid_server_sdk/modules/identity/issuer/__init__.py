@@ -1,4 +1,4 @@
-"""Issuer module for TrustID SDK"""
+"""Issuer module for DCID SDK"""
 
 from .issuer import Issuer
 

@@ -1,1 +1,1 @@
-"""Modules for TrustID SDK"""
+"""Modules for DCID SDK"""

@@ -21,7 +21,8 @@ import { DCIDServerSDK } from "@dcid/server-sdk";
 
 // Initialize the SDK
 const sdk = new DCIDServerSDK({
-  baseUrl: "https://api.dcid.com", // or 'http://localhost:4000' for local dev
+  apiKey: "your-api-key",
+  environment: "prod",
 });
 
 // Register/Sign-in with OTP
@@ -44,7 +45,8 @@ const { DCIDServerSDK } = require("@dcid/server-sdk");
 
 // Initialize the SDK
 const sdk = new DCIDServerSDK({
-  baseUrl: "https://api.dcid.com",
+  apiKey: "your-api-key",
+  environment: "prod",
 });
 
 // Use the SDK the same way...
@@ -208,65 +210,6 @@ await sdk.identity.ipfs.getAllUserCredentials({
   includeCredentialData: false,
 });
 ```
-
-## Test Server
-
-The TypeScript SDK includes a test server that exposes HTTP endpoints for all SDK methods.
-
-### Running the Test Server
-
-```bash
-# Navigate to test server directory
-cd test_server
-
-# Install dependencies
-npm install
-
-# Set environment variables
-export DCID_API_KEY="your-api-key"
-export DCID_ENVIRONMENT="dev"  # or "prod"
-export PORT="8080"  # optional
-
-# Run the server
-npm run dev
-```
-
-The server will start on `http://localhost:8080`.
-
-### Test Server Endpoints
-
-The test server provides 21 endpoints covering all SDK functionality:
-
-#### Authentication
-- `POST /api/auth/register-otp` - Register OTP
-- `POST /api/auth/confirm-otp` - Confirm OTP
-- `POST /api/auth/admin-login` - Admin login
-- `POST /api/auth/refresh-token` - Refresh token
-
-#### Identity - Encryption
-- `POST /api/identity/encryption/generate-key` - Generate encryption key
-- `POST /api/identity/encryption/get-key` - Get encrypted key
-
-#### Identity - Issuer
-- `POST /api/identity/issuer/issue-credential` - Issue credential
-- `GET /api/identity/issuer/get-credential-offer` - Get credential offer
-
-#### Identity - IPFS
-- `POST /api/identity/ipfs/store-credential` - Store credential
-- `POST /api/identity/ipfs/retrieve-user-credential` - Retrieve user credential
-- `POST /api/identity/ipfs/get-all-user-credentials` - Get all user credentials
-
-#### Identity - Verification
-- `POST /api/identity/verification/verify-sign-in` - Verify sign-in
-- `GET /api/identity/verification/link-store` - Get link store
-- `POST /api/identity/verification/link-store` - Post link store
-- `POST /api/identity/verification/callback` - Verify callback
-
-#### Analytics
-- `POST /api/analytics/start-session` - Start session
-- `POST /api/analytics/end-session` - End session
-
-See [test_server/README.md](./test_server/README.md) for complete documentation.
 
 ## Module System Support
 

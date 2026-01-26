@@ -1,4 +1,4 @@
-"""Analytics module for TrustID SDK"""
+"""Analytics module for DCID SDK"""
 
 from .analytics import Analytics
 from .types import (

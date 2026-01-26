@@ -1,4 +1,4 @@
-"""Verification module for TrustID SDK"""
+"""Verification module for DCID SDK"""
 
 from .verification import Verification
 

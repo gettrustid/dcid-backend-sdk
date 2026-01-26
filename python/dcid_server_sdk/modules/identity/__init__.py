@@ -1,1 +1,1 @@
-"""Identity module for TrustID SDK"""
+"""Identity module for DCID SDK"""

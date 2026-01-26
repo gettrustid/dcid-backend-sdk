@@ -1,4 +1,4 @@
-"""Authentication module for TrustID SDK"""
+"""Authentication module for DCID SDK"""
 
 from .otp import AuthOTP
 

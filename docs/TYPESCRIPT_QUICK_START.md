@@ -32,15 +32,15 @@ async function test() {
   try {
     // Test registerOTP
     console.log('Testing registerOTP...');
-    const result = await sdk.auth.registerOTP({ 
-      email: 'test@example.com' 
+    const result = await sdk.auth.registerOTP({
+      email: 'test@example.com'
     });
     console.log('Success!', result);
 
     // If in dev mode, you'll get the OTP back
     if (result.otp) {
       console.log('OTP Code:', result.otp);
-      
+
       // Test confirmOTP
       console.log('Testing confirmOTP...');
       const tokens = await sdk.auth.confirmOTP({
@@ -76,7 +76,6 @@ npx ts-node test-sdk.ts
 ✅ **Full TypeScript support** with types
 ✅ **Error handling** with custom error class
 ✅ **Documentation** in README.md
-✅ **Examples** in examples/basic-usage.ts
 
 ## Next Steps
 
@@ -84,10 +83,3 @@ npx ts-node test-sdk.ts
 2. **Review the code** - Check `src/auth/otp.ts` to see the methods
 3. **Read the docs** - See `README.md` for full API reference
 4. **Extend if needed** - Add more methods following the same pattern
-
-## Need Help?
-
-- **How to use it?** → See `README.md`
-- **Code examples?** → See `examples/basic-usage.ts`
-- **What was built?** → See `IMPLEMENTATION_SUMMARY.md`
-

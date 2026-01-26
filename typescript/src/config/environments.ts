@@ -1,5 +1,5 @@
 /**
- * Environment configuration for TrustID SDK
+ * Environment configuration for DCID Server SDK
  *
  * Contains hard-coded URLs for different environments (dev, prod)
  */

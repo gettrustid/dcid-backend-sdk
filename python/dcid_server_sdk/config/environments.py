@@ -1,4 +1,4 @@
-"""Environment configuration for TrustID SDK"""
+"""Environment configuration for DCID SDK"""
 
 from typing import Literal
 from dataclasses import dataclass

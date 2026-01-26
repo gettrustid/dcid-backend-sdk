@@ -1,4 +1,4 @@
-"""Encryption module for TrustID SDK"""
+"""Encryption module for DCID SDK"""
 
 from .key_manager import KeyManager
 

@@ -6,6 +6,7 @@
     "outDir": "./dist/esm",
     "declaration": true,
     "declarationMap": true
-  }
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "src/__test-utils__", "vitest.config.ts"]
 }
 

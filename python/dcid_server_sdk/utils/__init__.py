@@ -1,4 +1,4 @@
-"""Utilities for TrustID SDK"""
+"""Utilities for DCID SDK"""
 
 from .logger import Logger, ConsoleLogger, NoOpLogger
 
