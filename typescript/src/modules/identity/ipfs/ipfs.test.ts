@@ -37,7 +37,8 @@ describe("IPFS", () => {
           credentialType: "KYCAgeCredential",
           credential: "encrypted-string-data",
           encrypted: true,
-        }
+        },
+        { headers: { "X-TrustID-Service": "identity:ipfs_store_credential" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -62,7 +63,8 @@ describe("IPFS", () => {
           credentialType: "UPHEM",
           credential: credObj,
           encrypted: false,
-        }
+        },
+        { headers: { "X-TrustID-Service": "identity:ipfs_store_credential" } }
       );
     });
 
@@ -79,7 +81,8 @@ describe("IPFS", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/ipfs/store-credential",
-        expect.objectContaining({ encrypted: true })
+        expect.objectContaining({ encrypted: true }),
+        { headers: { "X-TrustID-Service": "identity:ipfs_store_credential" } }
       );
     });
 
@@ -159,7 +162,8 @@ describe("IPFS", () => {
           did: "did:iden3:test",
           credentialType: "KYC",
           includeCidOnly: false,
-        }
+        },
+        { headers: { "X-TrustID-Service": "identity:ipfs_retrieve_credential" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -177,7 +181,8 @@ describe("IPFS", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/retrieve-user-credential",
-        expect.objectContaining({ includeCidOnly: true })
+        expect.objectContaining({ includeCidOnly: true }),
+        { headers: { "X-TrustID-Service": "identity:ipfs_retrieve_credential" } }
       );
     });
 
@@ -210,7 +215,8 @@ describe("IPFS", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/get-all-user-credentials",
-        { did: "did:iden3:test", includeCredentialData: false }
+        { did: "did:iden3:test", includeCredentialData: false },
+        { headers: { "X-TrustID-Service": "identity:ipfs_get_all_credentials" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -227,7 +233,8 @@ describe("IPFS", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/get-all-user-credentials",
-        expect.objectContaining({ includeCredentialData: true })
+        expect.objectContaining({ includeCredentialData: true }),
+        { headers: { "X-TrustID-Service": "identity:ipfs_get_all_credentials" } }
       );
     });
 

@@ -282,10 +282,13 @@ class HTTPClient:
         path: str,
         json: Optional[Dict[str, Any]] = None,
         params: Optional[Dict[str, Any]] = None,
+        extra_headers: Optional[Dict[str, str]] = None,
     ) -> Any:
-        """Make HTTP request"""
+        """Make HTTP request. extra_headers override default headers (e.g. X-TrustID-Service)."""
         url = f"{self.base_url}{path}" if self.base_url else path
         headers = self._build_headers()
+        if extra_headers:
+            headers.update(extra_headers)
 
         if self.enable_request_logging:
             self.logger.debug(
@@ -387,18 +390,26 @@ class HTTPClient:
             self.logger.error("Network error", {"error": error.message, "context": context})
             raise error
 
-    def get(self, path: str, params: Optional[Dict[str, Any]] = None) -> Any:
+    def get(
+        self,
+        path: str,
+        params: Optional[Dict[str, Any]] = None,
+        extra_headers: Optional[Dict[str, str]] = None,
+    ) -> Any:
         """Make GET request"""
-        return self._request("GET", path, params=params)
+        return self._request("GET", path, params=params, extra_headers=extra_headers)
 
     def post(
         self,
         path: str,
         json: Optional[Dict[str, Any]] = None,
         params: Optional[Dict[str, Any]] = None,
+        extra_headers: Optional[Dict[str, str]] = None,
     ) -> Any:
         """Make POST request"""
-        return self._request("POST", path, json=json, params=params)
+        return self._request(
+            "POST", path, json=json, params=params, extra_headers=extra_headers
+        )
 
     def put(self, path: str, json: Optional[Dict[str, Any]] = None) -> Any:
         """Make PUT request"""

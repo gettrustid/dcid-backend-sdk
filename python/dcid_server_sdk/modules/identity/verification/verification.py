@@ -42,6 +42,7 @@ class Verification:
         response = self.http_client.post(
             "/identity/verify/sign-in",
             json={"credentialName": options.credential_name},
+            extra_headers={"X-TrustID-Service": "identity:verification_sign_in"},
         )
 
         return VerifySignInResponse(
@@ -69,7 +70,9 @@ class Verification:
             raise ValueError("Valid id is required")
 
         response = self.http_client.get(
-            "/identity/verify/link-store", params={"id": options.id}
+            "/identity/verify/link-store",
+            params={"id": options.id},
+            extra_headers={"X-TrustID-Service": "identity:verification_link_store_get"},
         )
 
         return GetLinkStoreResponse(
@@ -122,6 +125,7 @@ class Verification:
                 "typ": options.typ,
                 "body": options.body,
             },
+            extra_headers={"X-TrustID-Service": "identity:verification_link_store_post"},
         )
 
         return PostLinkStoreResponse(
@@ -156,6 +160,7 @@ class Verification:
             "/identity/verify/callback",
             json={"token": options.token},
             params={"sessionId": options.session_id},
+            extra_headers={"X-TrustID-Service": "identity:verification_callback"},
         )
 
         return VerifyCallbackResponse(

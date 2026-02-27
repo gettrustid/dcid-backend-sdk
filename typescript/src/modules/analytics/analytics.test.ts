@@ -36,7 +36,8 @@ describe("Analytics", () => {
           page_location: "https://example.com",
           event: "start_session",
           event_name: "start_session",
-        }
+        },
+        { headers: { "X-TrustID-Service": "analytics:start_session" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -57,7 +58,8 @@ describe("Analytics", () => {
         {
           event: "start_session",
           event_name: "start_session",
-        }
+        },
+        { headers: { "X-TrustID-Service": "analytics:start_session" } }
       );
     });
 
@@ -78,7 +80,8 @@ describe("Analytics", () => {
           page_location: "/home",
           event: "start_session",
           event_name: "start_session",
-        })
+        }),
+        { headers: { "X-TrustID-Service": "analytics:start_session" } }
       );
     });
   });
@@ -102,7 +105,8 @@ describe("Analytics", () => {
           session_id: "sess-abc",
           event: "end_session",
           event_name: "end_session",
-        })
+        }),
+        { headers: { "X-TrustID-Service": "analytics:end_session" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -128,7 +132,8 @@ describe("Analytics", () => {
         `${baseUrl}/analytics/sgtm`,
         expect.objectContaining({
           ended_at: "2025-01-01T01:00:00Z",
-        })
+        }),
+        { headers: { "X-TrustID-Service": "analytics:end_session" } }
       );
     });
   });

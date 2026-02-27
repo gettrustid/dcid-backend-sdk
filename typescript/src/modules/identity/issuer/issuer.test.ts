@@ -36,7 +36,8 @@ describe("Issuer", () => {
           credentialName: validOptions.credentialName,
           values: validOptions.values,
           ownerEmail: validOptions.ownerEmail,
-        }
+        },
+        { headers: { "X-TrustID-Service": "identity:issuer_issue_credential" } }
       );
       expect(result).toEqual(sigResponse);
     });
@@ -115,7 +116,10 @@ describe("Issuer", () => {
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         "/identity/issuer/get-credential-offer",
-        { params: { claimId: "claim-123", txId: "0xdef456" } }
+        {
+          params: { claimId: "claim-123", txId: "0xdef456" },
+          headers: { "X-TrustID-Service": "identity:issuer_get_credential_offer" },
+        }
       );
       expect(result).toEqual(publishedResponse);
     });

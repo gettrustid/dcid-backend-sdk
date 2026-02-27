@@ -80,7 +80,8 @@ export class IPFS {
         credentialType: options.credentialType,
         credential: options.credential,
         encrypted: encrypted,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:ipfs_store_credential" } }
     );
 
     return response.data;
@@ -137,7 +138,8 @@ export class IPFS {
         did: options.did,
         credentialType: options.credentialType,
         includeCidOnly: includeCidOnly,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:ipfs_retrieve_credential" } }
     );
 
     return response.data;
@@ -189,7 +191,8 @@ export class IPFS {
       {
         did: options.did,
         includeCredentialData: includeCredentialData,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:ipfs_get_all_credentials" } }
     );
 
     return response.data;

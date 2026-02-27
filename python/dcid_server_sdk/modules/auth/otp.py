@@ -50,6 +50,7 @@ class AuthOTP:
         response = self.http_client.post(
             "/auth/sign-in/initiate",
             json=body,
+            extra_headers={"X-TrustID-Service": "otp:initiate"},
         )
 
         return InitiateOTPResponse(**response)
@@ -84,6 +85,7 @@ class AuthOTP:
         response = self.http_client.post(
             "/auth/sign-in/confirm",
             json=body,
+            extra_headers={"X-TrustID-Service": "otp:confirm"},
         )
 
         # Extract only the fields we need (backend may return extra Keycloak fields)
@@ -127,6 +129,7 @@ class AuthOTP:
         response = self.http_client.post(
             "/auth/sign-in/initiate?type=admin",
             json=body,
+            extra_headers={"X-TrustID-Service": "otp:admin_initiate"},
         )
 
         return InitiateOTPResponse(**response)
@@ -152,6 +155,7 @@ class AuthOTP:
         response = self.http_client.post(
             "/auth/refresh-token",
             json={"refreshToken": options.refresh_token},
+            extra_headers={"X-TrustID-Service": "otp:refresh_token"},
         )
 
         # Extract only the fields we need (backend may return extra Keycloak fields)

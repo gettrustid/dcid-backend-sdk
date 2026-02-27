@@ -65,7 +65,8 @@ export class Issuer {
         credentialName: options.credentialName,
         values: options.values,
         ownerEmail: options.ownerEmail,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:issuer_issue_credential" } }
     );
 
     return response.data;
@@ -111,6 +112,7 @@ export class Issuer {
           claimId: options.claimId,
           txId: options.txId,
         },
+        headers: { "X-TrustID-Service": "identity:issuer_get_credential_offer" },
       }
     );
 

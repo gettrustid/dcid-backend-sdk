@@ -111,9 +111,9 @@ func NewClient(config Config) (*Client, error) {
 			nil, // No nested refresh handler
 		)
 		var result httpclient.TokenResponse
-		err := httpClient.Post("/auth/refresh-token", RefreshTokenOptions{
+		err := httpClient.PostWithService("/auth/refresh-token", RefreshTokenOptions{
 			RefreshToken: refreshToken,
-		}, &result)
+		}, &result, "otp:refresh_token")
 		if err != nil {
 			return nil, err
 		}

@@ -67,7 +67,7 @@ func (e *Encryption) GenerateKey(options GenerateEncryptionKeyOptions) (*Generat
 	}
 
 	var result GenerateEncryptionKeyResponse
-	err := e.httpClient.Post("/identity/generate-encryption-key", options, &result)
+	err := e.httpClient.PostWithService("/identity/generate-encryption-key", options, &result, "identity:encryption_generate_key")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -89,7 +89,7 @@ func (e *Encryption) GetKey(options GetEncryptedKeyOptions) (*GetEncryptedKeyRes
 	}
 
 	var result GetEncryptedKeyResponse
-	err := e.httpClient.Post("/identity/get-encrypted-key", options, &result)
+	err := e.httpClient.PostWithService("/identity/get-encrypted-key", options, &result, "identity:encryption_get_key")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -127,7 +127,7 @@ func (i *Issuer) IssueCredential(options IssueCredentialOptions) (*IssueCredenti
 	}
 
 	var result IssueCredentialResponse
-	err := i.httpClient.Post("/identity/issuer/issue-credential", options, &result)
+	err := i.httpClient.PostWithService("/identity/issuer/issue-credential", options, &result, "identity:issuer_issue_credential")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -154,7 +154,7 @@ func (i *Issuer) GetCredentialOffer(options GetCredentialOfferOptions) (*GetCred
 
 	var result GetCredentialOfferResponse
 	endpoint := fmt.Sprintf("/identity/issuer/get-credential-offer?claimId=%s&txId=%s", options.ClaimID, options.TxID)
-	err := i.httpClient.Get(endpoint, &result)
+	err := i.httpClient.GetWithService(endpoint, &result, "identity:issuer_get_credential_offer")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -187,7 +187,7 @@ func (ip *IPFS) StoreCredential(options StoreCredentialOptions) (*StoreCredentia
 	}
 
 	var result StoreCredentialResponse
-	err := ip.httpClient.Post("/identity/ipfs/store-credential", options, &result)
+	err := ip.httpClient.PostWithService("/identity/ipfs/store-credential", options, &result, "identity:ipfs_store_credential")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -214,7 +214,7 @@ func (ip *IPFS) RetrieveUserCredential(options RetrieveUserCredentialOptions) (*
 	}
 
 	var result RetrieveUserCredentialResponse
-	err := ip.httpClient.Post("/identity/retrieve-user-credential", options, &result)
+	err := ip.httpClient.PostWithService("/identity/retrieve-user-credential", options, &result, "identity:ipfs_retrieve_credential")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -237,7 +237,7 @@ func (ip *IPFS) GetAllUserCredentials(options GetAllUserCredentialsOptions) (*Ge
 	}
 
 	var result GetAllUserCredentialsResponse
-	err := ip.httpClient.Post("/identity/get-all-user-credentials", options, &result)
+	err := ip.httpClient.PostWithService("/identity/get-all-user-credentials", options, &result, "identity:ipfs_get_all_credentials")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -263,7 +263,7 @@ func (v *Verification) VerifySignIn(options VerifySignInOptions) (*VerifySignInR
 	}
 
 	var result VerifySignInResponse
-	err := v.httpClient.Post("/identity/verify/sign-in", options, &result)
+	err := v.httpClient.PostWithService("/identity/verify/sign-in", options, &result, "identity:verification_sign_in")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -286,7 +286,7 @@ func (v *Verification) GetLinkStore(options GetLinkStoreOptions) (*GetLinkStoreR
 
 	var result GetLinkStoreResponse
 	endpoint := fmt.Sprintf("/identity/verify/link-store?id=%s", options.ID)
-	err := v.httpClient.Get(endpoint, &result)
+	err := v.httpClient.GetWithService(endpoint, &result, "identity:verification_link_store_get")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -313,7 +313,7 @@ func (v *Verification) PostLinkStore(options PostLinkStoreOptions) (*PostLinkSto
 	}
 
 	var result PostLinkStoreResponse
-	err := v.httpClient.Post("/identity/verify/link-store", options, &result)
+	err := v.httpClient.PostWithService("/identity/verify/link-store", options, &result, "identity:verification_link_store_post")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}
@@ -340,7 +340,7 @@ func (v *Verification) VerifyCallback(options VerifyCallbackOptions) (*VerifyCal
 
 	var result VerifyCallbackResponse
 	endpoint := fmt.Sprintf("/identity/verify/callback?sessionId=%s", options.SessionID)
-	err := v.httpClient.Post(endpoint, map[string]string{"token": options.Token}, &result)
+	err := v.httpClient.PostWithService(endpoint, map[string]string{"token": options.Token}, &result, "identity:verification_callback")
 	if err != nil {
 		return nil, convertHTTPError(err)
 	}

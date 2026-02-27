@@ -54,14 +54,14 @@ func (a *AnalyticsClient) StartSession(options *StartSessionOptions) (*StartSess
 	}
 
 	var result StartSessionResponse
-	err := a.httpClient.Post("/analytics/sgtm", requestBody, &result)
+	err := a.httpClient.PostWithService("/analytics/sgtm", requestBody, &result, "analytics:start_session")
 	if err != nil {
 		return nil, a.convertError(err)
 	}
 	return &result, nil
 }
 
-// convertError converts HTTP errors to SDK errors
+// convertError converts HTTP errors to SDK errors HTTP errors to SDK errors
 func (a *AnalyticsClient) convertError(err error) error {
 	httpErr, ok := err.(*httpclient.HTTPError)
 	if !ok {
@@ -171,7 +171,7 @@ func (a *AnalyticsClient) EndSession(options *EndSessionOptions) (*EndSessionRes
 	}
 
 	var result EndSessionResponse
-	err := a.httpClient.Post("/analytics/sgtm", requestBody, &result)
+	err := a.httpClient.PostWithService("/analytics/sgtm", requestBody, &result, "analytics:end_session")
 	if err != nil {
 		return nil, a.convertError(err)
 	}

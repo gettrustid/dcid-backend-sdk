@@ -32,7 +32,7 @@ func (a *AuthClient) RegisterOTP(options RegisterOTPOptions) (*InitiateOTPRespon
 	}
 
 	var result InitiateOTPResponse
-	err := a.httpClient.Post("/auth/sign-in/initiate", options, &result)
+	err := a.httpClient.PostWithService("/auth/sign-in/initiate", options, &result, "otp:initiate")
 	if err != nil {
 		return nil, a.convertError(err)
 	}
@@ -61,7 +61,7 @@ func (a *AuthClient) ConfirmOTP(options ConfirmOTPOptions) (*TokenResponse, erro
 	}
 
 	var result TokenResponse
-	err := a.httpClient.Post("/auth/sign-in/confirm", options, &result)
+	err := a.httpClient.PostWithService("/auth/sign-in/confirm", options, &result, "otp:confirm")
 	if err != nil {
 		return nil, a.convertError(err)
 	}
@@ -87,7 +87,7 @@ func (a *AuthClient) AdminLogin(options RegisterOTPOptions) (*InitiateOTPRespons
 	}
 
 	var result InitiateOTPResponse
-	err := a.httpClient.Post("/auth/sign-in/initiate?type=admin", options, &result)
+	err := a.httpClient.PostWithService("/auth/sign-in/initiate?type=admin", options, &result, "otp:admin_initiate")
 	if err != nil {
 		return nil, a.convertError(err)
 	}
@@ -109,7 +109,7 @@ func (a *AuthClient) RefreshToken(options RefreshTokenOptions) (*TokenResponse, 
 	}
 
 	var result TokenResponse
-	err := a.httpClient.Post("/auth/refresh-token", options, &result)
+	err := a.httpClient.PostWithService("/auth/refresh-token", options, &result, "otp:refresh_token")
 	if err != nil {
 		return nil, a.convertError(err)
 	}

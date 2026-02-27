@@ -46,7 +46,8 @@ export class Analytics {
         ...params,
         event: 'start_session',
         event_name: 'start_session',
-      }
+      },
+      { headers: { 'X-TrustID-Service': 'analytics:start_session' } }
     );
 
     return response.data;
@@ -69,7 +70,8 @@ export class Analytics {
         ...event,
         event: 'end_session',
         event_name: 'end_session',
-      }
+      },
+      { headers: { 'X-TrustID-Service': 'analytics:end_session' } }
     );
 
     return response.data;

@@ -45,7 +45,9 @@ class Analytics:
                 payload["session_id"] = params.session_id
 
         response = self.http_client.post(
-            f"{self.base_url}/analytics/sgtm", json=payload
+            f"{self.base_url}/analytics/sgtm",
+            json=payload,
+            extra_headers={"X-TrustID-Service": "analytics:start_session"},
         )
 
         return StartSessionResponse(
@@ -86,7 +88,9 @@ class Analytics:
             payload["ended_at"] = event.ended_at
 
         response = self.http_client.post(
-            f"{self.base_url}/analytics/sgtm", json=payload
+            f"{self.base_url}/analytics/sgtm",
+            json=payload,
+            extra_headers={"X-TrustID-Service": "analytics:end_session"},
         )
 
         return AnalyticsEventResponse(

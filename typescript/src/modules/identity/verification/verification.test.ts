@@ -27,7 +27,8 @@ describe("Verification", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/verify/sign-in",
-        { credentialName: "ProofOfAgeCredential" }
+        { credentialName: "ProofOfAgeCredential" },
+        { headers: { "X-TrustID-Service": "identity:verification_sign_in" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -66,7 +67,10 @@ describe("Verification", () => {
 
       expect(mockAxios.get).toHaveBeenCalledWith(
         "/identity/verify/link-store",
-        { params: { id: "sess-123" } }
+        {
+          params: { id: "sess-123" },
+          headers: { "X-TrustID-Service": "identity:verification_link_store_get" },
+        }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -123,7 +127,8 @@ describe("Verification", () => {
           from: validOptions.from,
           typ: validOptions.typ,
           body: validOptions.body,
-        }
+        },
+        { headers: { "X-TrustID-Service": "identity:verification_link_store_post" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -199,7 +204,10 @@ describe("Verification", () => {
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/verify/callback",
         { token: "jwz-token-abc" },
-        { params: { sessionId: "sess-123" } }
+        {
+          params: { sessionId: "sess-123" },
+          headers: { "X-TrustID-Service": "identity:verification_callback" },
+        }
       );
       expect(result).toEqual(mockResponse);
     });
