@@ -101,6 +101,7 @@ func NewClient(config Config) (*Client, error) {
 		httpClient := httpclient.NewClient(
 			baseURL,
 			config.APIKey,
+			"otp",
 			timeout,
 			logger,
 			enableRequestLogging,
@@ -131,6 +132,7 @@ func NewClient(config Config) (*Client, error) {
 	authHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
+		"otp",
 		timeout,
 		logger,
 		enableRequestLogging,
@@ -144,6 +146,7 @@ func NewClient(config Config) (*Client, error) {
 	authenticatedHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
+		"identity",
 		timeout,
 		logger,
 		enableRequestLogging,
@@ -156,6 +159,7 @@ func NewClient(config Config) (*Client, error) {
 	analyticsHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
+		"analytics",
 		timeout,
 		logger,
 		enableRequestLogging,

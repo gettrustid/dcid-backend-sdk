@@ -22,6 +22,7 @@ func newTestHTTPClient(serverURL string, opts ...func(*Client)) *Client {
 	c := NewClient(
 		serverURL,
 		"test-api-key",
+		"",
 		5*time.Second,
 		&noopLogger{},
 		false,
@@ -106,7 +107,7 @@ func TestRequest_SetsRequiredHeaders(t *testing.T) {
 	}))
 	defer server.Close()
 
-	c := NewClient(server.URL, "my-key", 5*time.Second, &noopLogger{}, false, nil, nil, nil, nil)
+	c := NewClient(server.URL, "my-key", "", 5*time.Second, &noopLogger{}, false, nil, nil, nil, nil)
 	var resp json.RawMessage
 	if err := c.Get("/headers", &resp); err != nil {
 		t.Fatal(err)
@@ -489,7 +490,7 @@ func TestRequest_LoggingEnabled(t *testing.T) {
 	defer server.Close()
 
 	logger := &noopLogger{}
-	c := NewClient(server.URL, "key", 5*time.Second, logger, true, nil, nil, nil, nil)
+	c := NewClient(server.URL, "key", "", 5*time.Second, logger, true, nil, nil, nil, nil)
 	var resp json.RawMessage
 	if err := c.Get("/log-test", &resp); err != nil {
 		t.Fatal(err)

@@ -26,6 +26,7 @@ type TokenResponse struct {
 type Client struct {
 	baseURL              string
 	apiKey               string
+	service              string // X-TrustID-Service: otp, identity, analytics
 	timeout              time.Duration
 	httpClient           *http.Client
 	logger               Logger
@@ -40,6 +41,7 @@ type Client struct {
 func NewClient(
 	baseURL string,
 	apiKey string,
+	service string,
 	timeout time.Duration,
 	logger Logger,
 	enableLogging bool,
@@ -51,6 +53,7 @@ func NewClient(
 	return &Client{
 		baseURL:              baseURL,
 		apiKey:               apiKey,
+		service:              service,
 		timeout:              timeout,
 		logger:               logger,
 		enableLogging:        enableLogging,
@@ -95,6 +98,9 @@ func (c *Client) Request(method, url string, body interface{}, response interfac
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("X-API-Key", c.apiKey)
+	if c.service != "" {
+		req.Header.Set("X-TrustID-Service", c.service)
+	}
 
 	// Add auth token if available
 	if c.getAuthToken != nil {
