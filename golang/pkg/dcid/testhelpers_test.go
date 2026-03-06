@@ -35,6 +35,7 @@ func newTestHTTPClient(serverURL string, opts ...testHTTPClientOption) *httpclie
 	return httpclient.NewClient(
 		serverURL,
 		cfg.apiKey,
+		"",
 		cfg.timeout,
 		&NoOpLogger{},
 		false,

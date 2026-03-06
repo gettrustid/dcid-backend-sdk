@@ -62,6 +62,7 @@ class IPFS:
                 "credential": options.credential,
                 "encrypted": encrypted,
             },
+            extra_headers={"X-TrustID-Service": "identity:ipfs_store_credential"},
         )
 
         return StoreCredentialResponse(
@@ -106,6 +107,7 @@ class IPFS:
                 "credentialType": options.credential_type,
                 "includeCidOnly": include_cid_only,
             },
+            extra_headers={"X-TrustID-Service": "identity:ipfs_retrieve_credential"},
         )
 
         return RetrieveUserCredentialResponse(
@@ -145,6 +147,7 @@ class IPFS:
                 "did": options.did,
                 "includeCredentialData": include_credential_data,
             },
+            extra_headers={"X-TrustID-Service": "identity:ipfs_get_all_credentials"},
         )
 
         return GetAllUserCredentialsResponse(

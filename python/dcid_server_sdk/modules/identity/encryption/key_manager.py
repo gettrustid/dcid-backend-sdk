@@ -41,6 +41,7 @@ class KeyManager:
         response = self.http_client.post(
             "/identity/generate-encryption-key",
             json={"did": options.did, "ownerEmail": options.owner_email},
+            extra_headers={"X-TrustID-Service": "identity:encryption_generate_key"},
         )
 
         return GenerateEncryptionKeyResponse(
@@ -69,7 +70,9 @@ class KeyManager:
             raise ValueError('Valid DID is required (must start with "did:")')
 
         response = self.http_client.post(
-            "/identity/get-encrypted-key", json={"did": options.did}
+            "/identity/get-encrypted-key",
+            json={"did": options.did},
+            extra_headers={"X-TrustID-Service": "identity:encryption_get_key"},
         )
 
         return GetEncryptedKeyResponse(

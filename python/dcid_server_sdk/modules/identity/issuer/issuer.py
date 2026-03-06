@@ -55,6 +55,7 @@ class Issuer:
                 "values": options.values,
                 "ownerEmail": options.owner_email,
             },
+            extra_headers={"X-TrustID-Service": "identity:issuer_issue_credential"},
         )
 
         # Return response as is - it will have either qrCodeLink or txId/claimId
@@ -92,6 +93,7 @@ class Issuer:
         response = self.http_client.get(
             "/identity/issuer/get-credential-offer",
             params={"claimId": options.claim_id, "txId": options.tx_id},
+            extra_headers={"X-TrustID-Service": "identity:issuer_get_credential_offer"},
         )
 
         return GetCredentialOfferResponse(

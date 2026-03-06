@@ -26,6 +26,7 @@ type TokenResponse struct {
 type Client struct {
 	baseURL              string
 	apiKey               string
+	service              string // X-TrustID-Service: otp, identity, analytics
 	timeout              time.Duration
 	httpClient           *http.Client
 	logger               Logger
@@ -40,6 +41,7 @@ type Client struct {
 func NewClient(
 	baseURL string,
 	apiKey string,
+	service string,
 	timeout time.Duration,
 	logger Logger,
 	enableLogging bool,
@@ -51,6 +53,7 @@ func NewClient(
 	return &Client{
 		baseURL:              baseURL,
 		apiKey:               apiKey,
+		service:              service,
 		timeout:              timeout,
 		logger:               logger,
 		enableLogging:        enableLogging,
@@ -66,16 +69,26 @@ func NewClient(
 
 // Post makes a POST request
 func (c *Client) Post(url string, body interface{}, response interface{}) error {
-	return c.Request("POST", url, body, response)
+	return c.Request("POST", url, body, response, "")
+}
+
+// PostWithService makes a POST request with X-TrustID-Service override (SERVICE:EVENT_TYPE format)
+func (c *Client) PostWithService(url string, body interface{}, response interface{}, service string) error {
+	return c.Request("POST", url, body, response, service)
 }
 
 // Get makes a GET request
 func (c *Client) Get(url string, response interface{}) error {
-	return c.Request("GET", url, nil, response)
+	return c.Request("GET", url, nil, response, "")
 }
 
-// Request makes an HTTP request
-func (c *Client) Request(method, url string, body interface{}, response interface{}) error {
+// GetWithService makes a GET request with X-TrustID-Service override (SERVICE:EVENT_TYPE format)
+func (c *Client) GetWithService(url string, response interface{}, service string) error {
+	return c.Request("GET", url, nil, response, service)
+}
+
+// Request makes an HTTP request. serviceOverride: if non-empty, uses it for X-TrustID-Service instead of c.service.
+func (c *Client) Request(method, url string, body interface{}, response interface{}, serviceOverride string) error {
 	var reqBody io.Reader
 	if body != nil {
 		jsonData, err := json.Marshal(body)
@@ -95,6 +108,13 @@ func (c *Client) Request(method, url string, body interface{}, response interfac
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("X-API-Key", c.apiKey)
+	service := serviceOverride
+	if service == "" {
+		service = c.service
+	}
+	if service != "" {
+		req.Header.Set("X-TrustID-Service", service)
+	}
 
 	// Add auth token if available
 	if c.getAuthToken != nil {
@@ -127,7 +147,7 @@ func (c *Client) Request(method, url string, body interface{}, response interfac
 				if err == nil && newTokens != nil {
 					c.onTokenRefreshed(newTokens)
 					// Retry request with new token
-					return c.Request(method, url, body, response)
+					return c.Request(method, url, body, response, serviceOverride)
 				}
 			}
 		}

@@ -13,7 +13,8 @@ export interface EnvironmentConfig {
  */
 export const ENVIRONMENTS: Record<"dev" | "prod", EnvironmentConfig> = {
   dev: {
-    baseUrl: "http://krakend.dev-external.trustid.life/api",
+    // baseUrl: "http://krakend.dev-external.trustid.life/api",
+    baseUrl: "http://localhost:5000/api",
   },
   prod: {
     baseUrl: "https://gateway.trustid.life/api",

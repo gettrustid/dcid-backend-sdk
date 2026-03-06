@@ -101,6 +101,7 @@ func NewClient(config Config) (*Client, error) {
 		httpClient := httpclient.NewClient(
 			baseURL,
 			config.APIKey,
+			"otp",
 			timeout,
 			logger,
 			enableRequestLogging,
@@ -110,9 +111,9 @@ func NewClient(config Config) (*Client, error) {
 			nil, // No nested refresh handler
 		)
 		var result httpclient.TokenResponse
-		err := httpClient.Post("/auth/refresh-token", RefreshTokenOptions{
+		err := httpClient.PostWithService("/auth/refresh-token", RefreshTokenOptions{
 			RefreshToken: refreshToken,
-		}, &result)
+		}, &result, "otp:refresh_token")
 		if err != nil {
 			return nil, err
 		}
@@ -131,6 +132,7 @@ func NewClient(config Config) (*Client, error) {
 	authHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
+		"otp",
 		timeout,
 		logger,
 		enableRequestLogging,
@@ -144,6 +146,7 @@ func NewClient(config Config) (*Client, error) {
 	authenticatedHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
+		"identity",
 		timeout,
 		logger,
 		enableRequestLogging,
@@ -156,6 +159,7 @@ func NewClient(config Config) (*Client, error) {
 	analyticsHTTPClient := httpclient.NewClient(
 		baseURL,
 		config.APIKey,
+		"analytics",
 		timeout,
 		logger,
 		enableRequestLogging,

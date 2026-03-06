@@ -53,7 +53,8 @@ export class Verification {
       "/identity/verify/sign-in",
       {
         credentialName: options.credentialName,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:verification_sign_in" } }
     );
 
     return response.data;
@@ -92,6 +93,7 @@ export class Verification {
         params: {
           id: options.id,
         },
+        headers: { "X-TrustID-Service": "identity:verification_link_store_get" },
       }
     );
 
@@ -156,7 +158,8 @@ export class Verification {
         from: options.from,
         typ: options.typ,
         body: options.body,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:verification_link_store_post" } }
     );
 
     return response.data;
@@ -205,6 +208,7 @@ export class Verification {
         params: {
           sessionId: options.sessionId,
         },
+        headers: { "X-TrustID-Service": "identity:verification_callback" },
       }
     );
 

@@ -52,7 +52,8 @@ export class KeyManager {
       {
         did: options.did,
         ownerEmail: options.ownerEmail,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:encryption_generate_key" } }
     );
 
     return response.data;
@@ -88,7 +89,8 @@ export class KeyManager {
       "/identity/get-encrypted-key",
       {
         did: options.did,
-      }
+      },
+      { headers: { "X-TrustID-Service": "identity:encryption_get_key" } }
     );
 
     return response.data;

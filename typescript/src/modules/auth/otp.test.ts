@@ -21,10 +21,11 @@ describe("AuthOTP", () => {
 
       const result = await auth.registerOTP({ email: "user@test.com" });
 
-      expect(mockAxios.post).toHaveBeenCalledWith("/auth/sign-in/initiate", {
-        email: "user@test.com",
-        phone: undefined,
-      });
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        "/auth/sign-in/initiate",
+        { email: "user@test.com", phone: undefined },
+        { headers: { "X-TrustID-Service": "otp:initiate" } }
+      );
       expect(result).toEqual({ otp: "123456" });
     });
 
@@ -33,10 +34,11 @@ describe("AuthOTP", () => {
 
       await auth.registerOTP({ phone: "+1234567890" });
 
-      expect(mockAxios.post).toHaveBeenCalledWith("/auth/sign-in/initiate", {
-        email: undefined,
-        phone: "+1234567890",
-      });
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        "/auth/sign-in/initiate",
+        { email: undefined, phone: "+1234567890" },
+        { headers: { "X-TrustID-Service": "otp:initiate" } }
+      );
     });
 
     it("should throw if neither email nor phone provided", async () => {
@@ -65,11 +67,11 @@ describe("AuthOTP", () => {
         otp: "123456",
       });
 
-      expect(mockAxios.post).toHaveBeenCalledWith("/auth/sign-in/confirm", {
-        email: "user@test.com",
-        phone: undefined,
-        otp: "123456",
-      });
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        "/auth/sign-in/confirm",
+        { email: "user@test.com", phone: undefined, otp: "123456" },
+        { headers: { "X-TrustID-Service": "otp:confirm" } }
+      );
       expect(result).toEqual(MOCK_TOKEN_RESPONSE);
     });
 
@@ -116,11 +118,11 @@ describe("AuthOTP", () => {
 
       await auth.confirmOTP({ phone: "+1234567890", otp: "123456" });
 
-      expect(mockAxios.post).toHaveBeenCalledWith("/auth/sign-in/confirm", {
-        email: undefined,
-        phone: "+1234567890",
-        otp: "123456",
-      });
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        "/auth/sign-in/confirm",
+        { email: undefined, phone: "+1234567890", otp: "123456" },
+        { headers: { "X-TrustID-Service": "otp:confirm" } }
+      );
     });
   });
 
@@ -132,7 +134,8 @@ describe("AuthOTP", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/auth/sign-in/initiate?type=admin",
-        { email: "admin@test.com", phone: undefined }
+        { email: "admin@test.com", phone: undefined },
+        { headers: { "X-TrustID-Service": "otp:admin_initiate" } }
       );
       expect(result).toEqual({ otp: "654321" });
     });
@@ -154,9 +157,11 @@ describe("AuthOTP", () => {
         refreshToken: "some-refresh-token",
       });
 
-      expect(mockAxios.post).toHaveBeenCalledWith("/auth/refresh-token", {
-        refreshToken: "some-refresh-token",
-      });
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        "/auth/refresh-token",
+        { refreshToken: "some-refresh-token" },
+        { headers: { "X-TrustID-Service": "otp:refresh_token" } }
+      );
       expect(result).toEqual(MOCK_TOKEN_RESPONSE);
     });
 

@@ -31,7 +31,8 @@ describe("KeyManager", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/generate-encryption-key",
-        { did: validOptions.did, ownerEmail: validOptions.ownerEmail }
+        { did: validOptions.did, ownerEmail: validOptions.ownerEmail },
+        { headers: { "X-TrustID-Service": "identity:encryption_generate_key" } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -83,7 +84,8 @@ describe("KeyManager", () => {
 
       expect(mockAxios.post).toHaveBeenCalledWith(
         "/identity/get-encrypted-key",
-        { did: "did:iden3:test" }
+        { did: "did:iden3:test" },
+        { headers: { "X-TrustID-Service": "identity:encryption_get_key" } }
       );
       expect(result).toEqual(mockResponse);
     });

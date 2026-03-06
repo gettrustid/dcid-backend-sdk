@@ -61,8 +61,8 @@ export class DCIDServerSDK {
         ? config.enableRequestLogging
         : environment === "dev";
 
-    // Create default headers with API key
-    const defaultHeaders: Record<string, string> = {
+    // Create default headers with API key (shared base)
+    const baseHeaders: Record<string, string> = {
       "X-API-Key": config.apiKey,
       ...config.defaultHeaders,
     };
@@ -71,11 +71,11 @@ export class DCIDServerSDK {
     const getAuthToken = () => this._authToken;
     const getRefreshToken = () => this._refreshToken;
 
-    // Create HTTP client for unauthenticated requests (auth module)
+    // Create HTTP client for unauthenticated requests (auth module - OTP)
     const httpClient = createHttpClient(
       this._baseUrl,
       config.timeout,
-      defaultHeaders,
+      { ...baseHeaders, "X-TrustID-Service": "otp" },
       undefined,
       undefined,
       undefined,
@@ -106,12 +106,12 @@ export class DCIDServerSDK {
       this._refreshToken = tokens.refresh_token;
     };
 
-    // Create HTTP client for authenticated requests (encryption module)
+    // Create HTTP client for authenticated requests (identity module)
     // This client will automatically refresh tokens on 401 errors using SDK's refreshToken method
     const authenticatedHttpClient = createHttpClient(
       this._baseUrl,
       config.timeout,
-      defaultHeaders,
+      { ...baseHeaders, "X-TrustID-Service": "identity" },
       getAuthToken,
       getRefreshToken,
       refreshTokenCallback,
@@ -132,7 +132,7 @@ export class DCIDServerSDK {
     const analyticsHttpClient = createHttpClient(
       "", // Base URL is empty since we use full URL in analytics methods
       config.timeout,
-      defaultHeaders,
+      { ...baseHeaders, "X-TrustID-Service": "analytics" },
       undefined,
       undefined,
       undefined,

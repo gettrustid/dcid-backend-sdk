@@ -50,7 +50,8 @@ export class AuthOTP {
       {
         email: options.email,
         phone: options.phone,
-      }
+      },
+      { headers: { "X-TrustID-Service": "otp:initiate" } }
     );
 
     return response.data;
@@ -94,7 +95,8 @@ export class AuthOTP {
         email: options.email,
         phone: options.phone,
         otp: options.otp,
-      }
+      },
+      { headers: { "X-TrustID-Service": "otp:confirm" } }
     );
 
     const tokens = response.data;
@@ -143,7 +145,8 @@ export class AuthOTP {
       {
         email: options.email,
         phone: options.phone,
-      }
+      },
+      { headers: { "X-TrustID-Service": "otp:admin_initiate" } }
     );
 
     return response.data;
@@ -175,7 +178,8 @@ export class AuthOTP {
       "/auth/refresh-token",
       {
         refreshToken: options.refreshToken,
-      }
+      },
+      { headers: { "X-TrustID-Service": "otp:refresh_token" } }
     );
 
     return response.data;

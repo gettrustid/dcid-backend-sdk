@@ -99,8 +99,8 @@ class DCIDServerSDK:
             else environment == "dev"
         )
 
-        # Create default headers with API key
-        default_headers = {
+        # Create default headers with API key (shared base)
+        base_headers = {
             "X-API-Key": config.api_key,
             **(config.default_headers or {}),
         }
@@ -116,11 +116,11 @@ class DCIDServerSDK:
         def get_refresh_token() -> Optional[str]:
             return self._refresh_token
 
-        # Create HTTP client for unauthenticated requests (auth module)
+        # Create HTTP client for unauthenticated requests (auth module - OTP)
         http_client = create_http_client(
             self._base_url,
             config.timeout,
-            default_headers,
+            {**base_headers, "X-TrustID-Service": "otp"},
             None,
             None,
             None,
@@ -150,11 +150,11 @@ class DCIDServerSDK:
             self._auth_token = tokens.access_token
             self._refresh_token = tokens.refresh_token
 
-        # Create HTTP client for authenticated requests
+        # Create HTTP client for authenticated requests (identity module)
         authenticated_http_client = create_http_client(
             self._base_url,
             config.timeout,
-            default_headers,
+            {**base_headers, "X-TrustID-Service": "identity"},
             get_auth_token,
             get_refresh_token,
             refresh_token_callback,
@@ -175,7 +175,7 @@ class DCIDServerSDK:
         analytics_http_client = create_http_client(
             "",  # Base URL is empty since we use full URL in analytics methods
             config.timeout,
-            default_headers,
+            {**base_headers, "X-TrustID-Service": "analytics"},
             None,
             None,
             None,
