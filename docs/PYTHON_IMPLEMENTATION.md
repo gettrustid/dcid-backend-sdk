@@ -177,7 +177,7 @@ Access documentation at: `http://localhost:8080/docs`
 ## Dependencies
 
 ### Core (1 dependency)
-- `requests>=2.28.0` - HTTP client
+- `requests>=2.33.0` - HTTP client
 
 ### Server (3 additional dependencies)
 - `fastapi>=0.104.0` - Web framework

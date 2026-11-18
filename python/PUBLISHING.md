@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Python 3.8+
+- Python 3.10+
 - A [PyPI account](https://pypi.org/account/register/)
 - A [TestPyPI account](https://test.pypi.org/account/register/) (for pre-release testing)
 - API tokens from both [PyPI](https://pypi.org/manage/account/token/) and [TestPyPI](https://test.pypi.org/manage/account/token/)
@@ -67,7 +67,7 @@ twine upload --repository testpypi dist/*
 ### Install from TestPyPI:
 
 ```bash
-pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ dcid-server-sdk==0.1.0
+pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ dcid-server-sdk==0.2.0
 ```
 
 > The `--extra-index-url` flag tells pip to pull dependencies (like `requests`) from real PyPI, since TestPyPI may not have them.
