@@ -370,7 +370,7 @@ except DCIDServerSDKError as e:
 
 ## Python Version Support
 
-- Python 3.8+
+- Python 3.10+
 
 ## License
 

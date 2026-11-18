@@ -48,7 +48,7 @@ from .modules.analytics.analytics import Analytics
 from .config.environments import ENVIRONMENTS, get_environment_config, EnvironmentConfig
 from .utils.logger import Logger, ConsoleLogger, NoOpLogger
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "DCIDServerSDK",
